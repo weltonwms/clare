@@ -1,0 +1,212 @@
+body{
+	/*background-color: #b3b3b3;*/
+	background:url('../imgs/cinza.png');
+
+}
+
+header{
+	/*background:url('../imgs/logo.png') no-repeat;
+	background-size: 274px 91px;*/
+	background-image: linear-gradient(to right, rgba(229,229,219,1.0), rgb(255,255,255) );
+	margin-left: 10px;
+
+
+}
+
+header.row{
+	margin-left: 0px;
+
+}
+#logo{
+	
+
+}
+
+#login{
+	background-color:white;
+	width:480px;
+	min-height:260px;
+	margin:160px auto 0px;
+	border-radius:15px;
+	box-shadow:0px 0px 20px #000;
+	
+
+}
+
+#titulo_login{
+	
+	
+	text-align:center;
+	font:center;
+	color:white;
+	vertical-align: middle;
+	min-height:50px;
+	/*background-image: linear-gradient(to top, #3F4196 0%, #00AFEF 160%);*/
+    background-color:#00AFEF;
+    background-image: linear-gradient(to left, transparent, rgba(92,92,92,.3));
+	border-top-left-radius:15px;
+	border-top-right-radius:15px;
+
+}
+
+#corpo_login {
+	margin-left:15px;
+	margin-top:15px;
+
+
+}
+
+.box_recuperacao_senha{
+   
+	width:580px;
+	min-height:260px;
+	margin:60px auto 0px;
+	border-radius:15px;
+	
+}
+
+#tudo{
+	background-color:white;
+        padding-top: 1%;
+
+}
+
+#conteudo{
+	
+	min-height:450px;
+
+}
+
+#saudacao {
+    margin-top:45px;
+    margin-right:18px;
+    float: right;
+    
+}
+
+#apresentacao > h1{
+	margin-left:22px;
+	font-size:35pt;
+
+}
+
+#rodape{
+	
+	background-image: linear-gradient(to right, rgb(219,219,219), rgb(245,245,235) );
+	padding: 2px 2px 4px 2px;
+        margin-top: 15px;
+        margin-bottom: 10px;
+
+
+}
+
+#texto_rodape{
+	margin-top:-10px;
+	
+}
+
+.navbar-default{
+	color:white;
+	background-image:linear-gradient(to right,rgb(62,64,149),rgb(0,175,239));
+
+
+}
+
+.sair{
+    background-color: #d9534f;
+    border-color: #D43F3A;
+}
+
+
+    
+ul.nav.navbar-nav > li > a.sair:hover, ul.nav.navbar-nav > li > a.sair:focus{
+    color:#D43F3A;
+
+}
+
+
+
+ul.nav.navbar-nav > li > a {
+color: white;
+font-size:12pt;
+font-weight:bold;
+border-right:2px solid white;
+
+}
+
+ul.nav.navbar-nav > li > a:hover, ul.nav.navbar-nav > li > a:focus{
+color:black;
+background-image: linear-gradient(to right, rgba(229,229,219,1.0), rgb(255,255,255) );
+}
+
+
+label.error{
+	 color:red;
+
+}
+
+.modal-header{
+	background-color: #428bca;
+	color: #fff;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+}
+
+.modal-footer{
+	background-color: #f5f5f5;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+.pagination{
+    display: inline;
+    margin: 0px;
+}
+
+.dataTables_info{
+   
+}
+
+.dataTables_paginate{
+    float: right;
+}
+
+.pesquisa_tabela input[type=text] {
+    border-radius: 10px;
+      
+    
+}
+
+.pesquisa_tabela input[type=text]:focus {
+    border-color: #66AFE9;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+    outline: 0 none; 
+    
+}
+
+.panel{
+    margin-bottom: 2px;
+}
+
+#slide{
+        position: relative;
+        left: 250px;
+        top:90px;  
+}
+
+.nome_fornecedor{
+    color: red;
+    font-size: 10px;
+}
+
+.altura_minima{
+    min-height: 250px;
+}
+
+div.modal-dialog.largura_ideal{
+    width:75%;
+}
+
+a.detalhe_cliente{
+    color:black;
+}

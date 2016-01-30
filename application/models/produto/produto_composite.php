@@ -30,6 +30,10 @@ class Produto_composite extends CI_Model{
         return $this->fornecedor->get_empresa();
     }
     
+    public function get_valor(){
+        return $this->produto->get_valor();
+    }
+    
      public function get_nome_produto_fornecedor(){
         $string=$this->produto->get_nome().
                 " - <span class='nome_fornecedor'>{$this->fornecedor->get_empresa()}</span>";

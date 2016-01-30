@@ -63,6 +63,7 @@ class Servico_manager extends CI_Model {
 
     public function manter_itens_servico(array $post) {
         $this->load->model('item_servico/Item_servico_manager', 'item_servico_m');
+        $this->load->model('produto/Produto_model');
         $id_servico = NULL;
         if ($post['id_servico']) {
             $this->gravar_alteracao($post);
@@ -70,7 +71,7 @@ class Servico_manager extends CI_Model {
         } else {
             $id_servico = $this->cadastrar($post);
         }
-
+        $this->Produto_model->atualizar_valor($post['valor_fornecedor'],$post['id_produto']);
         if ($post['id_item_servico']) {
             $retorno = $this->item_servico_m->gravar_alteracao($post);
             $acao='alteracao';

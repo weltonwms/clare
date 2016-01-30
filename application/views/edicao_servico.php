@@ -151,7 +151,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                             <?php
                             foreach ($produtos as $produto):
                                 echo "<option value='{$produto->get_id_produto()}' ";
-                               
+                                echo "data-forn='{$produto->get_valor()}'";
                                 echo ">";
                                 echo $produto->get_nome_produto() . "  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- {$produto->get_nome_fornecedor()}";
                                 echo "</option>";

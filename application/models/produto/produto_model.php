@@ -4,7 +4,7 @@ class Produto_model extends CI_Model {
 
     private $id_produto;
     private $nome;
-   
+    private $valor;
     private $id_fornecedor;
 
     function __construct() {
@@ -14,7 +14,7 @@ class Produto_model extends CI_Model {
     public function cadastrar() {
         $dados = array(
             'nome' => $this->nome,
-           
+            'valor'=>  $this->valor,
             'id_fornecedor' => $this->id_fornecedor
         );
         $this->db->insert('produto', $dados);
@@ -27,8 +27,23 @@ class Produto_model extends CI_Model {
     public function gravar_alteracao() {
         $dados = array(
             'nome' => $this->nome,
-           
+            'valor'=>  $this->valor,
             'id_fornecedor' => $this->id_fornecedor
+        );
+        $this->db->where('id_produto', $this->id_produto);
+        $this->db->update('produto', $dados);
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        }
+        return;
+    }
+    
+    public function atualizar_valor($valor,$id_produto){
+        $this->set_valor($valor, 1);
+        $this->set_id_produto($id_produto);
+         $dados = array(
+              'valor'=>  $this->valor,
+           
         );
         $this->db->where('id_produto', $this->id_produto);
         $this->db->update('produto', $dados);
@@ -63,8 +78,20 @@ class Produto_model extends CI_Model {
         $this->nome = $nome;
     }
 
-   
+    public function get_valor() {
+        return $this->valor;
+    }
 
+    public function set_valor($valor,$trata_valor=null) {
+         if ($trata_valor) {
+            $valor = str_replace(".", "", $valor);
+            $valor = str_replace(",", ".", $valor);
+        }
+       
+        $this->valor = $valor;
+    }
+
+    
     public function get_id_fornecedor() {
         return $this->id_fornecedor;
     }

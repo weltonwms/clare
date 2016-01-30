@@ -26,7 +26,7 @@ class Produto_dao extends CI_Model {
             $produto = new $this->Produto_model();
             $produto->set_id_produto($produto_banco[0]->id_produto);
             $produto->set_nome($produto_banco[0]->nome);
-           
+           $produto->set_valor($produto_banco[0]->valor);
             $produto->set_id_fornecedor($produto_banco[0]->id_fornecedor);
             
             return $produto;

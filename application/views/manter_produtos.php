@@ -27,7 +27,7 @@
     <thead>
         <tr class="text-primary">
             <th>Nome</th>
-           
+            <th>Valor</th>
             <th>Fornecedor</th>
             
             <th><span class="glyphicon glyphicon-pencil"></span> Editar</th>
@@ -46,6 +46,7 @@
                 ?>
                 <tr>
                     <td><?php echo $produto->get_nome_produto(); ?></td>
+                      <td><?php echo "R$ " . number_format($produto->get_valor(), 2, ",", "."); ?></td>
                     <td><?php echo $produto->get_nome_fornecedor(); ?></td>
                     
                     <td>

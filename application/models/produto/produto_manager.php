@@ -23,7 +23,7 @@ class Produto_manager extends CI_Model {
     public function cadastrar(array $post){
         $this->load->model('produto/Produto_model','produto');
         $this->produto->set_nome($post['nome']);
-       
+        $this->produto->set_valor(isset($post['valor'])?$post['valor']:NULL,1);
         $this->produto->set_id_fornecedor($post['id_fornecedor']);
         return $this->produto->cadastrar();
         
@@ -35,7 +35,7 @@ class Produto_manager extends CI_Model {
         $this->load->model('produto/Produto_model','produto');
         $this->produto->set_id_produto($post['id_produto']);
         $this->produto->set_nome($post['nome']);
-        
+        $this->produto->set_valor(isset($post['valor'])?$post['valor']:NULL,1);
         $this->produto->set_id_fornecedor($post['id_fornecedor']);
         return $this->produto->gravar_alteracao();
     }

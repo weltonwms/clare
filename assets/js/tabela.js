@@ -3,7 +3,7 @@ $(document).ready(function(){
     $('#tabela').dataTable( {
 	 "sDom":'ft<"row" <"col-md-4"i ><"col-md-8" p><"clearfix">',
         "sPaginationType": "bootstrap",
-         "iDisplayLength" : 10,
+         "iDisplayLength" : 20,
         "bSort": false,
          
 	  "oLanguage": {

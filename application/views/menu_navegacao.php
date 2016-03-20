@@ -1,14 +1,22 @@
+<?php
+$x1=isset($active) && $active=='home'?'active':'';
+$x2=isset($active) && $active=='cliente'?'active':'';
+$x3=isset($active) && $active=='fornecedor'?'active':'';
+$x4=isset($active) && $active=='produto'?'active':'';
+$x5=isset($active) && $active=='servico'?'active':'';
+$x6=isset($active) && $active=='relatorio'?'active':'';
+?>
 <section id="menu"  >
 		<nav class="navbar navbar-default" >
 			
 			<ul class="nav navbar-nav">
-				<li class=""><a href="<?php echo base_url('home')?>">Home</a></li>
-				<li class=""><a href="<?php echo base_url('cliente') ?>">Cliente</a></li>
-                                <li class=""><a href="<?php echo base_url('fornecedor') ?>">Fornecedor</a></li>
-                                <li class=""><a href="<?php echo base_url('produto') ?>">Produto</a></li>
-                                <li class=""><a href="<?php echo base_url('servico') ?>">Serviço</a></li>
+				<li class="<?php echo $x1?>"><a href="<?php echo base_url('home')?>">Home</a></li>
+                                <li class="<?php echo $x2?>"><a href="<?php echo base_url('cliente') ?>">Cliente</a></li>
+                                <li class="<?php echo $x3?>"><a href="<?php echo base_url('fornecedor') ?>">Fornecedor</a></li>
+                                <li class="<?php echo $x4?>"><a href="<?php echo base_url('produto') ?>">Produto</a></li>
+                                <li class="<?php echo $x5?>"><a href="<?php echo base_url('servico') ?>">Serviço</a></li>
 				
-				<li class=""><a href="<?php echo base_url('relatorio') ?>">Emitir Relatório</a></li>
+				<li class="<?php echo $x6?>"><a href="<?php echo base_url('relatorio') ?>">Emitir Relatório</a></li>
 			</ul>
 
 			<div class="navbar-right">

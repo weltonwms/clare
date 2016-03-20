@@ -46,15 +46,16 @@
 */
 
 $active_group = 'default';
-$active_record = TRUE;
+//$active_record = TRUE;
+$query_builder = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'clare';
 $db['default']['password'] = '123456';
 $db['default']['database'] = 'clare';
-$db['default']['dbdriver'] = 'mysql';
+$db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
-$db['default']['pconnect'] = TRUE;
+$db['default']['pconnect'] = FALSE;
 $db['default']['db_debug'] = TRUE;
 $db['default']['cache_on'] = FALSE;
 $db['default']['cachedir'] = '';

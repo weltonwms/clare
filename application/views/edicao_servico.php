@@ -87,8 +87,9 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
         <select class="form-control " name='estado' id="estado">
             <option value="" >Selecione</option>
             <option value="1" <?php if ($servico->get_estado() == '1') echo "selected='selected'"; ?>>Orçamento</option>
-            <option value="2" <?php if ($servico->get_estado() == '2') echo "selected='selected'"; ?>>Executado</option>
             <option value="3" <?php if ($servico->get_estado() == '3') echo "selected='selected'"; ?>>Em Produção</option>
+            <option value="4" <?php if ($servico->get_estado() == '4') echo "selected='selected'"; ?>>Entregue não Pago</option>
+            <option value="2" <?php if ($servico->get_estado() == '2') echo "selected='selected'"; ?>>Executado</option>
         </select>
 
     </div>

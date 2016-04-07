@@ -190,10 +190,12 @@
                          <td><?php echo "R$ " . number_format($item->get_valor_final_multiplicado(), 2, ",", "."); ?></td>
                     </tr>
                     <?php $cont++; endforeach;?>
+                    <?php if($imprimir_total):?>
                     <tr id="preco_total">
                         <td colspan="4" align="right"> Total Geral</td>
                         <td class="destaque"><?php echo "R$ " . number_format($servico->get_total_itens_servico(), 2, ",", "."); ?></td>
                     </tr>
+                    <?php endif;?>
                 </table>
                 <br>
              <?php if($servico->get_obs()) echo "Obs: ".$servico->get_obs()?>

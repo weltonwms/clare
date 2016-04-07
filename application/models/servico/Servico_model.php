@@ -87,7 +87,7 @@ class Servico_model extends CI_Model {
     }
 
     public function get_nome_estado() {
-        $array = array('', 'Orçamento', 'Executado', 'Em Produção');
+        $array = array('', 'Orçamento', 'Executado', 'Em Produção','Entregue não Pago');
         return $array[$this->estado];
     }
 

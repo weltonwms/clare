@@ -30,6 +30,8 @@ class Home extends CI_Controller {
             $this->x->set_servico($post,$skips);
         }
         
+        
+        
        
         
         

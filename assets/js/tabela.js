@@ -5,6 +5,7 @@ $(document).ready(function(){
         "sPaginationType": "bootstrap",
          "iDisplayLength" : 20,
         "bSort": false,
+        "bStateSave": true,
          
 	  "oLanguage": {
             "sLengthMenu": "Mostrar _MENU_ registros por página",

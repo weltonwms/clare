@@ -78,9 +78,9 @@ class Servico extends CI_Controller{
     }
     
     public function imprimir($id_servico){
-        //$servico=$this->Servico_manager->get_servico($id_servico);
-        //echo "<pre>"; print_r($servico->get_itens_servico()); exit();
+        $imprimir_total=$this->input->get('imprimir_total')==""?1:$this->input->get('imprimir_total');
         $dados['servico']=$this->Servico_manager->get_servico($id_servico);
+        $dados['imprimir_total']=  $imprimir_total;
         $html=$this->load->view('impressao_servico',  $dados,TRUE);
         $this->load->library('pdf');
         $this->pdf->createPDF($html,'relat');

@@ -30,12 +30,11 @@ class Servico extends CI_Controller{
     }
     
     public function index(){
+        //$this->output->enable_profiler(TRUE);
         $dados['servicos']=$this->Servico_manager->get_servicos();
         $this->carrega_view('manter_servicos',$dados);    
 		
     }
-    
-    
     
     public function salvar_servico(){
         
@@ -49,7 +48,7 @@ class Servico extends CI_Controller{
             $this->session->set_flashdata('status','danger');
             $this->session->set_flashdata('msg_confirm','Não foi Possível Salvar Serviço!');
         }
-        redirect('servico');
+        redirect(base_url('servico'));
     }
     
     public function editar($id_servico=null){
@@ -74,7 +73,7 @@ class Servico extends CI_Controller{
             $this->session->set_flashdata('status','danger');
             $this->session->set_flashdata('msg_confirm','Não foi possível Excluir Serviço!');
         }
-        redirect('servico');
+        redirect(base_url('servico'));
     }
     
     public function imprimir($id_servico){
@@ -99,7 +98,7 @@ class Servico extends CI_Controller{
             $this->session->set_flashdata('status','danger');
             $this->session->set_flashdata('msg_confirm','Não foi Possível Salvar Serviço!');
         }
-        redirect("servico/editar/$id_servico");
+        redirect(base_url("servico/editar/$id_servico"));
         
         
     }
@@ -114,7 +113,7 @@ class Servico extends CI_Controller{
             $this->session->set_flashdata('status','danger');
             $this->session->set_flashdata('msg_confirm','Não foi possível Excluir Item de Serviço!');
         }
-         redirect("servico/editar/$id_servico");
+         redirect(base_url("servico/editar/$id_servico"));
     }
     
     public function clonar(){
@@ -127,7 +126,7 @@ class Servico extends CI_Controller{
             $this->session->set_flashdata('status','danger');
             $this->session->set_flashdata('msg_confirm','Não foi possível Clonar o Serviço!');
         }
-        redirect('servico');
+        redirect(base_url('servico'));
     }
     
     public function executar_servico($id_servico){
@@ -140,12 +139,21 @@ class Servico extends CI_Controller{
             $this->session->set_flashdata('status','danger');
             $this->session->set_flashdata('msg_confirm','Não foi possível Mudar o Estado!');
         }
-        redirect('servico');
+        redirect(base_url('servico'));
     }
 
     public function detalhar_servico_ajax($id_servico){
         $dados['servico']=$this->Servico_manager->get_servico($id_servico);
         $this->load->view('servico_detalhado_ajax',  $dados);
+    }
+    
+    public function teste1(){
+        $this->load->model("datatables/Data_tables");
+         $colunas=array('id_servico', 'cliente', 'data', 'estado', 'tipo');
+             $tabela="xTemp";
+             $this->Data_tables->inicializar($this->input->post(),$colunas,$tabela);
+             $saida=$this->Data_tables->get_saida();
+             echo json_encode($saida);
     }
     
 }

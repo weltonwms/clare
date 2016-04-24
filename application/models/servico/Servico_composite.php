@@ -6,6 +6,11 @@ class Servico_composite extends CI_Model{
     private $itens_servico; //array de objetos tipo Item_servico_model
     private $cliente; //objeto Cliente_model
     
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('item_servico/Item_servico_dao');
+    }
+    
     public function set_servico(Servico_model $servico){
         $this->servico=$servico;
     }
@@ -74,7 +79,11 @@ class Servico_composite extends CI_Model{
         return $this->servico->get_nome_tipo();
     }
 
-        public function get_itens_servico() {
+    public function get_itens_servico() {
+        if(!$this->itens_servico):
+            $itens=$this->Item_servico_dao->get_itens_servico($this->get_id_servico());
+            $this->itens_servico=$itens;
+        endif;
         return $this->itens_servico;
     }
     

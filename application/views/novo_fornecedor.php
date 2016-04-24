@@ -48,8 +48,8 @@ echo "<script src='".base_url('assets/js/validacao_fornecedor.js')."'></script>"
                     <div class="control-group col-md-7 col-md-offset-5">
                         <br><br>
 				<button formaction="<?php echo base_url('fornecedor/cadastrar')?>"
-					type="submit" class="btn btn-success" id="salvar">
-					<span class="glyphicon glyphicon-save"></span> Salvar
+					type="submit" class="btn btn-success limpa_state" id="salvar">
+					<span class="glyphicon glyphicon-save "></span> Salvar
 				</button>
 				<button id="voltar"
 					type="button" class="btn btn-default">

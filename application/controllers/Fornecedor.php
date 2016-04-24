@@ -30,6 +30,7 @@ class Fornecedor extends CI_Controller{
     }
     
     public function index(){
+        //$this->output->enable_profiler(TRUE);
         $dados['fornecedores']=$this->Fornecedor_manager->get_fornecedores();
         $this->carrega_view('manter_fornecedores',$dados);    
 		

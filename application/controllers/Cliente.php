@@ -30,6 +30,7 @@ class Cliente extends CI_Controller{
     }
     
     public function index(){
+        //$this->output->enable_profiler(TRUE);
         $dados['clientes']=$this->Cliente_manager->get_clientes();
         $this->carrega_view('manter_clientes',$dados);    
 		

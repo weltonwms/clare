@@ -1,7 +1,8 @@
 $(document).ready(function () {
 
 
-    $("#tabela").on('click', '.detalhe_servico', function () {
+    $("body").on('click', '.detalhe_servico', function (e) {
+        e.preventDefault();
         id_servico = ($(this).attr('data-id_servico'));
         $.ajax({
             type: "GET",
@@ -40,6 +41,10 @@ $(document).ready(function () {
           //alert( "Handler for .submit() called." );
   //event.preventDefault();
         $("#modal_imprimir_servico").modal('hide');
+    });
+    
+    $("#tabela_ajax_servico").on('click','.confirm',function(){
+        alert("confirm");
     });
 
 

@@ -8,16 +8,16 @@ class Produto_manager extends CI_Model {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('produto/Produto_composite_dao');
+        $this->load->model('produto/Produto_dao');
     }
 
     public function get_produtos() {
-       return $this->Produto_composite_dao->get_produtos_composite();
+       return $this->Produto_dao->get_produtos_composite();
     }
     
    
     public function get_produto($id_produto) {
-        return $this->Produto_composite_dao->get_produto_composite($id_produto);
+        return $this->Produto_dao->get_produto_composite($id_produto);
     }
     
     public function cadastrar(array $post){

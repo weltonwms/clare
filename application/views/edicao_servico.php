@@ -7,12 +7,17 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
 echo link_tag(array('href' => 'assets/plugins/chosen/chosen.css', 'rel' => 'stylesheet', 'type' => 'text/css'));
 echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'></script>";
 ?>
+
 <legend>
-    <?php
-    if ($servico->get_id_servico())
+    <?php 
+    $class_limpa="";
+    if ($servico->get_id_servico()){
         echo 'Alteração de  Serviço';
-    else
+    }
+    else{
+        $class_limpa="limpa_state";
         echo 'Novo Serviço';
+    }
     ?>
 
 
@@ -32,12 +37,16 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
     <input type="hidden" name="id_servico" value="<?php echo $servico->get_id_servico(); ?>"/>
     <div class="col-md-12">
         <div class="navbar-right ">
+            <?php if ($servico->get_id_servico()):?>
             <button formaction="<?php echo base_url('servico/clonar') ?>"
-                    type="submit" class="btn btn-default" id="Clonar">
+                    type="submit" class="btn btn-default limpa_state" id="Clonar">
                 <span class=" text-danger glyphicon glyphicon-heart"></span> Clonar
             </button>
+            <?php endif;?>
             <button formaction="<?php echo base_url('servico/salvar_servico') ?>"
-                    type="submit" class="btn btn-success" id="salvar">
+                    type="submit" 
+                    class="btn btn-success <?php echo $class_limpa?>" 
+                    id="salvar">
                 <span class="glyphicon glyphicon-save"></span> Salvar e Fechar
             </button>
             <a href="<?php echo base_url('servico') ?>"
@@ -221,7 +230,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                 </div> <!-- /.modal-body -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button id="btn_submit_tudo"  class="btn btn-success">Salvar</button>
+                    <button id="btn_submit_tudo"  class="btn btn-success <?php echo $class_limpa?>">Salvar</button>
                 </div>
 
 
@@ -242,7 +251,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
              id="btn_adicionar_item_servico" class="btn btn-default navbar-right"> <span
                 class="glyphicon glyphicon-plus"></span> Novo Item
         </btn>
-        <table id="tabela" class="table table-bordered table-striped custab table-condensed">
+        <table class="table table-bordered table-striped custab table-condensed">
             <thead>
                 <tr class="text-primary">
                     <th>Item</th>

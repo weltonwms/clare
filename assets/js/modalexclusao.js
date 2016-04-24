@@ -23,12 +23,14 @@ $(document).ready(function() {
 		cancelButton : " Cancelar"
 	});
         
+        
         $(".confirm_servico").confirm({
-		text : "Deseja realmente excluir este Serviço?",
+                text : "Deseja realmente excluir este Serviço?",
 		title : "  Exclusão de Serviço",
 		confirmButton : " Excluir",
 		cancelButton : " Cancelar"
-	});
+        });
+        
         
          $(".confirm_item_servico").confirm({
 		text : "Deseja realmente excluir este Item de Serviço?",

@@ -1,6 +1,5 @@
 <?php echo "<script src='" . base_url('assets/plugins/jquery.confirm.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>"; ?>
-<?php echo "<script src='" . base_url('assets/plugins/data_table.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/js/tabela.js') . "'></script>"; ?>
 <legend>Lista de Fornecedores Cadastrados</legend>
 
@@ -13,11 +12,15 @@
     </div>
 <?php endif; ?>
 
-<a href="<?php echo base_url('fornecedor/novo_fornecedor') ?>" type="button"
-   class="btn btn-success navbar-right"> <span
-        class="glyphicon glyphicon-plus"></span> Novo Fornecedor
-</a>
-<br>
+<div class="row">
+    <div class="col-md-12">
+        <a href="<?php echo base_url('fornecedor/novo_fornecedor') ?>" type="button"
+           class="btn btn-success navbar-right"> <span
+                class="glyphicon glyphicon-plus"></span> Novo Fornecedor
+        </a>
+        <br><br>
+    </div>
+</div>
 
 
 <!--inicio da tabela com lista de fornecedores-->
@@ -30,10 +33,7 @@
             <th>Responsável</th>
             <th>Telefone</th>
             <th>Conta Bancária</th>
-            <th><span class="glyphicon glyphicon-pencil"></span> Editar</th>
-            <th><span class="text-danger"><span class="glyphicon glyphicon-trash">
-                    </span>Excluir</span>
-            </th>
+            <th>Ação</th>
 
         </tr>
     </thead>
@@ -50,18 +50,22 @@
                     <td><?php echo $fornecedor->get_fone(); ?></td>
                     <td><?php echo $fornecedor->get_conta(); ?></td>
                     <td>
-                        <a href="<?php echo base_url('fornecedor/editar') . '/' . $fornecedor->get_id_fornecedor() ?>">
+                        <a class="btn btn-default"
+                            data-toggle="tooltip"
+                            title="Editar"
+                            href="<?php echo base_url('fornecedor/editar') . '/' . $fornecedor->get_id_fornecedor() ?>">
                             <span class="glyphicon glyphicon-pencil"></span> 
                         </a>
-                    </td>
-                    <td class="text-center">
-                        <a class="confirm_fornecedor text-danger" 
+                   
+                        <a class="confirm_fornecedor btn btn-danger"
+                            data-toggle="tooltip"
+                            title="Excluir"
                            href="<?php echo base_url('fornecedor/excluir') . '/' . $fornecedor->get_id_fornecedor() ?>">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </td>
                 </tr>
-            <?php
+                <?php
             endforeach;
         endif;
         ?>

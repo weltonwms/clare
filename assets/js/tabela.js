@@ -1,13 +1,16 @@
-$(document).ready(function(){
-   $.fn.dataTableExt.oStdClasses["sFilter"] = "pesquisa_tabela";
-    $('#tabela').dataTable( {
-	 "sDom":'ft<"row" <"col-md-4"i ><"col-md-8" p><"clearfix">',
-        "sPaginationType": "bootstrap",
-         "iDisplayLength" : 20,
-        "bSort": false,
+$(document).ready(function () {
+    //$.fn.dataTableExt.oStdClasses["sFilter"] = "pesquisa_tabela";
+    $('#tabela').dataTable({
+        "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+        "iDisplayLength": 6,
         "bStateSave": true,
-         
-	  "oLanguage": {
+        "columnDefs": [{
+                "targets": [-1],
+                "orderable": false
+            }],
+        "oLanguage": {
             "sLengthMenu": "Mostrar _MENU_ registros por página",
             "sZeroRecords": "Nenhum registro encontrado",
             "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
@@ -20,30 +23,42 @@ $(document).ready(function(){
                 "sNext": "Próximo",
                 "sLast": "Último"
             }
-        },
-
-
-    } );
+        }
+    }); //fechamento datatable #tabela
     
-     $('#tabela_mensalidades').dataTable( {
-	"sDom":'ft<"row" <"col-md-4"i ><"col-md-8" p><"clearfix">',
-        "bPaginate": false,
-        "bSort": false,
-                 
-	  "oLanguage": {
+      $('#tabela_ajax_servico').dataTable({
+        "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+       "processing": true, 
+        "serverSide": true, 
+        "pageLength":5,
+         "ajax": {
+            "url": base_url+"servico/teste1",
+            "type": "POST"
+        },
+        "bStateSave": true,
+        "columnDefs": [{
+                "targets": [-1],
+                "orderable": false
+            }],
+        "oLanguage": {
             "sLengthMenu": "Mostrar _MENU_ registros por página",
             "sZeroRecords": "Nenhum registro encontrado",
-            "sInfo": "Mostrando _TOTAL_ registro(s)",
+            "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
             "sInfoEmpty": "<span class='text-danger'>Mostrando 0 / 0 de 0 registros</span>",
             "sInfoFiltered": "<span class='text-danger'>(filtrado de _MAX_ registros)</span>",
-            "sSearch": "<span class='glyphicon glyphicon-search'></span> Pesquisar: "
-            
+            "sSearch": "<span class='glyphicon glyphicon-search'></span> Pesquisar: ",
+            "oPaginate": {
+                "sFirst": "Início",
+                "sPrevious": "Anterior",
+                "sNext": "Próximo",
+                "sLast": "Último"
+            }
         }
-
-
-    } );
+    }); //fechamento datatable #tabela_ajax_servico
 
 
 
 
-});
+}); //fechamento do ready

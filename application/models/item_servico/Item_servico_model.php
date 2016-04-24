@@ -13,7 +13,7 @@ class Item_servico_model extends CI_Model {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('produto/Produto_composite_dao');
+        $this->load->model('produto/Produto_dao');
     }
 
     public function get_id() {
@@ -96,7 +96,7 @@ class Item_servico_model extends CI_Model {
 
     
     protected function set_obj_produto($id_produto) {
-        $this->obj_produto = $this->Produto_composite_dao->get_produto_composite($id_produto);
+        $this->obj_produto = $this->Produto_dao->get_produto_composite($id_produto);
     }
 
     public function get_nome_produto() {

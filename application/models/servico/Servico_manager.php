@@ -10,15 +10,15 @@ class Servico_manager extends CI_Model {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('servico/Servico_composite_dao');
+        $this->load->model('servico/Servico_dao');
     }
 
     public function get_servicos() {
-        return $this->Servico_composite_dao->get_servicos_composite();
+        return $this->Servico_dao->get_servicos_composite();
     }
 
     public function get_servico($id_servico) {
-        return $this->Servico_composite_dao->get_servico_composite($id_servico);
+        return $this->Servico_dao->get_servico_composite($id_servico);
     }
 
     public function salvar_servico($post) {

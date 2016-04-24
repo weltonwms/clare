@@ -30,6 +30,7 @@ class Produto extends CI_Controller{
     }
     
     public function index(){
+        //$this->output->enable_profiler(TRUE);
         $dados['produtos']=$this->Produto_manager->get_produtos();
         $this->carrega_view('manter_produtos',$dados);    
 		

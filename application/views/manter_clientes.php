@@ -1,6 +1,5 @@
 <?php echo "<script src='" . base_url('assets/plugins/jquery.confirm.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>"; ?>
-<?php echo "<script src='" . base_url('assets/plugins/data_table.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/js/tabela.js') . "'></script>"; ?>
 
 
@@ -15,11 +14,16 @@
     </div>
 <?php endif; ?>
 
-<a href="<?php echo base_url('cliente/novo_cliente') ?>" type="button"
-   class="btn btn-success navbar-right"> <span
-        class="glyphicon glyphicon-plus"></span> Novo Cliente
-</a>
-<br>
+<div class="row">
+    <div class="col-md-12">
+        <a href="<?php echo base_url('cliente/novo_cliente') ?>" type="button"
+           class="btn btn-success navbar-right"> <span
+                class="glyphicon glyphicon-plus"></span> Novo Cliente
+        </a>
+        <br><br>
+    </div>
+</div>
+
 
 
 <!--inicio da tabela com lista de clientes-->
@@ -32,11 +36,7 @@
             <th>Endereço</th>
             <th >Telefone1</th>
             <th>Responsavel</th>
-
-            <th class="col-md-1 col-lg-1"><span class="glyphicon glyphicon-pencil"></span> Editar</th>
-            <th class="col-md-1 col-lg-1"><span class="text-danger"><span class="glyphicon glyphicon-trash">
-                    </span>Excluir</span>
-            </th>
+            <th class="col-md-1"> Ação </th>
 
         </tr>
     </thead>
@@ -51,7 +51,7 @@
                     <td>
                         <a href="#" class="detalhe_cliente" 
                            data-id_cliente="<?php echo $cliente->get_id_cliente(); ?>">
-                            <?php echo $cliente->get_nome(); ?>
+                               <?php echo $cliente->get_nome(); ?>
                         </a>
 
                     </td>
@@ -60,12 +60,16 @@
                     <td><?php echo $cliente->get_responsavel(); ?></td>
 
                     <td>
-                        <a href="<?php echo base_url('cliente/editar') . '/' . $cliente->get_id_cliente() ?>">
+                        <a class="btn btn-default"
+                            data-toggle="tooltip"
+                            title="Editar"
+                            href="<?php echo base_url('cliente/editar') . '/' . $cliente->get_id_cliente() ?>">
                             <span class="glyphicon glyphicon-pencil"></span> 
                         </a>
-                    </td>
-                    <td class="text-center col-md-1">
-                        <a class="confirm text-danger" 
+                   
+                        <a class="confirm btn btn-danger" 
+                           data-toggle="tooltip"
+                            title="Excluir"
                            href="<?php echo base_url('cliente/excluir') . '/' . $cliente->get_id_cliente() ?>">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>

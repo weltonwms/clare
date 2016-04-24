@@ -151,7 +151,7 @@ echo "<script src='" . base_url('assets/js/validacao_relatorio.js') . "'></scrip
                 <select name="estado" class="form-control">
                     <option value=''>--Todos--</option>
                     <?php
-                        $opcoes2=array('2'=>'Executado', '1'=>'Orçamento','3'=>'Em Produção');
+                        $opcoes2=array('2'=>'Executado', '1'=>'Orçamento','3'=>'Em Produção','4'=>"Entregue não pago");
                             
                         foreach ($opcoes2 as $key=>$opcao):
                         echo "<option value='{$key}' ";

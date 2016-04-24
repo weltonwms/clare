@@ -157,7 +157,7 @@ label.error{
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
 }
-
+/*
 .pagination{
     display: inline;
     margin: 0px;
@@ -171,17 +171,26 @@ label.error{
     float: right;
 }
 
-.pesquisa_tabela input[type=text] {
+.pesquisa_tabela input[type=search] {
     border-radius: 10px;
       
     
 }
 
-.pesquisa_tabela input[type=text]:focus {
+.pesquisa_tabela input[type=search]:focus {
     border-color: #66AFE9;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
     outline: 0 none; 
     
+}
+*/
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: left;
+}
+
+div.dataTables_wrapper div.dataTables_length {
+    text-align: right;
 }
 
 .panel{

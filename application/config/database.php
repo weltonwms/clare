@@ -50,9 +50,9 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'clare';
-$db['default']['password'] = '123456';
-$db['default']['database'] = 'clare';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'raidonia';
+$db['default']['database'] = 'clare_producao';
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = FALSE;

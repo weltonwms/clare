@@ -11,10 +11,10 @@ $x6=isset($active) && $active=='relatorio'?'active':'';
 			
 			<ul class="nav navbar-nav">
 				<li class="<?php echo $x1?>"><a href="<?php echo base_url('home')?>">Home</a></li>
-                                <li class="<?php echo $x2?>"><a href="<?php echo base_url('cliente') ?>">Cliente</a></li>
-                                <li class="<?php echo $x3?>"><a href="<?php echo base_url('fornecedor') ?>">Fornecedor</a></li>
-                                <li class="<?php echo $x4?>"><a href="<?php echo base_url('produto') ?>">Produto</a></li>
-                                <li class="<?php echo $x5?>"><a href="<?php echo base_url('servico') ?>">Serviço</a></li>
+                                <li class="<?php echo $x2?>"><a href="<?php echo base_url('cliente') ?>" class="limpa_state">Cliente</a></li>
+                                <li class="<?php echo $x3?>"><a href="<?php echo base_url('fornecedor') ?>" class="limpa_state">Fornecedor</a></li>
+                                <li class="<?php echo $x4?>"><a href="<?php echo base_url('produto') ?>" class="limpa_state">Produto</a></li>
+                                <li class="<?php echo $x5?>"><a href="<?php echo base_url('servico') ?>" class="limpa_state">Serviço</a></li>
 				
 				<li class="<?php echo $x6?>"><a href="<?php echo base_url('relatorio') ?>">Emitir Relatório</a></li>
 			</ul>

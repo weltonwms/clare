@@ -66,8 +66,8 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
     </div>
     <div class="control-group col-md-7 col-md-offset-5">
         <button formaction="<?php echo base_url('produto/cadastrar') ?>"
-                type="submit" class="btn btn-success" id="salvar">
-            <span class="glyphicon glyphicon-save"></span> Salvar
+                type="submit" class="btn btn-success limpa_state" id="salvar">
+            <span class="glyphicon glyphicon-save "></span> Salvar
         </button>
         <button id="voltar"
                 type="button" class="btn btn-default">

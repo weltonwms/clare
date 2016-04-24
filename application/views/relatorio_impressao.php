@@ -29,7 +29,7 @@
     <body>
         <div align="center">
             <?php
-            $estado = array('', 'Orçamento', 'Executado', 'Em Produção');
+            $estado = array('', 'Orçamento', 'Executado', 'Em Produção',"Entregue não pago");
             if ($requisicao['estado']):
                 echo "Relatório de Serviço: {$estado[$requisicao['estado']]}";
             endif;

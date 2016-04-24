@@ -148,6 +148,10 @@ class Cliente_model extends CI_Model{
         }
     }
     
+    public function get_atributos() {
+        return get_class_vars(get_class($this));
+    }
+    
     
 
 

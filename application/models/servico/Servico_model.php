@@ -1,49 +1,22 @@
 <?php
 
-class Servico_model extends CI_Model {
+class Servico_model extends Generic_model {
 
-    private $id_servico;
-    private $data;
-    private $id_cliente;
-    private $estado;
-    private $forma_pagamento;
-    private $obs;
-    private $tipo;
-
+    protected $id_servico;
+    protected $data;
+    protected $id_cliente;
+    protected $estado;
+    protected  $forma_pagamento;
+    protected $obs;
+    protected $tipo;
+    protected $tabela="servico";
+    
+    
     function __construct() {
         parent::__construct();
+        
     }
-
-    public function cadastrar() {
-        $skips = array('id_servico');
-        $dados = $this->carrega_dados($skips);
-        $this->db->insert('servico', $dados);
-        if ($this->db->affected_rows() > 0) {
-            return $this->db->insert_id();
-        }
-        return;
-    }
-
-    public function gravar_alteracao() {
-        $skips = array('id_servico');
-        $dados = $this->carrega_dados($skips);
-        $this->db->where('id_servico', $this->id_servico);
-        $this->db->update('servico', $dados);
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        }
-        return;
-    }
-
-    public function excluir($id_servico) {
-        $this->db->where('id_servico', $id_servico);
-        $this->db->delete('servico');
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        }
-        return;
-    }
-
+    
     public function get_id_servico() {
         return $this->id_servico;
     }
@@ -58,8 +31,7 @@ class Servico_model extends CI_Model {
             $formato_brasil = $partes[2] . "/" . $partes[1] . "/" . $partes[0];
             return $formato_brasil;
         }
-        else
-            return $this->data;
+        return $this->data;
     }
 
     public function set_data($data) {
@@ -136,22 +108,10 @@ class Servico_model extends CI_Model {
         }
         return;
     }
-
-    private function carrega_dados(array $skips = array()) {
-        $atributos = get_class_vars(get_class($this));
-        $dados = array();
-        foreach ($atributos as $key => $valor):
-            if (in_array($key, $skips)) {
-                continue;
-            }
-            $dados[$key] = $this->$key;
-        endforeach;
-        return $dados;
-    }
-
-    public function get_atributos() {
-        return get_class_vars(get_class($this));
-    }
-
+    
+    
+   
+  
+    
 }
 

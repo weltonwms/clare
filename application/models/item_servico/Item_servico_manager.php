@@ -10,6 +10,7 @@ class Item_servico_manager extends CI_Model {
 
     function __construct() {
         parent::__construct();
+        $this->load->model('generic/Generic_model');
         $this->load->model('item_servico/Item_servico_model');
     }
 
@@ -39,7 +40,7 @@ class Item_servico_manager extends CI_Model {
             $this->Item_servico_model->set_valor_fornecedor($post['valor_fornecedor'],1);
             $this->Item_servico_model->set_descricao($post['descricao']);
 
-            return $this->Item_servico_model->gravar_alteracao();
+            return $this->Item_servico_model->alterar();
         endif;
         return FALSE;
     }

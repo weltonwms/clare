@@ -156,5 +156,11 @@ class Servico extends CI_Controller{
              echo json_encode($saida);
     }
     
+    public function teste2(){
+        $this->load->model('cliente/Cliente_model');
+        echo "<pre>";print_r($this->Cliente_model->get_atributos());
+        echo "fal";
+    }
+    
 }
 

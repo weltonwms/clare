@@ -9,6 +9,7 @@ class Relatorio_manager extends CI_Model {
 
     function __construct() {
         parent::__construct();
+        $this->load->model('generic/Generic_model');
         $this->load->helper('util');
         $this->load->model('item_servico/Item_servico_composite');
         $this->load->model('item_servico/Item_servico_model');

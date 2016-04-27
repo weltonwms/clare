@@ -1,16 +1,17 @@
 <?php
 
-class Item_servico_model extends CI_Model {
+class Item_servico_model extends Generic_model {
 
-    private $id;
-    private $id_servico;
-    private $id_produto;
-    private $qtd_produto;
-    private $descricao;
-    private $valor_final;
-    private $valor_fornecedor;
+    protected $id;
+    protected $id_servico;
+    protected $id_produto;
+    protected $qtd_produto;
+    protected $descricao;
+    protected $valor_final;
+    protected $valor_fornecedor;
     private $obj_produto; //objeto Produto_composite
-
+    protected $tabela="item_servico";
+    
     function __construct() {
         parent::__construct();
         $this->load->model('produto/Produto_dao');
@@ -141,48 +142,6 @@ class Item_servico_model extends CI_Model {
                       "<span class='nome_fornecedor'>  - {$this->obj_produto->get_nome_fornecedor()}</span>"; 
         return $string;
     }
-
-    public function cadastrar() {
-        $dados = array(
-            'id_servico' => $this->id_servico,
-            'id_produto' => $this->id_produto,
-            'qtd_produto' => $this->qtd_produto,
-            'valor_final' => $this->valor_final,
-            'valor_fornecedor' => $this->valor_fornecedor,
-            'descricao' => $this->descricao
-        );
-        $this->db->insert('item_servico', $dados);
-        if ($this->db->affected_rows() > 0) {
-            return $this->db->insert_id();
-        }
-        return;
-    }
-
-    public function gravar_alteracao() {
-        $dados = array(
-            'id_servico' => $this->id_servico,
-            'id_produto' => $this->id_produto,
-            'qtd_produto' => $this->qtd_produto,
-            'valor_final' => $this->valor_final,
-            'valor_fornecedor' => $this->valor_fornecedor,
-            'descricao' => $this->descricao
-        );
-        $this->db->where('id', $this->id);
-        $this->db->update('item_servico', $dados);
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        }
-        return;
-    }
-
-    public function excluir($id) {
-        $this->db->where('id', $id);
-        $this->db->delete('item_servico');
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        }
-        return;
-    }
-
+    
 }
 

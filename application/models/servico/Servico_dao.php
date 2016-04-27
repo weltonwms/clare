@@ -31,7 +31,7 @@ class Servico_dao extends CI_Model {
         $servico_banco = $this->db->get('servico')->result();
         if (count($servico_banco) > 0) {
             $servico = new $this->Servico_model();
-            $this->set_servico($servico_banco[0], $servico);
+            $this->set_atributos($servico_banco[0], $servico);
             return $servico;
         }
         return;
@@ -39,16 +39,6 @@ class Servico_dao extends CI_Model {
 
     public function get_servico_vazio() {
         return new $this->Servico_model();
-    }
-
-    private function set_servico($servico_banco, $objeto) {
-
-        $attr = $this->Servico_model->get_atributos();
-        foreach ($attr as $key => $valor):
-
-            $metodo = "set_$key";
-            $objeto->$metodo(isset($servico_banco->$key) ? $servico_banco->$key : null);
-        endforeach;
     }
 
     public function get_servicos_composite() {
@@ -127,17 +117,25 @@ class Servico_dao extends CI_Model {
         $objeto_composite = new $this->Servico_composite();
         $objeto_servico_model = new $this->Servico_model();
         $objeto_cliente_model = new $this->Cliente_model();
-        $this->set_servico($objeto_banco, $objeto_servico_model);
-        $objeto_cliente_model->set_id_cliente($objeto_banco->id_cliente);
-        $objeto_cliente_model->set_nome($objeto_banco->nome);
-        $objeto_cliente_model->set_telefone($objeto_banco->telefone);
-        $objeto_cliente_model->set_telefone2($objeto_banco->telefone2);
-        $objeto_cliente_model->set_responsavel($objeto_banco->responsavel);
-        $objeto_cliente_model->set_email($objeto_banco->email);
-        $objeto_cliente_model->set_cnpj($objeto_banco->cnpj);
+        
+        $this->set_atributos($objeto_banco, $objeto_servico_model);
+        $this->set_atributos($objeto_banco, $objeto_cliente_model);
+        
         $objeto_composite->set_cliente($objeto_cliente_model);
         $objeto_composite->set_servico($objeto_servico_model);
         return $objeto_composite;
+    }
+    
+     private function set_atributos($objeto_banco, $objeto) {
+
+        $attr = $objeto->get_atributos();
+        foreach ($attr as $key => $valor):
+
+            $metodo = "set_$key";
+            if(method_exists( $objeto ,$metodo )):
+            $objeto->$metodo(isset($objeto_banco->$key) ? $objeto_banco->$key : null);
+            endif;
+        endforeach;
     }
 
 }

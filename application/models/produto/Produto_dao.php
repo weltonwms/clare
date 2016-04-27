@@ -29,11 +29,7 @@ class Produto_dao extends CI_Model {
         $produto_banco = $this->db->get('produto')->result();
         if (count($produto_banco) > 0) {
             $produto = new $this->Produto_model();
-            $produto->set_id_produto($produto_banco[0]->id_produto);
-            $produto->set_nome($produto_banco[0]->nome);
-            $produto->set_valor($produto_banco[0]->valor);
-            $produto->set_id_fornecedor($produto_banco[0]->id_fornecedor);
-
+            $this->set_atributos($produto_banco[0], $produto);
             return $produto;
         }
         return;
@@ -77,18 +73,22 @@ class Produto_dao extends CI_Model {
         $objeto_produto_model = new $this->Produto_model();
         $objeto_fornecedor_model = new $this->Fornecedor_model();
         
-        $objeto_produto_model->set_id_produto($objeto_banco->id_produto);
-        $objeto_produto_model->set_id_fornecedor($objeto_banco->id_fornecedor);
-        $objeto_produto_model->set_nome($objeto_banco->nome);
-        $objeto_produto_model->set_valor($objeto_banco->valor);
-        
-        $objeto_fornecedor_model->set_empresa($objeto_banco->empresa);
-        $objeto_fornecedor_model->set_responsavel($objeto_banco->responsavel);
-        $objeto_fornecedor_model->set_conta($objeto_banco->conta);
-        
+        $this->set_atributos($objeto_banco, $objeto_produto_model);
+        $this->set_atributos($objeto_banco, $objeto_fornecedor_model);
+       
         $objeto_composite->set_produto($objeto_produto_model);
         $objeto_composite->set_fornecedor($objeto_fornecedor_model);
         return $objeto_composite;
+    }
+    
+     private function set_atributos($objeto_banco, $objeto) {
+        $attr = $objeto->get_atributos();
+        foreach ($attr as $key => $valor):
+            $metodo = "set_$key";
+            if(method_exists( $objeto ,$metodo )):
+            $objeto->$metodo(isset($objeto_banco->$key) ? $objeto_banco->$key : null);
+            endif;
+        endforeach;
     }
 
 }

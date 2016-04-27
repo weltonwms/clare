@@ -1,17 +1,18 @@
 <?php
 
-class Fornecedor_model extends CI_Model {
+class Fornecedor_model extends Generic_model {
 
-    private $id_fornecedor;
-    private $empresa;
-    private $responsavel;
-    private $fone;
-    private $conta;
+    protected $id_fornecedor;
+    protected $empresa;
+    protected $responsavel;
+    protected $fone;
+    protected $conta;
+    protected $tabela = 'fornecedor';
 
     function __construct() {
         parent::__construct();
     }
-    
+
     public function get_responsavel() {
         return $this->responsavel;
     }
@@ -43,52 +44,13 @@ class Fornecedor_model extends CI_Model {
     public function set_empresa($empresa) {
         $this->empresa = $empresa;
     }
-    
+
     public function get_conta() {
         return $this->conta;
     }
 
     public function set_conta($conta) {
         $this->conta = $conta;
-    }
-
-    
-    public function cadastrar() {
-        $dados = array(
-            'empresa' => $this->empresa,
-            'responsavel'=>$this->responsavel,
-            'fone'=>  $this->fone,
-            'conta'=> $this->conta
-        );
-        $this->db->insert('fornecedor', $dados);
-        if ($this->db->affected_rows() > 0) {
-            return $this->db->insert_id();
-        }
-        return;
-    }
-
-    public function excluir($id_fornecedor) {
-        $this->db->where('id_fornecedor', $id_fornecedor);
-        $this->db->delete('fornecedor');
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        }
-        return;
-    }
-
-    public function gravar_alteracao() {
-        $dados = array(
-            'empresa' => $this->empresa,
-            'responsavel'=>$this->responsavel,
-            'fone'=>  $this->fone,
-            'conta'=> $this->conta
-        );
-        $this->db->where('id_fornecedor', $this->id_fornecedor);
-        $this->db->update('fornecedor', $dados);
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        }
-        return;
     }
 
     public function is_relacionado_a_produto($id_fornecedor) {
@@ -100,6 +62,7 @@ class Fornecedor_model extends CI_Model {
             return FALSE;
         }
     }
+    
+    
 
 }
-

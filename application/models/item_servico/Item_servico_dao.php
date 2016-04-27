@@ -23,6 +23,8 @@ class Item_servico_dao extends CI_Model {
         $item_servico_banco = $this->db->get('item_servico')->result();
         if (count($item_servico_banco) > 0) {
             $item_servico = new $this->Item_servico_model();
+            $this->set_atributos($item_servico_banco[0], $id_item_servico);
+            /*
             $item_servico->set_id($item_servico_banco[0]->id);
             $item_servico->set_id_servico($item_servico_banco[0]->id_servico);
             $item_servico->set_id_produto($item_servico_banco[0]->id_produto);
@@ -30,7 +32,8 @@ class Item_servico_dao extends CI_Model {
             $item_servico->set_valor_final($item_servico_banco[0]->valor_final);
             $item_servico->set_valor_fornecedor($item_servico_banco[0]->valor_fornecedor);
             $item_servico->set_descricao($item_servico_banco[0]->descricao);
-
+            */
+            
             return $item_servico;
         }
         return;
@@ -46,6 +49,8 @@ class Item_servico_dao extends CI_Model {
 
     private function montar_item_servico($objeto_banco) {
         $item_servico = new $this->Item_servico_model();
+        $this->set_atributos($objeto_banco, $item_servico);
+        /*
         $item_servico->set_id($objeto_banco->id);
         $item_servico->set_id_servico($objeto_banco->id_servico);
         $item_servico->set_id_produto($objeto_banco->id_produto);
@@ -53,6 +58,8 @@ class Item_servico_dao extends CI_Model {
         $item_servico->set_valor_final($objeto_banco->valor_final);
         $item_servico->set_valor_fornecedor($objeto_banco->valor_fornecedor);
         $item_servico->set_descricao($objeto_banco->descricao);
+         * 
+         */
 
         return $item_servico;
     }
@@ -68,6 +75,16 @@ class Item_servico_dao extends CI_Model {
 
     public function get_itens_servico_vazio() {
         return array();
+    }
+    
+     private function set_atributos($objeto_banco, $objeto) {
+        $attr = $objeto->get_atributos();
+        foreach ($attr as $key => $valor):
+            $metodo = "set_$key";
+            if(method_exists( $objeto ,$metodo )):
+            $objeto->$metodo(isset($objeto_banco->$key) ? $objeto_banco->$key : null);
+            endif;
+        endforeach;
     }
 
 }

@@ -89,6 +89,15 @@ class Cliente extends CI_Controller{
          $dados['cliente']=  $this->Cliente_manager->get_cliente($id_cliente);
         $this->load->view('cliente_detalhado_ajax',  $dados);
     }
+    public function teste1(){
+        $this->load->model('servico/Servico_model');
+        $atributos=  $this->Servico_model->get_atributos();
+        echo "<pre>"; print_r($atributos); echo "<pre>";
+        
+        end($atributos);
+        reset($atributos);
+        echo key($atributos);
+    }
     
 }
 

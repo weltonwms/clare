@@ -30,17 +30,25 @@ class Fornecedor_dao extends CI_Model {
         $fornecedor_banco = $this->db->get('fornecedor')->result();
         if (count($fornecedor_banco) == 1) {
             $fornecedor = new $this->Fornecedor_model();
-            $fornecedor->set_id_fornecedor($fornecedor_banco[0]->id_fornecedor);
-            $fornecedor->set_empresa($fornecedor_banco[0]->empresa);
-            $fornecedor->set_responsavel($fornecedor_banco[0]->responsavel);
-            $fornecedor->set_fone($fornecedor_banco[0]->fone);
-            $fornecedor->set_conta($fornecedor_banco[0]->conta);
-
+            $this->set_atributos($fornecedor_banco[0], $fornecedor);
+            
             return $fornecedor;
         }
         return;
     }
+    
+     private function set_atributos($objeto_banco, $objeto) {
+
+        $attr = $objeto->get_atributos();
+        foreach ($attr as $key => $valor):
+
+            $metodo = "set_$key";
+            if(method_exists( $objeto ,$metodo )):
+            $objeto->$metodo(isset($objeto_banco->$key) ? $objeto_banco->$key : null);
+            endif;
+        endforeach;
+    }
 
 }
 
-?>
+

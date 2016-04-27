@@ -1,17 +1,18 @@
 <?php
 
 
-class Cliente_model extends CI_Model{
-    private $id_cliente;
-    private $nome;
-    private $endereco;
-    private $telefone;
-    private $telefone2;
-    private $telefone3;
-    private $responsavel;
-    private $cnpj;
-    private $email;
-    
+class Cliente_model extends Generic_model{
+    protected $id_cliente;
+    protected $nome;
+    protected $endereco;
+    protected $telefone;
+    protected $telefone2;
+    protected $telefone3;
+    protected $responsavel;
+    protected $cnpj;
+    protected $email;
+    protected $tabela="cliente";
+            
     
     function __construct() {
         parent::__construct();
@@ -89,68 +90,17 @@ class Cliente_model extends CI_Model{
         $this->telefone3 = $telefone3;
     }
 
-            
-    public function cadastrar(){
-        $dados=array(
-            'nome'=>  $this->nome,
-            'endereco'=>  $this->endereco,
-            'telefone'=>$this->telefone,
-            'telefone2'=>$this->telefone2,
-            'telefone3'=>$this->telefone3,
-            'responsavel'=>  $this->responsavel,
-            'cnpj'=>  $this->cnpj,
-            'email'=> $this->email
-        );
-        $this->db->insert('cliente',$dados);
-        if($this->db->affected_rows()>0){
-            return $this->db->insert_id();
-        }
-        return;
-    }
-    
-    public function excluir($id_cliente){
-        $this->db->where('id_cliente',$id_cliente);
-        $this->db->delete('cliente');
-        if($this->db->affected_rows()>0){
-             return TRUE;
-        }
-        return;
-      
-    }
-    
-    public function gravar_alteracao(){
-        $dados=array(
-            'nome'=>  $this->nome,
-            'endereco'=>  $this->endereco,
-            'telefone'=>$this->telefone,
-            'telefone2'=>$this->telefone2,
-            'telefone3'=>$this->telefone3,
-            'responsavel'=>  $this->responsavel,
-            'cnpj'=>  $this->cnpj,
-            'email'=> $this->email
-        );
-        $this->db->where('id_cliente',  $this->id_cliente);
-        $this->db->update('cliente',$dados);
-        if($this->db->affected_rows()>0){
-            return TRUE;
-        }
-        return;
-    
-    }
-    
     public function is_relacionado_a_servico($id_cliente) {
         $this->db->where('id_cliente', $id_cliente);
         $result = $this->db->get('servico')->result();
         if (count($result) > 0) {
             return TRUE;
-        } else {
-            return FALSE;
         }
+        return FALSE;
+        
     }
     
-    public function get_atributos() {
-        return get_class_vars(get_class($this));
-    }
+    
     
     
 

@@ -10,6 +10,7 @@ class Servico_manager extends CI_Model {
 
     function __construct() {
         parent::__construct();
+        $this->load->model('generic/Generic_model');
         $this->load->model('servico/Servico_dao');
     }
 
@@ -33,10 +34,10 @@ class Servico_manager extends CI_Model {
 
         return $retorno;
     }
-    
-    public function executar_servico($id_servico){
-         $this->load->model('servico/Servico_model', 'servico');
-         return $this->servico->executar_servico($id_servico);
+
+    public function executar_servico($id_servico) {
+        $this->load->model('servico/Servico_model', 'servico');
+        return $this->servico->executar_servico($id_servico);
     }
 
     public function cadastrar(array $post) {
@@ -48,7 +49,7 @@ class Servico_manager extends CI_Model {
     public function gravar_alteracao(array $post) {
         $this->load->model('servico/Servico_model', 'servico');
         $this->set_servico($post);
-        return $this->servico->gravar_alteracao();
+        return $this->servico->alterar();
     }
 
     public function excluir($id_servico) {
@@ -71,18 +72,18 @@ class Servico_manager extends CI_Model {
         } else {
             $id_servico = $this->cadastrar($post);
         }
-        $this->Produto_model->atualizar_valor($post['valor_fornecedor'],$post['id_produto']);
+        $this->Produto_model->atualizar_valor($post['valor_fornecedor'], $post['id_produto']);
         if ($post['id_item_servico']) {
             $retorno = $this->item_servico_m->gravar_alteracao($post);
-            $acao='alteracao';
+            $acao = 'alteracao';
             //atualizar item de servico
         } else {
             $post['id_servico'] = $id_servico;
             $retorno = $this->item_servico_m->cadastrar($post);
-            $acao='cadastro';
+            $acao = 'cadastro';
             //cadastrar item_servico
         }
-        return array('id_servico' => $id_servico, 'status' => $retorno,'acao_executada'=>$acao);
+        return array('id_servico' => $id_servico, 'status' => $retorno, 'acao_executada' => $acao);
     }
 
     public function clonar($post) {
@@ -97,17 +98,20 @@ class Servico_manager extends CI_Model {
     }
 
     private function set_servico($post, $skips = array()) {
+
         $this->load->model('servico/Servico_model', 'servico');
+
         $attr = $this->servico->get_atributos();
         foreach ($attr as $key => $valor):
             if (in_array($key, $skips)) {
                 continue;
             }
             $metodo = "set_$key";
-            $this->servico->$metodo(isset($post[$key]) ? $post[$key] : null);
+            if (method_exists($this->servico, $metodo)):
+                $this->servico->$metodo(isset($post[$key]) ? $post[$key] : null);
+            endif;
         endforeach;
-        
+        // echo "<pre>"; print_r($this->servico); exit();
     }
 
 }
-

@@ -8,6 +8,7 @@ class Produto_manager extends CI_Model {
 
     function __construct() {
         parent::__construct();
+        $this->load->model('generic/Generic_model');
         $this->load->model('produto/Produto_dao');
     }
 
@@ -26,9 +27,6 @@ class Produto_manager extends CI_Model {
         $this->produto->set_valor(isset($post['valor'])?$post['valor']:NULL,1);
         $this->produto->set_id_fornecedor($post['id_fornecedor']);
         return $this->produto->cadastrar();
-        
-        
-                
     }
     
     public function gravar_alteracao(array $post){
@@ -37,7 +35,7 @@ class Produto_manager extends CI_Model {
         $this->produto->set_nome($post['nome']);
         $this->produto->set_valor(isset($post['valor'])?$post['valor']:NULL,1);
         $this->produto->set_id_fornecedor($post['id_fornecedor']);
-        return $this->produto->gravar_alteracao();
+        return $this->produto->alterar();
     }
     
     public function excluir($id_produto){

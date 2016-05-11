@@ -8,7 +8,7 @@ class Fornecedor_manager extends CI_Model{
     
     function __construct() {
         parent::__construct();
-        $this->load->model('generic/Generic_model');
+        //$this->load->model('generic/Generic_model');
         $this->load->model('fornecedor/Fornecedor_dao','Fornecedor_dao');
         $this->load->model('fornecedor/Fornecedor_model','Fornecedor_model');
     }

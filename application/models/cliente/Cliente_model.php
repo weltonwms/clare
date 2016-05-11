@@ -1,5 +1,5 @@
 <?php
-
+include_once( APPPATH . 'models/generic/Generic_model.php');
 
 class Cliente_model extends Generic_model{
     protected $id_cliente;

@@ -1,4 +1,5 @@
 <?php
+include_once( APPPATH . 'models/generic/Generic_model.php');
 
 class Fornecedor_model extends Generic_model {
 

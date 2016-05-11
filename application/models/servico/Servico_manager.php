@@ -10,7 +10,7 @@ class Servico_manager extends CI_Model {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('generic/Generic_model');
+        //$this->load->model('generic/Generic_model');
         $this->load->model('servico/Servico_dao');
     }
 

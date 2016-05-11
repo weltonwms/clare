@@ -10,7 +10,7 @@ class Cliente_manager extends CI_Model {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('generic/Generic_model');
+        //$this->load->model('generic/Generic_model');
         $this->load->model('cliente/Cliente_dao', 'Cliente_dao');
         $this->load->model('cliente/Cliente_model', 'Cliente_model');
     }
@@ -60,4 +60,4 @@ class Cliente_manager extends CI_Model {
 
 }
 
-?>
+

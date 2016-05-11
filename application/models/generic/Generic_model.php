@@ -1,7 +1,7 @@
 <?php
 
 
-class Generic_model extends CI_Model{
+abstract class Generic_model extends CI_Model{
     protected $tabela;
     protected $identificador;
     

@@ -8,7 +8,7 @@ class Fornecedor extends CI_Controller{
             if(!$this->session->userdata('logado')){
 		redirect("login");
             }
-        $this->load->model('fornecedor/Fornecedor_manager','Fornecedor_manager');
+        $this->load->model('fornecedor/Fornecedor_manager');
     }
     
     /***************************************************************************
@@ -32,12 +32,12 @@ class Fornecedor extends CI_Controller{
     public function index(){
         //$this->output->enable_profiler(TRUE);
         $dados['fornecedores']=$this->Fornecedor_manager->get_fornecedores();
-        $this->carrega_view('manter_fornecedores',$dados);    
+        $this->carrega_view('fornecedor/manter_fornecedores',$dados);    
 		
     }
     
     public function novo_fornecedor(){
-         $this->carrega_view('novo_fornecedor'); 
+         $this->carrega_view('fornecedor/novo_fornecedor'); 
     }
     
     public function cadastrar(){
@@ -55,7 +55,7 @@ class Fornecedor extends CI_Controller{
     
     public function editar($id_fornecedor){
         $dados['fornecedor']=  $this->Fornecedor_manager->get_fornecedor($id_fornecedor);
-        $this->carrega_view('edicao_fornecedor',$dados);
+        $this->carrega_view('fornecedor/edicao_fornecedor',$dados);
     }
     
     public function gravar_alteracao(){

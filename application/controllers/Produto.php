@@ -32,14 +32,14 @@ class Produto extends CI_Controller{
     public function index(){
         //$this->output->enable_profiler(TRUE);
         $dados['produtos']=$this->Produto_manager->get_produtos();
-        $this->carrega_view('manter_produtos',$dados);    
+        $this->carrega_view('produto/manter_produtos',$dados);    
 		
     }
     
     public function novo_produto(){
         $this->load->model('fornecedor/Fornecedor_manager','Fornecedor_manager');
         $dados['fornecedores']=$this->Fornecedor_manager->get_fornecedores();
-        $this->carrega_view('novo_produto',$dados); 
+        $this->carrega_view('produto/novo_produto',$dados); 
     }
     
     public function cadastrar(){
@@ -59,7 +59,7 @@ class Produto extends CI_Controller{
         $this->load->model('fornecedor/Fornecedor_manager','Fornecedor_manager');
         $dados['fornecedores']=$this->Fornecedor_manager->get_fornecedores();
         $dados['produto']=  $this->Produto_manager->get_produto($id_produto);
-        $this->carrega_view('edicao_produto',$dados);
+        $this->carrega_view('produto/edicao_produto',$dados);
     }
     
     public function gravar_alteracao(){

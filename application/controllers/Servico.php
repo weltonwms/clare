@@ -8,7 +8,7 @@ class Servico extends CI_Controller{
             if(!$this->session->userdata('logado')){
 		redirect("login");
             }
-        $this->load->model('servico/Servico_manager','Servico_manager');
+        $this->load->model('servico/Servico_manager');
     }
     
     /***************************************************************************
@@ -32,7 +32,7 @@ class Servico extends CI_Controller{
     public function index(){
         //$this->output->enable_profiler(TRUE);
         $dados['servicos']=$this->Servico_manager->get_servicos();
-        $this->carrega_view('manter_servicos',$dados);    
+        $this->carrega_view('servico/manter_servicos',$dados);    
 		
     }
     
@@ -58,7 +58,7 @@ class Servico extends CI_Controller{
         $dados['clientes']=  $this->Cliente_manager->get_clientes();
         $dados['produtos']=  $this->Produto_manager->get_produtos();
         $dados['servico']=$this->Servico_manager->get_servico($id_servico);
-        $this->carrega_view('edicao_servico',$dados);
+        $this->carrega_view('servico/edicao_servico',$dados);
     }
     
     
@@ -80,7 +80,7 @@ class Servico extends CI_Controller{
         $imprimir_total=$this->input->get('imprimir_total')==""?1:$this->input->get('imprimir_total');
         $dados['servico']=$this->Servico_manager->get_servico($id_servico);
         $dados['imprimir_total']=  $imprimir_total;
-        $html=$this->load->view('impressao_servico',  $dados,TRUE);
+        $html=$this->load->view('servico/impressao_servico',  $dados,TRUE);
         $this->load->library('pdf');
         $this->pdf->createPDF($html,'relat');
     }
@@ -144,7 +144,7 @@ class Servico extends CI_Controller{
 
     public function detalhar_servico_ajax($id_servico){
         $dados['servico']=$this->Servico_manager->get_servico($id_servico);
-        $this->load->view('servico_detalhado_ajax',  $dados);
+        $this->load->view('servico/servico_detalhado_ajax',  $dados);
     }
     
     public function teste1(){

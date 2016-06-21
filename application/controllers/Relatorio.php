@@ -39,7 +39,7 @@ class Relatorio extends CI_Controller {
         $dados['produtos'] = $this->Produto_manager->get_produtos();
         $dados['fornecedores'] = $this->Fornecedor_manager->get_fornecedores();
 
-        $this->carrega_view('view_relatorio', $dados);
+        $this->carrega_view('relatorio/view_relatorio', $dados);
     }
 
     public function gerar_relatorio() {
@@ -53,7 +53,7 @@ class Relatorio extends CI_Controller {
         $dados['relatorio'] = $this->Relatorio_manager->gerar_relatorio($this->input->post());
 
 
-        $this->carrega_view('view_relatorio', $dados);
+        $this->carrega_view('relatorio/view_relatorio', $dados);
     }
 
     public function imprimir() {
@@ -64,7 +64,7 @@ class Relatorio extends CI_Controller {
         endif;
         
         $dados['relatorio'] = $this->Relatorio_manager->gerar_relatorio($this->input->post());
-        $html = $this->load->view('relatorio_impressao', $dados, TRUE);
+        $html = $this->load->view('relatorio/relatorio_impressao', $dados, TRUE);
         $this->load->library('pdf');
         $this->pdf->createPDF($html, 'relat');
     }

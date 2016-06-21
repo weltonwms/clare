@@ -37,7 +37,12 @@ class Fornecedor_dao extends CI_Model {
         return;
     }
     
-     private function set_atributos($objeto_banco, $objeto) {
+    public function get_fornecedor_vazio(){
+        return new $this->Fornecedor_model();
+    }
+
+
+    private function set_atributos($objeto_banco, $objeto) {
 
         $attr = $objeto->get_atributos();
         foreach ($attr as $key => $valor):

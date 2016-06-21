@@ -32,12 +32,12 @@ class Cliente extends CI_Controller{
     public function index(){
         //$this->output->enable_profiler(TRUE);
         $dados['clientes']=$this->Cliente_manager->get_clientes();
-        $this->carrega_view('manter_clientes',$dados);    
+        $this->carrega_view('cliente/manter_clientes',$dados);    
 		
     }
     
     public function novo_cliente(){
-         $this->carrega_view('novo_cliente'); 
+         $this->carrega_view('cliente/novo_cliente'); 
     }
     
     public function cadastrar(){
@@ -55,7 +55,7 @@ class Cliente extends CI_Controller{
     
     public function editar($id_cliente){
         $dados['cliente']=  $this->Cliente_manager->get_cliente($id_cliente);
-        $this->carrega_view('edicao_cliente',$dados);
+        $this->carrega_view('cliente/edicao_cliente',$dados);
     }
     
     public function gravar_alteracao(){
@@ -87,7 +87,7 @@ class Cliente extends CI_Controller{
     
      public function detalhar_cliente_ajax($id_cliente){
          $dados['cliente']=  $this->Cliente_manager->get_cliente($id_cliente);
-        $this->load->view('cliente_detalhado_ajax',  $dados);
+        $this->load->view('cliente/cliente_detalhado_ajax',  $dados);
     }
     public function teste1(){
         $this->load->model('servico/Servico_model');

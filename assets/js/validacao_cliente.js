@@ -8,7 +8,12 @@ $(document).ready(function() {
 
 /*********************Mascaras para os campos ****************************************/
 	$('#cpf').mask("000.000.000-00");
-	$('.telefone').mask("(00) 0000-0000");
+	 $('.telefone').mask(maskBehavior, {onKeyPress:
+               function(val, e, field, options) {
+               field.mask(maskBehavior(val, e, field, options), options);
+                        }
+         });
+
 
 /*************************************************************************************/
 
@@ -36,3 +41,8 @@ $(document).ready(function() {
         
         
 });//fechamento do document.ready
+
+var masks = ['(00) 00000-0000', '(00) 0000-00009'],
+        maskBehavior = function(val, e, field, options) {
+    return val.length > 14 ? masks[0] : masks[1];
+};

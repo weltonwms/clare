@@ -31,6 +31,13 @@ $(document).ready(function() {
 		cancelButton : " Cancelar"
         });
         
+         $(".confirm_anotacao").confirm({
+                text : "Deseja realmente excluir esta Anotação?",
+		title : "  Exclusão de Anotação",
+		confirmButton : " Excluir",
+		cancelButton : " Cancelar"
+        });
+        
         
          $(".confirm_item_servico").confirm({
 		text : "Deseja realmente excluir este Item de Serviço?",

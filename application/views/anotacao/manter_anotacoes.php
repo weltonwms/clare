@@ -77,7 +77,7 @@
                             <span class="glyphicon glyphicon-pencil"></span> 
                         </a>
                    
-                        <a class="confirm_servico btn btn-danger" 
+                        <a class="confirm_anotacao btn btn-danger" 
                             data-toggle="tooltip"
                            title="Excluir"
                            href="<?php echo base_url('anotacao/excluir') . '/' . $anotacao->get_id_anotacao() ?>">

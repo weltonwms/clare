@@ -8,28 +8,24 @@ $(document).ready(function() {
 
 /*********************Mascaras para os campos ****************************************/
 	$('#cpf').mask("000.000.000-00");
-	$('.telefone').mask(maskBehavior, {onKeyPress:
-               function(val, e, field, options) {
-               field.mask(maskBehavior(val, e, field, options), options);
-                        }
-         });
+	
 
 /*************************************************************************************/
 
 /*****************Regras de validação*************************************************/
-	$("#form_fornecedor").validate({
+	$("#form_anotacao").validate({
 		rules:{
-			empresa:{required:true},
-                        responsavel:{required:true},
-			fone:{required:true}
+			id_fornecedor:{required:true},
+                        data:{required:true},
+			descricao:{required:true}
 			
 
 		},
 	
 		messages:{
-			empresa:{required:'Digite o Nome da Empresa'},
-			responsavel:{required:'Digite o Responsavel'},
-                        fone:{required:'Digite o Telefone'}
+			id_fornecedor:{required:'Selecione o Fornecedor'},
+			data:{required:'Digite a Data'},
+                        descricao:{required:'Digite a Descrição'}
 		}
 	});//fechamento do validate
         
@@ -38,8 +34,3 @@ $(document).ready(function() {
         
         
 });//fechamento do document.ready
-
-var masks = ['(00) 00000-0000', '(00) 0000-00009'],
-        maskBehavior = function(val, e, field, options) {
-    return val.length > 14 ? masks[0] : masks[1];
-};

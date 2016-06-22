@@ -4,7 +4,7 @@ $(document).ready(function () {
         "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        "iDisplayLength": 6,
+        "iDisplayLength": 25,
         "bStateSave": true,
         "columnDefs": [{
                 "targets": [-1],

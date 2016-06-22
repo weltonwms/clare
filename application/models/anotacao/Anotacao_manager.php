@@ -19,7 +19,7 @@ class Anotacao_manager extends Generic_manager {
     }
     
     public function get_anotacao($id){
-         return $this->Anotacao_dao->get_anotacao($id);
+         return $this->Anotacao_dao->get_anotacao_composite($id);
     }
 
     protected function get_model() {

@@ -1,7 +1,7 @@
 <?php
 echo "<script src='" . base_url('assets/plugins/jquery.validate.js') . "'></script>";
 echo "<script src='" . base_url('assets/plugins/jquery.mask.js') . "'></script>";
-echo "<script src='" . base_url('assets/js/validacao_servico.js') . "'></script>";
+echo "<script src='" . base_url('assets/js/validacao_anotacao.js') . "'></script>";
 echo "<script src='" . base_url('assets/plugins/jquery.confirm.js') . "'></script>";
 echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
 echo link_tag(array('href' => 'assets/plugins/chosen/chosen.css', 'rel' => 'stylesheet', 'type' => 'text/css'));

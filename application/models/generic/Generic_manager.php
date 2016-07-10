@@ -25,6 +25,7 @@ abstract class Generic_manager extends CI_Model {
     public function alterar(array $post) {
         $model = $this->get_model();
         $this->set_objeto($post);
+        //echo "<pre>"; print_r($model); exit();
         return $model->alterar();
     }
 
@@ -47,7 +48,12 @@ abstract class Generic_manager extends CI_Model {
                 $model->$metodo(isset($post[$key]) ? $post[$key] : null);
             endif;
         endforeach;
+        $this->after_set_objeto($model,$post);
         //echo "<pre>"; print_r($model); exit();
+    }
+    
+    protected function after_set_objeto($model,$post){
+        return true;
     }
 
     abstract protected function get_model();

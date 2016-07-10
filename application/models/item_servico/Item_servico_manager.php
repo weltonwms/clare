@@ -6,60 +6,56 @@
  * trabalho com  a Servico.
  */
 
-class Item_servico_manager extends CI_Model {
+include_once( APPPATH . 'models/generic/Generic_manager.php');
+class Item_servico_manager extends Generic_manager {
 
     function __construct() {
         parent::__construct();
-        //$this->load->model('generic/Generic_model');
-        $this->load->model('item_servico/Item_servico_model');
     }
 
     public function cadastrar(array $post) {
-        //echo "<pre>"; print_r($post); exit();
-        if ($post['id_produto']):
-            $this->Item_servico_model->set_id_servico($post['id_servico']);
-            $this->Item_servico_model->set_id_produto($post['id_produto']);
-            $this->Item_servico_model->set_qtd_produto($post['qtd_produto']);
-            $this->Item_servico_model->set_valor_final($post['valor_final'], 1);
-            $this->Item_servico_model->set_valor_fornecedor($post['valor_fornecedor'],1);
-            $this->Item_servico_model->set_descricao($post['descricao']);
-
-            return $this->Item_servico_model->cadastrar();
+       if ($post['id_produto']):
+            return parent::cadastrar($post);
         endif;
         return FALSE;
     }
 
-    public function gravar_alteracao(array $post) {
-        if ($post['id_produto']):
-            $this->Item_servico_model->set_id($post['id_item_servico']);
-
-            $this->Item_servico_model->set_id_servico($post['id_servico']);
-            $this->Item_servico_model->set_id_produto($post['id_produto']);
-            $this->Item_servico_model->set_qtd_produto($post['qtd_produto']);
-            $this->Item_servico_model->set_valor_final($post['valor_final'], 1);
-            $this->Item_servico_model->set_valor_fornecedor($post['valor_fornecedor'],1);
-            $this->Item_servico_model->set_descricao($post['descricao']);
-
-            return $this->Item_servico_model->alterar();
+    public function alterar(array $post) {
+       if ($post['id_produto']):
+            return parent::alterar($post);
         endif;
         return FALSE;
     }
-
-    public function excluir($id_item_servico) {
-
-        return $this->Item_servico_model->excluir($id_item_servico);
+    
+    protected function after_set_objeto($model, $post) {
+         $model->set_valor_final($post['valor_final'], 1);
+         $model->set_valor_fornecedor($post['valor_fornecedor'],1);
+         $model->set_total_fornecedor($post['total_fornecedor'], 1);
+         $model->set_total_venda($post['total_venda'],1);
     }
+    
     
     public function clonar($id_origem,$id_destino){
         $this->db->where('id_servico',$id_origem);
         $data=$this->db->get('item_servico')->result_array();
         foreach($data as $key=>$valor):
             $data[$key]['id_servico']=$id_destino;
-            unset($data[$key]['id']);
+            unset($data[$key]['id_item']);
         endforeach;
         
         return $this->db->insert_batch('item_servico', $data); 
     }
+
+     protected function get_model() {
+        $this->load->model('item_servico/Item_servico_model');
+        return $this->Item_servico_model;
+    }
+
+    protected function get_nome_id() {
+        return "id_item";
+    }
+    
+   
 
 }
 

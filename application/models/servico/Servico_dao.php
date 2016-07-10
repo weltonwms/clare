@@ -1,16 +1,17 @@
 <?php
-
-class Servico_dao extends CI_Model {
-
-    private $result_query; //array com resultado da query
+include_once( APPPATH . 'models/generic/Generic_dao.php');
+class Servico_dao extends Generic_dao {
 
     function __construct() {
         parent::__construct();
         $this->load->model('servico/Servico_model');
         $this->load->model('servico/Servico_composite');
         $this->load->model('cliente/Cliente_model');
+        /*
         $this->load->model('cliente/Cliente_dao');
         $this->load->model('item_servico/Item_servico_dao');
+         * 
+         */
     }
 
     public function get_servicos() {
@@ -42,100 +43,27 @@ class Servico_dao extends CI_Model {
     }
 
     public function get_servicos_composite() {
-
-        $this->iniciar_query();
-        $this->executar_query();
-        $lista = $this->montar_servicos_composite();
-        return $lista;
-        /*
-          $lista = array();
-
-          $this->db->order_by("id_servico", "desc");
-          $servicos_banco = $this->db->get('servico')->result();
-          if (count($servicos_banco) > 0) {
-          foreach ($servicos_banco as $servico) {
-          $lista[] = $this->get_servico_composite($servico->id_servico);
-          }
-          }
-          return $lista;
-         */
+        return $this->get_objetos_composite();
     }
 
     public function get_servico_composite($id_servico) {
-        if ($id_servico):
-            $this->iniciar_query();
-            $this->db->where("id_servico", $id_servico);
-            $this->executar_query();
-            return $this->montar_servico_composite($this->result_query[0]);
-        endif;
-        $servico = new $this->Servico_composite();
-        $servico->set_servico($this->Servico_dao->get_servico_vazio());
-        $servico->set_cliente($this->Cliente_dao->get_cliente_vazio());
-        $servico->set_itens_servico($this->Item_servico_dao->get_itens_servico_vazio());
-        return $servico;
-        /*
-          $servico_banco= array()
-          if ($id_servico):
-          $this->db->where('id_servico', $id_servico);
-          $servico_banco = $this->db->get('servico')->result();
-          endif;
-          $servico = new $this->Servico_composite();
-          if (count($servico_banco) > 0) {
-
-          $servico->set_servico($this->get_servico($servico_banco[0]->id_servico));
-          $servico->set_cliente($this->Cliente_dao->get_cliente($servico_banco[0]->id_cliente));
-          $servico->set_itens_servico($this->Item_servico_dao->get_itens_servico($servico_banco[0]->id_servico));
-          } else {
-          $servico->set_servico($this->Servico_dao->get_servico_vazio());
-          $servico->set_cliente($this->Cliente_dao->get_cliente_vazio());
-          $servico->set_itens_servico($this->Item_servico_dao->get_itens_servico_vazio());
-          }
-          return $servico;
-         * 
-         */
+        return $this->get_objeto_composite($id_servico, "id_servico");
+       
     }
 
-    private function iniciar_query() {
+    protected function iniciar_query() {
         $this->db->select("*");
         $this->db->from("servico s");
         $this->db->join("cliente c", "s.id_cliente=c.id_cliente", "left");
     }
-
-    private function executar_query() {
-        $this->result_query = $this->db->get()->result();
-    }
-
-    private function montar_servicos_composite() {
-        $array = array();
-        foreach ($this->result_query as $objeto_banco):
-            $array[] = $this->montar_servico_composite($objeto_banco);
-        endforeach;
-        return $array;
-    }
-
-    private function montar_servico_composite($objeto_banco) {
-        $objeto_composite = new $this->Servico_composite();
-        $objeto_servico_model = new $this->Servico_model();
-        $objeto_cliente_model = new $this->Cliente_model();
-        
-        $this->set_atributos($objeto_banco, $objeto_servico_model);
-        $this->set_atributos($objeto_banco, $objeto_cliente_model);
-        
-        $objeto_composite->set_cliente($objeto_cliente_model);
-        $objeto_composite->set_servico($objeto_servico_model);
-        return $objeto_composite;
-    }
-    
-     private function set_atributos($objeto_banco, $objeto) {
-
-        $attr = $objeto->get_atributos();
-        foreach ($attr as $key => $valor):
-
-            $metodo = "set_$key";
-            if(method_exists( $objeto ,$metodo )):
-            $objeto->$metodo(isset($objeto_banco->$key) ? $objeto_banco->$key : null);
-            endif;
-        endforeach;
+     
+    protected function get_componentes_composite() {
+        $componentes = array(
+            new Servico_composite(),
+            new Servico_model(),
+            new Cliente_model()
+        );
+        return $componentes;
     }
 
 }

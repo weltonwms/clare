@@ -34,7 +34,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                             <span class="input-group-addon">R$</span>
                             <input name="valor" id="valor" type="text"
                                    class="form-control money" 
-                                   value="<?php echo $produto->get_valor() ?>" > 
+                                   value="<?php echo number_format($produto->get_valor(),2,"," ,".");?>" > 
                         </div>
                     </div>
 
@@ -82,3 +82,5 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
 
 
 </form>
+
+

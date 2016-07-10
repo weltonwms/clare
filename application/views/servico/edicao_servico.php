@@ -9,13 +9,12 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
 ?>
 
 <legend>
-    <?php 
-    $class_limpa="";
-    if ($servico->get_id_servico()){
+    <?php
+    $class_limpa = "";
+    if ($servico->get_id_servico()) {
         echo 'Alteração de  Serviço';
-    }
-    else{
-        $class_limpa="limpa_state";
+    } else {
+        $class_limpa = "limpa_state";
         echo 'Novo Serviço';
     }
     ?>
@@ -37,15 +36,15 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
     <input type="hidden" name="id_servico" value="<?php echo $servico->get_id_servico(); ?>"/>
     <div class="col-md-12">
         <div class="navbar-right ">
-            <?php if ($servico->get_id_servico()):?>
-            <button formaction="<?php echo base_url('servico/clonar') ?>"
-                    type="submit" class="btn btn-default limpa_state" id="Clonar">
-                <span class=" text-danger glyphicon glyphicon-heart"></span> Clonar
-            </button>
-            <?php endif;?>
+            <?php if ($servico->get_id_servico()): ?>
+                <button formaction="<?php echo base_url('servico/clonar') ?>"
+                        type="submit" class="btn btn-default limpa_state" id="Clonar">
+                    <span class=" text-danger glyphicon glyphicon-heart"></span> Clonar
+                </button>
+            <?php endif; ?>
             <button formaction="<?php echo base_url('servico/salvar_servico') ?>"
                     type="submit" 
-                    class="btn btn-success <?php echo $class_limpa?>" 
+                    class="btn btn-success <?php echo $class_limpa ?>" 
                     id="salvar">
                 <span class="glyphicon glyphicon-save"></span> Salvar e Fechar
             </button>
@@ -60,8 +59,8 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
     <div class="control-group col-md-5">
         <label class="control-label">Cliente</label>
 
-        <select  name="id_cliente" class="form-control meu_chosen" >
-              <option value="" >Selecione</option>
+        <select  name="id_cliente" id="id_cliente" class="form-control meu_chosen" >
+            <option value="" >Selecione</option>
             <?php
             foreach ($clientes as $cliente):
                 echo "<option value='{$cliente->get_id_cliente()}' ";
@@ -121,8 +120,8 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
         </select>
 
     </div>
-    
-     <div class="control-group col-md-10">
+
+    <div class="control-group col-md-10">
         <label class="control-label ">Obs:</label> 
 
         <input 	id="obs" type="text" class="form-control" name='obs'
@@ -147,7 +146,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
             <div class="modal-content">
 
 
-                <input type="hidden" name="id_item_servico" id="id_item_servico" value=""/>
+                <input type="hidden" name="id_item" id="id_item" value=""/>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Adicionar Produto</h4>
@@ -194,33 +193,44 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
 
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label class="control-label ">Valor Un</label>
+                    <div class="form-group col-md-6" >
+                        <label class="control-label text-success">Valor Un Fornecedor</label>
 
                         <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input id="valor_final" type="text"
-                                   class="form-control money" name='valor_final' placeholder="000.000,00">
+                            <input name="" id="valor_unitario_fornecedor" type="text"
+                                   class="form-control" style="background-color:azure"> 
                         </div>
 
                     </div>
-                    
-                     <div class="form-group col-md-4">
-                        <label class="control-label ">Valor Un Fornecedor</label>
+                    <div class="form-group col-md-6">
+                        <label class="control-label " >Un Venda</label>
 
                         <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input name="valor_fornecedor" id="valor_fornecedor" type="text"
-                                   class="form-control" > 
+                            <input id="valor_unitario_venda" type="text"
+                                   class="form-control money" name='' placeholder="000.000,00">
                         </div>
 
                     </div>
-                    <div class="form-group col-md-4">
+
+                    <div class="form-group col-md-6" >
+                        <label class="control-label text-success ">Total Fornecedor</label>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input id="total_fornecedor" type="text" name="total_fornecedor"
+                                   class="form-control " style="background-color:azure">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group col-md-6">
                         <label class="control-label ">Valor Total</label>
 
                         <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input id="valor_total" type="text"
+                            <input id="total_venda" type="text" name="total_venda"
                                    class="form-control" >
                         </div>
 
@@ -230,7 +240,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                 </div> <!-- /.modal-body -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button id="btn_submit_tudo"  class="btn btn-success <?php echo $class_limpa?>">Salvar</button>
+                    <button id="btn_submit_tudo"  class="btn btn-success <?php echo $class_limpa ?>">Salvar</button>
                 </div>
 
 
@@ -258,9 +268,9 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                     <th>Qtd</th>
                     <th class="col-md-6">Nome Produto</th>
                     <th>Descrição</th>
-                    <th >Valor Un</th>
-                    <th >Valor Forn</th>
-                    <th>Total</th>
+
+                    <th >Total Forn</th>
+                    <th>Total Venda</th>
 
                     <th><span class="glyphicon glyphicon-pencil"></span> Editar</th>
                     <th><span class="text-danger"><span class="glyphicon glyphicon-trash">
@@ -271,23 +281,27 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
             </thead>
 
             <tbody>
-                <?php $cont=1;
-                foreach ($servico->get_itens_servico() as $item_servico): ?> 
+                <?php
+                $cont = 1;
+                foreach ($servico->get_itens_servico() as $item_servico):
+                    ?> 
                     <tr>
                         <td><?php echo $cont ?> </td>
                         <td><?php echo $item_servico->get_qtd_produto() ?></td>
-                       <td><?php echo $item_servico->get_nome_produto_fornecedor() ?></td>
+                        <td><?php echo $item_servico->get_nome_produto_fornecedor() ?></td>
                         <td><?php echo $item_servico->get_descricao() ?></td>
-                        <td><?php echo "R$ " . number_format($item_servico->get_valor_final(), 3, ",", "."); ?></td>
-                         <td><?php echo "R$ " . number_format($item_servico->get_valor_fornecedor(), 3, ",", "."); ?></td>
-                        <td><?php echo "R$ " . number_format($item_servico->get_valor_final_multiplicado(), 2, ",", "."); ?></td>
+
+                        <td><?php echo "R$ " . number_format($item_servico->get_total_fornecedor(), 2, ",", "."); ?></td>
+                        <td><?php echo "R$ " . number_format($item_servico->get_total_venda(), 2, ",", "."); ?></td>
                         <td>
-                            <a data-id_item_servico="<?php echo $item_servico->get_id() ?>" 
+                            <a data-id_item="<?php echo $item_servico->get_id_item() ?>" 
                                data-id_produto="<?php echo $item_servico->get_id_produto() ?>"
                                data-qtd_produto="<?php echo $item_servico->get_qtd_produto() ?>"
                                data-descricao="<?php echo $item_servico->get_descricao() ?>"
-                               data-valor_final="<?php echo number_format($item_servico->get_valor_final(),3,"," ,".");?>"
-                               data-valor_fornecedor="<?php echo number_format($item_servico->get_valor_fornecedor(),3,"," ,".");?>"
+                               data-valor_unitario_venda="<?php echo number_format($item_servico->get_valor_unitario_venda(), 3, ",", "."); ?>"
+                               data-valor_unitario_fornecedor="<?php echo number_format($item_servico->get_valor_unitario_fornecedor(), 3, ",", "."); ?>"
+                               data-total_venda="<?php echo number_format($item_servico->get_total_venda(), 3, ",", "."); ?>"
+                               data-total_fornecedor="<?php echo number_format($item_servico->get_total_fornecedor(), 3, ",", "."); ?>"
                                class="editar_item_servico"
                                href="#">
                                 <span class="glyphicon glyphicon-pencil"></span> 
@@ -298,7 +312,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                             <a class="confirm_item_servico text-danger" 
                                href="<?php
                                echo base_url('servico/excluir_item_servico') . '/' .
-                               $item_servico->get_id() . '/' . $servico->get_id_servico()
+                               $item_servico->get_id_item() . '/' . $servico->get_id_servico()
                                ?>">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
@@ -306,8 +320,17 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                         </td>
                     </tr>
 
-<?php $cont++;
-endforeach; ?>
+                    <?php
+                    $cont++;
+                endforeach;
+                ?>
+                <tr >
+                    <td colspan="3"></td>
+                    <td class="text-center info"><b>Total Geral</b></td>
+                    <td class="info"><?php echo "R$ " . number_format($servico->get_total_geral_fornecedor(), 2, ",", "."); ?></td>
+                    <td class="info"><?php echo "R$ " . number_format($servico->get_total_geral_venda(), 2, ",", "."); ?></td>
+                    <td colspan="2"></td>
+                </tr>
 
             </tbody>
 
@@ -319,43 +342,58 @@ endforeach; ?>
 <script>
 
 
-    $("#btn_adicionar_item_servico").click(function() {
-        $('.modal-title').html('Adicionar Item de servico');
-        $("#id_item_servico").val('');
-        $("#id_produto").val('').trigger("chosen:updated");
-        $("#qtd_produto").val('');
-        $("#descricao").val('');
-        $("#valor_final").val('');
-        $("#valor_total").val('');
-        $("#valor_fornecedor").val('');
-        $("#modal_manter_item_servico").modal('show');
+    $("#btn_adicionar_item_servico").click(function () {
+        if (pre_validar()) {
+            $('.modal-title').html('Adicionar Item de servico');
+            $("#id_item").val('');
+            $("#id_produto").val('').trigger("chosen:updated");
+            $("#qtd_produto").val('');
+            $("#descricao").val('');
+            $("#valor_unitario_venda").val('');
+            $("#total_venda").val('');
+            $("#valor_unitario_fornecedor").val('');
+            $("#total_fornecedor").val('');
+            $("#modal_manter_item_servico").modal('show');
+        }
     });
 
-    $("#btn_submit_tudo").click(function() {
-
-
+    $("#btn_submit_tudo").click(function () {
         $("#form_servico").submit();
     });
 
-    $(".editar_item_servico").click(function() {
-        valor_forn = ($(this).attr('data-valor_forn'));
-        id_item_servico = ($(this).attr('data-id_item_servico'));
-        id_produto = ($(this).attr('data-id_produto'));
-        qtd_produto = ($(this).attr('data-qtd_produto'));
-        valor_final = ($(this).attr('data-valor_final'));
-        valor_fornecedor = ($(this).attr('data-valor_fornecedor'));
-        descricao = ($(this).attr('data-descricao'));
-        $("#valor_total").val('');
-        $('.modal-title').html('Alterar Item de Serviço');
-        $("#id_item_servico").val(id_item_servico);
-        $("#id_produto").val(id_produto).trigger("chosen:updated");
-        $("#qtd_produto").val(qtd_produto);
-        $("#descricao").val(descricao);
-        $("#valor_final").val(valor_final);
-        $("#valor_fornecedor").val(valor_fornecedor);
-        $("#modal_manter_item_servico").modal('show');
+    $(".editar_item_servico").click(function () {
+        if (pre_validar()) {
+            id_item = ($(this).attr('data-id_item'));
+            id_produto = ($(this).attr('data-id_produto'));
+            qtd_produto = ($(this).attr('data-qtd_produto'));
+            descricao = ($(this).attr('data-descricao'));
+            valor_unitario_fornecedor = ($(this).attr('data-valor_unitario_fornecedor'));
+            total_fornecedor = ($(this).attr('data-total_fornecedor'));
+            valor_unitario_venda = ($(this).attr('data-valor_unitario_venda'));
+            total_venda = ($(this).attr('data-total_venda'));
+
+            $('.modal-title').html('Alterar Item de Serviço');
+
+            $("#id_item").val(id_item);
+            $("#id_produto").val(id_produto).trigger("chosen:updated");
+            $("#qtd_produto").val(qtd_produto);
+            $("#descricao").val(descricao);
+            $("#valor_unitario_fornecedor").val(valor_unitario_fornecedor);
+            $("#total_fornecedor").val(total_fornecedor);
+            $("#valor_unitario_venda").val(valor_unitario_venda);
+            $("#total_venda").val(total_venda);
+            $("#modal_manter_item_servico").modal('show');
+        }
     });
 
+    function pre_validar() {
+        var validator = $("#form_servico").validate();
+        var v1 = validator.element("#id_cliente");
+        var v2 = validator.element("#data");
+        var v3 = validator.element("#estado");
+        return v1 && v2 && v3;
+
+    }
 
 
 

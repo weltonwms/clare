@@ -1,8 +1,6 @@
 <?php
-
-class Item_servico_dao extends CI_Model {
-
-    private $result_query; //array com resultado da query
+include_once( APPPATH . 'models/generic/Generic_dao.php');
+class Item_servico_dao extends Generic_dao {
 
     function __construct() {
         parent::__construct();
@@ -12,28 +10,18 @@ class Item_servico_dao extends CI_Model {
     public function get_itens_servico($id_servico) {
         $this->iniciar_query();
         $this->db->where('id_servico', $id_servico);
-        $this->db->order_by("id", "asc");
+        $this->db->order_by("id_item", "asc");
         $this->executar_query();
         $lista = $this->montar_itens_servico();
         return $lista;
     }
 
     public function get_item_servico($id_item_servico) {
-        $this->db->where('id', $id_item_servico);
+        $this->db->where('id_item', $id_item_servico);
         $item_servico_banco = $this->db->get('item_servico')->result();
         if (count($item_servico_banco) > 0) {
             $item_servico = new $this->Item_servico_model();
             $this->set_atributos($item_servico_banco[0], $id_item_servico);
-            /*
-            $item_servico->set_id($item_servico_banco[0]->id);
-            $item_servico->set_id_servico($item_servico_banco[0]->id_servico);
-            $item_servico->set_id_produto($item_servico_banco[0]->id_produto);
-            $item_servico->set_qtd_produto($item_servico_banco[0]->qtd_produto);
-            $item_servico->set_valor_final($item_servico_banco[0]->valor_final);
-            $item_servico->set_valor_fornecedor($item_servico_banco[0]->valor_fornecedor);
-            $item_servico->set_descricao($item_servico_banco[0]->descricao);
-            */
-            
             return $item_servico;
         }
         return;
@@ -50,41 +38,24 @@ class Item_servico_dao extends CI_Model {
     private function montar_item_servico($objeto_banco) {
         $item_servico = new $this->Item_servico_model();
         $this->set_atributos($objeto_banco, $item_servico);
-        /*
-        $item_servico->set_id($objeto_banco->id);
-        $item_servico->set_id_servico($objeto_banco->id_servico);
-        $item_servico->set_id_produto($objeto_banco->id_produto);
-        $item_servico->set_qtd_produto($objeto_banco->qtd_produto);
-        $item_servico->set_valor_final($objeto_banco->valor_final);
-        $item_servico->set_valor_fornecedor($objeto_banco->valor_fornecedor);
-        $item_servico->set_descricao($objeto_banco->descricao);
-         * 
-         */
-
         return $item_servico;
     }
 
-    private function iniciar_query() {
+    protected function iniciar_query() {
         $this->db->select("*");
         $this->db->from("item_servico");
     }
 
-    private function executar_query() {
-        $this->result_query = $this->db->get()->result();
-    }
+    
 
     public function get_itens_servico_vazio() {
         return array();
     }
     
-     private function set_atributos($objeto_banco, $objeto) {
-        $attr = $objeto->get_atributos();
-        foreach ($attr as $key => $valor):
-            $metodo = "set_$key";
-            if(method_exists( $objeto ,$metodo )):
-            $objeto->$metodo(isset($objeto_banco->$key) ? $objeto_banco->$key : null);
-            endif;
-        endforeach;
+    
+
+    protected function get_componentes_composite() {
+        
     }
 
 }

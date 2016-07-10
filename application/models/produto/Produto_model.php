@@ -13,9 +13,15 @@ class Produto_model extends Generic_model {
         parent::__construct();
     }
 
-    public function atualizar_valor($valor, $id_produto) {
-        $this->set_valor($valor, 1);
+    public function atualizar_valor($post) {
+        
+        $total_fornecedor=  $this->tratar_valor($post['total_fornecedor']);
+        $qtd=$this->tratar_valor($post['qtd_produto']);
+        $valor_base=$total_fornecedor/$qtd;
+        $id_produto=$post['id_produto'];
+        $this->set_valor($valor_base);
         $this->set_id_produto($id_produto);
+       // echo "<pre>";print_r($this); exit();
         $dados = array(
             'valor' => $this->valor,
         );
@@ -49,11 +55,16 @@ class Produto_model extends Generic_model {
 
     public function set_valor($valor, $trata_valor = null) {
         if ($trata_valor) {
-            $valor = str_replace(".", "", $valor);
-            $valor = str_replace(",", ".", $valor);
+            $valor=  $this->tratar_valor($valor);
         }
 
         $this->valor = $valor;
+    }
+    
+    private function tratar_valor($valor){
+        $v1 = str_replace(".", "", $valor);
+        $valor_tratado = str_replace(",", ".", $v1);
+        return $valor_tratado;
     }
 
     public function get_id_fornecedor() {

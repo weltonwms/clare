@@ -5,12 +5,11 @@
  * Controler. Ela utiliza as outras Classes Model que ajudam a realizar todo o 
  * trabalho com  a Servico.
  */
-
-class Servico_manager extends CI_Model {
+include_once( APPPATH . 'models/generic/Generic_manager.php');
+class Servico_manager extends Generic_manager {
 
     function __construct() {
         parent::__construct();
-        //$this->load->model('generic/Generic_model');
         $this->load->model('servico/Servico_dao');
     }
 
@@ -22,39 +21,9 @@ class Servico_manager extends CI_Model {
         return $this->Servico_dao->get_servico_composite($id_servico);
     }
 
-    public function salvar_servico($post) {
-        $retorno = array();
-        if ($post['id_servico']) {
-            $retorno['status'] = (int) $this->gravar_alteracao($post);
-            $retorno['acao_executada'] = 'alteracao';
-        } else {
-            $retorno['status'] = $this->cadastrar($post);
-            $retorno['acao_executada'] = 'cadastro';
-        }
-
-        return $retorno;
-    }
-
     public function executar_servico($id_servico) {
         $this->load->model('servico/Servico_model', 'servico');
         return $this->servico->executar_servico($id_servico);
-    }
-
-    public function cadastrar(array $post) {
-        $this->load->model('servico/Servico_model', 'servico');
-        $this->set_servico($post);
-        return $this->servico->cadastrar();
-    }
-
-    public function gravar_alteracao(array $post) {
-        $this->load->model('servico/Servico_model', 'servico');
-        $this->set_servico($post);
-        return $this->servico->alterar();
-    }
-
-    public function excluir($id_servico) {
-        $this->load->model('servico/Servico_model', 'servico');
-        return $this->servico->excluir($id_servico);
     }
 
     public function excluir_item_servico($id_item_servico) {
@@ -67,21 +36,23 @@ class Servico_manager extends CI_Model {
         $this->load->model('produto/Produto_model');
         $id_servico = NULL;
         if ($post['id_servico']) {
-            $this->gravar_alteracao($post);
+            $this->alterar($post);
             $id_servico = $post['id_servico'];
         } else {
             $id_servico = $this->cadastrar($post);
         }
-        $this->Produto_model->atualizar_valor($post['valor_fornecedor'], $post['id_produto']);
-        if ($post['id_item_servico']) {
-            $retorno = $this->item_servico_m->gravar_alteracao($post);
-            $acao = 'alteracao';
+        //echo "<pre>"; print_r($post); exit();
+        $this->Produto_model->atualizar_valor($post);
+        if ($post['id_item']) {
             //atualizar item de servico
+            $retorno = $this->item_servico_m->alterar($post);
+            $acao = 'alteracao';
         } else {
+            //cadastrar item_servico
             $post['id_servico'] = $id_servico;
             $retorno = $this->item_servico_m->cadastrar($post);
             $acao = 'cadastro';
-            //cadastrar item_servico
+            
         }
         return array('id_servico' => $id_servico, 'status' => $retorno, 'acao_executada' => $acao);
     }
@@ -97,21 +68,13 @@ class Servico_manager extends CI_Model {
         return $retorno;
     }
 
-    private function set_servico($post, $skips = array()) {
+    protected function get_model() {
+         $this->load->model('servico/Servico_model');
+         return $this->Servico_model;
+    }
 
-        $this->load->model('servico/Servico_model', 'servico');
-
-        $attr = $this->servico->get_atributos();
-        foreach ($attr as $key => $valor):
-            if (in_array($key, $skips)) {
-                continue;
-            }
-            $metodo = "set_$key";
-            if (method_exists($this->servico, $metodo)):
-                $this->servico->$metodo(isset($post[$key]) ? $post[$key] : null);
-            endif;
-        endforeach;
-        // echo "<pre>"; print_r($this->servico); exit();
+    protected function get_nome_id() {
+         return "id_servico";
     }
 
 }

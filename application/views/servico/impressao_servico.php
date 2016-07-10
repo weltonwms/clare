@@ -186,14 +186,14 @@
                             <?php echo $item->get_nome_produto()?>
                              <?php echo"<br>". $item->get_descricao()?>
                         </td>
-                         <td><?php echo "R$ " . number_format($item->get_valor_final(), 3, ",", "."); ?></td>
-                         <td><?php echo "R$ " . number_format($item->get_valor_final_multiplicado(), 2, ",", "."); ?></td>
+                         <td><?php echo "R$ " . number_format($item->get_valor_unitario_venda(), 2, ",", "."); ?></td>
+                         <td><?php echo "R$ " . number_format($item->get_total_venda(), 2, ",", "."); ?></td>
                     </tr>
                     <?php $cont++; endforeach;?>
                     <?php if($imprimir_total):?>
                     <tr id="preco_total">
                         <td colspan="4" align="right"> Total Geral</td>
-                        <td class="destaque"><?php echo "R$ " . number_format($servico->get_total_itens_servico(), 2, ",", "."); ?></td>
+                        <td class="destaque"><?php echo "R$ " . number_format($servico->get_total_geral_venda(), 2, ",", "."); ?></td>
                     </tr>
                     <?php endif;?>
                 </table>

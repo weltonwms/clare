@@ -4,6 +4,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Relatório de Serviço</title>
         <style>
+            *{
+                font-size: 11px;
+            }
             table tr td{
                 border: 1px solid;
                 padding: 4px;
@@ -29,7 +32,7 @@
     <body>
         <div align="center">
             <?php
-            $estado = array('', 'Orçamento', 'Executado', 'Em Produção',"Entregue não pago");
+            $estado = array('', 'Orçamento', 'Executado', 'Em Produção', "Entregue não pago");
             if ($requisicao['estado']):
                 echo "Relatório de Serviço: {$estado[$requisicao['estado']]}";
             endif;
@@ -60,8 +63,9 @@
 
                     <th>Produto</th>
                     <th>Qtd</th>
-                    <th>Valor Un</th>
-                    <th>Total</th>
+                    <th>Total Forn</th>
+                    <th>Total Venda</th>
+                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lucro &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 
                 </tr>
             </thead>
@@ -77,15 +81,17 @@
                             <td><?php echo $item_servico->get_tipo_servico() ?></td>
                             <td><?php echo $item_servico->get_nome_cliente() ?></td>
 
-                            <td><?php echo $item_servico->get_nome_produto() ?></td>
+                            <td><?php echo $item_servico->get_nome_produto() ?> </td>
                             <td><?php echo $item_servico->get_qtd_produto() ?></td>
-                            <td><?php echo $item_servico->get_valor_final_formatado() ?></td>
-                            <td><?php echo $item_servico->get_valor_final_multiplicado_formatado() ?></td>
+                            <td><?php echo $item_servico->get_total_fornecedor_formatado() ?></td>
+                            <td><?php echo $item_servico->get_total_venda_formatado() ?></td>
+                            <td><?php echo $item_servico->get_lucro_formatado() ?></td>
                         </tr>  
                     <?php endforeach; ?>
                     <tr class="total">
-                        <td colspan='8' class=""><b>Total Geral</b>&nbsp;&nbsp;&nbsp;</td>
+                        <td colspan='8' class="text-right"><b>Total Geral</b>&nbsp;&nbsp;&nbsp;</td>
                         <td class="info"><?php echo $relatorio->get_total_geral_formatado(); ?></td>
+                        <td class="info"><?php echo $relatorio->get_total_lucro_formatado(); ?></td>
                     </tr>
                 <?php endif; ?>
             </tbody>

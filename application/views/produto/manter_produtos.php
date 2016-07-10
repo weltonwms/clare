@@ -28,7 +28,7 @@
     <thead>
         <tr class="text-primary">
             <th>Nome</th>
-            <th>Valor</th>
+            <th>Valor Un</th>
             <th>Fornecedor</th>
             <th>Ação </th>
 

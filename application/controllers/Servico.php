@@ -38,7 +38,7 @@ class Servico extends CI_Controller{
     
     public function salvar_servico(){
         
-        $retorno=$this->Servico_manager->salvar_servico($this->input->post());
+        $retorno=$this->Servico_manager->salvar($this->input->post());
         
         if($retorno['status']>0){
             $this->session->set_flashdata('status','success');

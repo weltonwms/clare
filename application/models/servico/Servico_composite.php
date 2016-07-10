@@ -91,10 +91,18 @@ class Servico_composite extends CI_Model{
         return $this->cliente->get_email();
     }
     
-    public function get_total_itens_servico(){
+    public function get_total_geral_venda(){
         $soma=0;
         foreach($this->itens_servico as $item):
-            $soma+=$item->get_valor_final_multiplicado();
+            $soma+=$item->get_total_venda();
+        endforeach;
+        return $soma;
+    }
+    
+    public function get_total_geral_fornecedor(){
+        $soma=0;
+        foreach($this->itens_servico as $item):
+            $soma+=$item->get_total_fornecedor();
         endforeach;
         return $soma;
     }

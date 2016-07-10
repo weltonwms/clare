@@ -78,9 +78,10 @@
             <th>Qtd</th>
             <th>Discriminação</th>
              <th>Descrição</th>
-            <th>Fornecedor</th>
-            <th>Preço Un</th>
-            <th>Total</th>
+             <th class="text-muted">Un Forn</th>
+            <th class="text-muted">Total Forn</th>
+            <th>Un Venda</th>
+            <th>Total Venda</th>
         </tr>
     </thead>
     <tbody>
@@ -91,21 +92,21 @@
                 <td><?php echo $item->get_qtd_produto() ?></td>
                 <td><?php echo $item->get_nome_produto() ?></td>
                  <td><?php echo $item->get_descricao() ?> </td>
-               
-                <td><?php echo "R$ " . number_format($item->get_valor_fornecedor(), 3, ",", "."); ?>
+                <td class="text-muted"><?php echo "R$ " . number_format($item->get_valor_unitario_fornecedor(), 2, ",", "."); ?></td>
+                <td class="text-muted"><?php echo "R$ " . number_format($item->get_total_fornecedor(), 2, ",", "."); ?>
                     <span class="nome_fornecedor"><?php echo $item->get_nome_fornecedor()?></span>
                 
                 </td>
-                <td><?php echo "R$ " . number_format($item->get_valor_final(), 3, ",", "."); ?></td>
+                <td><?php echo "R$ " . number_format($item->get_valor_unitario_venda(), 2, ",", "."); ?></td>
                 <td>
-                    <?php echo "R$ " . number_format($item->get_valor_final_multiplicado(), 2, ",", "."); ?>
+                    <?php echo "R$ " . number_format($item->get_total_venda(), 2, ",", "."); ?>
                    
                 </td>
             </tr>
         <?php $cont++; endforeach; ?>
         <tr id="preco_total">
-            <td colspan="6" align="right"> <b>Total Geral</b<</td>
-            <td><?php echo "R$ " . number_format($servico->get_total_itens_servico(), 2, ",", "."); ?></td>
+            <td colspan="7" align="right"> <b>Total Geral</b<</td>
+            <td class="info"><?php echo "R$ " . number_format($servico->get_total_geral_venda(), 2, ",", "."); ?></td>
         </tr>
     </tbody>
 </table>

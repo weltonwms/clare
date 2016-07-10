@@ -20,7 +20,7 @@ class Relatorio_model extends CI_Model{
       
       $valor=0;
       foreach ($this->itens_servico as $item_servico):
-          $valor+=$item_servico->get_valor_final_multiplicado();
+          $valor+=$item_servico->get_total_venda();
       endforeach;
       return $valor;
       
@@ -28,6 +28,20 @@ class Relatorio_model extends CI_Model{
   
   public function get_total_geral_formatado(){
       return "R$ ". number_format($this->get_total_geral(),2,',','.');
+  }
+  
+  public function get_total_lucro(){
+      
+      $valor=0;
+      foreach ($this->itens_servico as $item_servico):
+          $valor+=$item_servico->get_lucro();
+      endforeach;
+      return $valor;
+      
+  }
+  
+  public function get_total_lucro_formatado(){
+      return "R$ ". number_format($this->get_total_lucro(),2,',','.');
   }
 
 }

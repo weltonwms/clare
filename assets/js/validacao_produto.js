@@ -10,6 +10,7 @@ $(document).ready(function() {
 /*********************Mascaras para os campos ****************************************/
 	$('.data').mask("00/00/0000");
 	$('.money').mask('000.000.000.000.000,00', {reverse: true});
+        $('.money2').mask('000.000.000.000.000,000', {reverse: true});
 
 /*************************************************************************************/
         $.validator.setDefaults({ ignore: ":hidden:not(select)" }) ;

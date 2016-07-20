@@ -83,9 +83,9 @@
 
                             <td><?php echo $item_servico->get_nome_produto() ?> </td>
                             <td><?php echo $item_servico->get_qtd_produto() ?></td>
-                            <td><?php echo $item_servico->get_total_fornecedor_formatado() ?></td>
-                            <td><?php echo $item_servico->get_total_venda_formatado() ?></td>
-                            <td><?php echo $item_servico->get_lucro_formatado() ?></td>
+                            <td><?php echo $item_servico->get_total_fornecedor(TRUE) ?></td>
+                            <td><?php echo $item_servico->get_total_venda(TRUE) ?></td>
+                            <td><?php echo $item_servico->get_lucro(TRUE) ?></td>
                         </tr>  
                     <?php endforeach; ?>
                     <tr class="total">

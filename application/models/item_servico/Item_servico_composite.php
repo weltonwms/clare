@@ -36,7 +36,11 @@ class Item_servico_composite extends CI_Model {
     }
 
     public function get_tipo_servico() {
-        return $this->servico->get_nome_tipo();
+        $tipo = $this->servico->get_nome_tipo();
+        if ($this->servico->get_tipo() == 2):
+            $tipo.= " ({$this->servico->get_porcentagem_comissao()}%)";
+        endif;
+        return $tipo;
     }
 
     public function get_nome_produto() {
@@ -51,7 +55,10 @@ class Item_servico_composite extends CI_Model {
         return $this->item_servico->get_valor_unitario_venda();
     }
 
-    public function get_total_venda() {
+    public function get_total_venda($formatar=FALSE) {
+         if ($formatar):
+                return $this->formatar_valor($this->item_servico->get_total_venda());
+         endif;
         return $this->item_servico->get_total_venda();
     }
 
@@ -59,32 +66,45 @@ class Item_servico_composite extends CI_Model {
         return $this->item_servico->get_valor_unitario_fornecedor();
     }
 
-    public function get_total_fornecedor() {
-        return $this->item_servico->get_total_fornecedor();
-    }
-    
-    public function get_valor_unitario_venda_formatado() {
-        return "R$ " . number_format($this->item_servico->get_valor_unitario_venda(), 2, ",", ".");
-    }
-
-    public function get_total_venda_formatado() {
-        return "R$ " . number_format($this->item_servico->get_total_venda(), 2, ",", ".");
+    public function get_total_fornecedor($formatar = false) {
+        $total_fornecedor = $this->item_servico->get_total_fornecedor();
+        if ($formatar):
+            return $this->formatar_valor($total_fornecedor);
+        endif;
+        return $total_fornecedor;
     }
 
-    public function get_total_fornecedor_formatado() {
-        if (!empty($this->item_servico->get_total_fornecedor())):
-            return "R$ " . number_format($this->item_servico->get_total_fornecedor(), 2, ",", ".");
+    public function get_lucro($formatar = FALSE) {
+        $total_fornecedor = $this->item_servico->get_total_fornecedor();
+        $total_venda = $this->item_servico->get_total_venda();
+        if ($total_fornecedor != NULL):
+            switch ($this->servico->get_tipo()):
+                case 2: $lucro = $this->calcular_lucro_comissao($total_fornecedor);
+                    break;
+                default : $lucro = $this->calcular_lucro_default($total_fornecedor, $total_venda);
+            endswitch;
+            if ($formatar):
+                return $this->formatar_valor($lucro);
+            endif;
+            return $lucro;
         endif;
     }
 
-    public function get_lucro_formatado() {
-        if (!empty($this->item_servico->get_total_fornecedor())):
-            return "R$ " . number_format($this->item_servico->get_lucro(), 2, ",", ".");
+    private function calcular_lucro_default($total_fornecedor, $total_venda) {
+        return $total_venda - $total_fornecedor;
+    }
+
+    private function calcular_lucro_comissao($total_fornecedor) {
+        $pc = $this->servico->get_porcentagem_comissao();
+        if ($pc):
+            return $total_fornecedor * ($pc / 100);
         endif;
     }
 
-    public function get_lucro() {
-        return $this->item_servico->get_lucro();
+    private function formatar_valor($valor) {
+        if ($valor != NULL):
+            return "R$ " . number_format($valor, 2, ",", ".");
+        endif;
     }
 
     public function get_descricao() {

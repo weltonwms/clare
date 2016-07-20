@@ -78,6 +78,10 @@ class Servico_composite extends CI_Model{
     public function get_nome_tipo(){
         return $this->servico->get_nome_tipo();
     }
+    
+    public function get_porcentagem_comissao(){
+         return $this->servico->get_porcentagem_comissao();
+    }
 
     public function get_itens_servico() {
         if(!$this->itens_servico):

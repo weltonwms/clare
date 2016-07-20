@@ -120,8 +120,21 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
         </select>
 
     </div>
+    
+    <div class="control-group col-md-2 bloco_porcentagem" <?php if($servico->get_tipo()!=2) echo "style='display: none'"?>>
+         <label class="control-label">Porcentagem</label>
 
-    <div class="control-group col-md-10">
+                        <div class="input-group">
+                           
+                            <input name="porcentagem_comissao" id="porcentagem_comissao" type="text"
+                                   class="form-control" 
+                                   value="<?php echo $servico->get_porcentagem_comissao() ?>">
+                             <span class="input-group-addon">%</span>
+                        </div>
+
+    </div>
+
+    <div class="control-group col-md-8 bloco_obs">
         <label class="control-label ">Obs:</label> 
 
         <input 	id="obs" type="text" class="form-control" name='obs'

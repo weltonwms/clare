@@ -97,20 +97,11 @@ class Item_servico_model extends Generic_model {
     }
 
     public function get_total_fornecedor() {
-        if (!empty($this->total_fornecedor)) {
-            return $this->total_fornecedor;
-        }
+        return $this->total_fornecedor;
     }
 
     public function get_total_venda() {
         return $this->total_venda;
-    }
-
-    public function get_lucro() {
-        if (!empty($this->total_fornecedor)) {
-            $lucro = $this->total_venda - $this->total_fornecedor;
-            return $lucro;
-        }
     }
 
     public function set_total_fornecedor($total_fornecedor, $trata_valor = null) {

@@ -10,6 +10,7 @@ class Servico_model extends Generic_model {
     protected  $forma_pagamento;
     protected $obs;
     protected $tipo;
+    protected $porcentagem_comissao;
     protected $tabela="servico";
     
     
@@ -100,6 +101,15 @@ class Servico_model extends Generic_model {
         $this->tipo = $tipo;
     }
     
+    public function get_porcentagem_comissao() {
+        return $this->porcentagem_comissao;
+    }
+
+    public function set_porcentagem_comissao($porcentagem_comissao) {
+        $this->porcentagem_comissao = $porcentagem_comissao;
+    }
+
+        
     public function executar_servico($id_servico){
         $this->db->set('estado', 2);
         $this->db->where('id_servico', $id_servico);

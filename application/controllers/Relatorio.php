@@ -68,6 +68,17 @@ class Relatorio extends CI_Controller {
         $this->load->library('pdf');
         $this->pdf->createPDF($html, 'relat');
     }
+    
+    public function teste(){
+        //$x=  '0';
+        $y= $this->t();
+       
+        var_dump($y);
+    }
+    
+    public function t(){
+        return 0===0;
+    }
 
 }
 

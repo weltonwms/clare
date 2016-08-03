@@ -36,7 +36,22 @@ $(document).ready(function () {
             total_fornecedor: {required: 'Digite o total do Fornecedor'}
         }
     });//fechamento do validate
-
+    
+   
+    $("#tipo").change(function () {
+       var tipo=$(this).val();
+       //alert(tipo);
+       if(tipo==2){
+           $(".bloco_porcentagem").show('slow');
+          
+       }
+       else{
+           $(".bloco_porcentagem").hide('slow');
+         
+       }
+       
+    });
+     $("#tipo").trigger('change');
 
     $("#id_produto").change(function () {
         valor_fornecedor = $('#id_produto option:selected').attr('data-forn');

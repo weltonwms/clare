@@ -92,12 +92,12 @@
                 <td><?php echo $item->get_qtd_produto() ?></td>
                 <td><?php echo $item->get_nome_produto() ?></td>
                  <td><?php echo $item->get_descricao() ?> </td>
-                <td class="text-muted"><?php echo "R$ " . number_format($item->get_valor_unitario_fornecedor(), 2, ",", "."); ?></td>
+                 <td class="text-muted"><?php echo "R$ " . formatar_float_to_money( $item->get_valor_unitario_fornecedor() ); ?></td>
                 <td class="text-muted"><?php echo "R$ " . number_format($item->get_total_fornecedor(), 2, ",", "."); ?>
                     <span class="nome_fornecedor"><?php echo $item->get_nome_fornecedor()?></span>
                 
                 </td>
-                <td><?php echo "R$ " . number_format($item->get_valor_unitario_venda(), 2, ",", "."); ?></td>
+                <td><?php echo "R$ " . formatar_float_to_money($item->get_valor_unitario_venda()); ?></td>
                 <td>
                     <?php echo "R$ " . number_format($item->get_total_venda(), 2, ",", "."); ?>
                    

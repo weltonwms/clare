@@ -146,7 +146,10 @@ $(document).ready(function () {
 
 function escrever_valor(valor, campo, naoFixar) {
     if (!naoFixar) {
-        valor = valor.toFixed(3);
+        var num_dec=retr_dec(valor); //numero de decimais
+        if(num_dec <2){
+            valor = valor.toFixed(2);
+        }
     }
     var valor_formatado = valor.toString().replace('.', ',');
     $(campo).val(valor_formatado);
@@ -156,6 +159,11 @@ function ler_valor(campo) {
     var valor = $(campo).val().replace('.', '').replace(',', '.');
     //alert(valor);
     return parseFloat(valor);
+}
+
+function retr_dec(num) {
+   var numero= num.toString();
+  return (numero.split('.')[1] || []).length;
 }
 
 

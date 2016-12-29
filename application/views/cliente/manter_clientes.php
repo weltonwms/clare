@@ -28,7 +28,7 @@
 
 <!--inicio da tabela com lista de clientes-->
 
-
+<div class="table-responsive">
 <table id="tabela" class="table table-bordered   table-condensed">
     <thead>
         <tr class="text-primary">
@@ -83,7 +83,7 @@
 
 
 </table>
-
+</div>
 <!--inicio do modal detalhar Cliente-->
 
 <div class="modal fade" id="modal_detalhar_cliente">

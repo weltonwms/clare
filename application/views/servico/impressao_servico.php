@@ -186,7 +186,7 @@
                             <?php echo $item->get_nome_produto()?>
                              <?php echo"<br>". $item->get_descricao()?>
                         </td>
-                         <td><?php echo "R$ " . number_format($item->get_valor_unitario_venda(), 2, ",", "."); ?></td>
+                         <td><?php echo "R$ " . formatar_float_to_money($item->get_valor_unitario_venda()); ?></td>
                          <td><?php echo "R$ " . number_format($item->get_total_venda(), 2, ",", "."); ?></td>
                     </tr>
                     <?php $cont++; endforeach;?>

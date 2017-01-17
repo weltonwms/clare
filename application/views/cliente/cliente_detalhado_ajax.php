@@ -5,11 +5,22 @@
             <td><?php echo $cliente->get_nome() ?></td>
 
         </tr>
+        
+         <tr>
+            <td><b>CEP</b></td>
+            <td><?php echo $cliente->get_cep() ?></td>
+        </tr>
             
         <tr>
             <td><b>Endereço</b></td>
             <td><?php echo $cliente->get_endereco() ?></td>
         </tr>
+        
+         <tr>
+            <td><b>Insc. Estadual</b></td>
+            <td><?php echo $cliente->get_inc_estadual() ?></td>
+        </tr>
+        
         <tr>
             <td><b>Telefone1</b></td>
             <td><?php echo $cliente->get_telefone() ?></td>

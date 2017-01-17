@@ -8,7 +8,7 @@ echo "<script src='".base_url('assets/js/validacao_cliente.js')."'></script>";
 
 	<form method="post" id="form_cliente">
             <input type="hidden" name="id_cliente" value="<?php echo $cliente->get_id_cliente();?>"/>
-                        <div class="col-md-6 control-group ">
+                        <div class="col-md-4 control-group ">
 
 				<label class="control-label" for="Nome">Empresa</label> 
                                 <input id="nome" name="nome" placeholder="Nome"
@@ -16,6 +16,16 @@ echo "<script src='".base_url('assets/js/validacao_cliente.js')."'></script>";
 					class="form-control" type="text">
 
 			</div>
+            
+                         <div class="col-md-2 control-group ">
+
+				<label class="control-label" for="Nome">CEP</label> 
+                                <input id="cep" name="cep" placeholder="CEP"
+                                       value="<?php echo $cliente->get_cep();?>"
+					class="form-control" type="text">
+
+			</div>
+            
                         <div class="col-md-6 control-group">
 				<label class="control-label">Endereço</label>
                                 <input id="endereco" type="text"
@@ -33,12 +43,20 @@ echo "<script src='".base_url('assets/js/validacao_cliente.js')."'></script>";
                                         placeholder="Responsavel">
 			</div>
             
-                         <div class="col-md-4 control-group">
+                         <div class="col-md-2 control-group">
 				<label class="control-label">CNPJ</label>
                                 <input id="cnpj" type="text"
                                         value="<?php echo $cliente->get_cnpj();?>"
 					class="form-control" name='cnpj'
                                         placeholder="CNPJ">
+			</div>
+            
+                         <div class="col-md-2 control-group">
+				<label class="control-label">Insc. Estadual</label>
+                                <input id="inc_estadual" type="text"
+                                        value="<?php echo $cliente->get_inc_estadual();?>"
+					class="form-control" name='inc_estadual'
+                                        placeholder="Insc. Estadual">
 			</div>
 			
 			
@@ -71,7 +89,7 @@ echo "<script src='".base_url('assets/js/validacao_cliente.js')."'></script>";
                    
                     <div class="control-group col-md-7 col-md-offset-5">
                         <br><br>
-				<button formaction="<?php echo base_url('cliente/gravar_alteracao')?>"
+				<button formaction="<?php echo base_url('cliente/salvar_cliente')?>"
 					type="submit" class="btn btn-success" id="salvar">
 					<span class="glyphicon glyphicon-save"></span> Salvar
 				</button>

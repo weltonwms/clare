@@ -7,13 +7,43 @@ class Servico_dao extends Generic_dao {
         $this->load->model('servico/Servico_model');
         $this->load->model('servico/Servico_composite');
         $this->load->model('cliente/Cliente_model');
-        /*
-        $this->load->model('cliente/Cliente_dao');
-        $this->load->model('item_servico/Item_servico_dao');
-         * 
-         */
+       
+    }
+   
+   
+
+    public function get_servicos_composite() {
+        return $this->get_objetos();
     }
 
+    public function get_servico_composite($id_servico) {
+        return $this->get_objeto($id_servico, "id_servico");
+       
+    }
+
+    protected function iniciar_query() {
+        $this->db->select("*");
+        $this->db->from("servico s");
+        $this->db->join("cliente c", "s.id_cliente=c.id_cliente", "left");
+    }
+     
+    protected function get_componentes_composite() {
+        $componentes = array(
+            new Servico_composite(),
+            new Servico_model(),
+            new Cliente_model()
+        );
+        return $componentes;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+     /*
     public function get_servicos() {
 
         $lista = array();
@@ -37,33 +67,12 @@ class Servico_dao extends Generic_dao {
         }
         return;
     }
-
+      
     public function get_servico_vazio() {
         return new $this->Servico_model();
     }
+     * 
+     */
 
-    public function get_servicos_composite() {
-        return $this->get_objetos_composite();
-    }
-
-    public function get_servico_composite($id_servico) {
-        return $this->get_objeto_composite($id_servico, "id_servico");
-       
-    }
-
-    protected function iniciar_query() {
-        $this->db->select("*");
-        $this->db->from("servico s");
-        $this->db->join("cliente c", "s.id_cliente=c.id_cliente", "left");
-    }
-     
-    protected function get_componentes_composite() {
-        $componentes = array(
-            new Servico_composite(),
-            new Servico_model(),
-            new Cliente_model()
-        );
-        return $componentes;
-    }
 
 }

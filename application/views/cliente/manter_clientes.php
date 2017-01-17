@@ -16,7 +16,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <a href="<?php echo base_url('cliente/novo_cliente') ?>" type="button"
+        <a href="<?php echo base_url('cliente/editar') ?>" type="button"
            class="btn btn-success navbar-right"> <span
                 class="glyphicon glyphicon-plus"></span> Novo Cliente
         </a>

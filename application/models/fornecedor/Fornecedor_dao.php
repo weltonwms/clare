@@ -1,6 +1,6 @@
 <?php
-
-class Fornecedor_dao extends CI_Model {
+include_once( APPPATH . 'models/generic/Generic_dao.php');
+class Fornecedor_dao extends Generic_dao {
 
     function __construct() {
         parent::__construct();
@@ -42,16 +42,14 @@ class Fornecedor_dao extends CI_Model {
     }
 
 
-    private function set_atributos($objeto_banco, $objeto) {
+    protected function get_componentes_composite()
+    {
+        
+    }
 
-        $attr = $objeto->get_atributos();
-        foreach ($attr as $key => $valor):
-
-            $metodo = "set_$key";
-            if(method_exists( $objeto ,$metodo )):
-            $objeto->$metodo(isset($objeto_banco->$key) ? $objeto_banco->$key : null);
-            endif;
-        endforeach;
+    protected function iniciar_query()
+    {
+        //implementar de acordo com generic
     }
 
 }

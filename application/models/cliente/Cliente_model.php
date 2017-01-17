@@ -11,6 +11,8 @@ class Cliente_model extends Generic_model{
     protected $responsavel;
     protected $cnpj;
     protected $email;
+    protected $cep;
+    protected $inc_estadual;
     protected $tabela="cliente";
             
     
@@ -89,7 +91,28 @@ class Cliente_model extends Generic_model{
     public function set_telefone3($telefone3) {
         $this->telefone3 = $telefone3;
     }
+    
+    public function get_cep()
+    {
+        return $this->cep;
+    }
 
+    public function get_inc_estadual()
+    {
+        return $this->inc_estadual;
+    }
+
+    public function set_cep($cep)
+    {
+        $this->cep = $cep;
+    }
+
+    public function set_inc_estadual($inc_estadual)
+    {
+        $this->inc_estadual = $inc_estadual;
+    }
+
+    
     public function is_relacionado_a_servico($id_cliente) {
         $this->db->where('id_cliente', $id_cliente);
         $result = $this->db->get('servico')->result();

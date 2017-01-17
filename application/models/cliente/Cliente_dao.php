@@ -1,17 +1,68 @@
 <?php
+include_once( APPPATH . 'models/generic/Generic_dao.php');
+class Cliente_dao extends Generic_dao {
 
-class Cliente_dao extends CI_Model {
-
-    private $result_query; //array com resultado da query
+    //private $result_query; //array com resultado da query
 
     function __construct() {
         parent::__construct();
         $this->load->model('cliente/Cliente_model', 'Cliente_model');
     }
+    
 
+    protected function iniciar_query() {
+        $this->db->select("*");
+        $this->db->from("cliente");
+        $this->db->order_by("nome", "asc");
+    }
+
+
+    
+
+    protected function get_componentes_composite()
+    {
+        return array(new Cliente_model());
+    }
+    
+    public function get_clientes(){
+        return $this->get_objetos();
+    }
+    
+    public function get_cliente($id){
+        return $this->get_objeto($id,'id_cliente');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     public function get_clientes() {
         $this->iniciar_query();
-        $this->db->order_by("nome", "asc");
+        
         $this->executar_query();
         $lista = $this->montar_clientes();
         return $lista;
@@ -27,16 +78,30 @@ class Cliente_dao extends CI_Model {
     public function get_cliente_vazio() {
         return new $this->Cliente_model();
     }
-
-    private function iniciar_query() {
-        $this->db->select("*");
-        $this->db->from("cliente");
+     * 
+     */
+    
+    /*
+    private function set_atributos($objeto_banco, $objeto) {
+        $attr = $objeto->get_atributos();
+        foreach ($attr as $key => $valor):
+            $metodo = "set_$key";
+            if(method_exists( $objeto ,$metodo )):
+            $objeto->$metodo(isset($objeto_banco->$key) ? $objeto_banco->$key : null);
+            endif;
+        endforeach;
     }
-
+     * 
+     */
+    
+    /*
     private function executar_query() {
         $this->result_query = $this->db->get()->result();
     }
-
+ * 
+ */
+    
+    /*
     private function montar_clientes() {
         $array = array();
         foreach ($this->result_query as $objeto_banco):
@@ -50,16 +115,8 @@ class Cliente_dao extends CI_Model {
         $this->set_atributos($objeto_banco, $objeto_cliente_model);
         return $objeto_cliente_model;
     }
-
-    private function set_atributos($objeto_banco, $objeto) {
-        $attr = $objeto->get_atributos();
-        foreach ($attr as $key => $valor):
-            $metodo = "set_$key";
-            if(method_exists( $objeto ,$metodo )):
-            $objeto->$metodo(isset($objeto_banco->$key) ? $objeto_banco->$key : null);
-            endif;
-        endforeach;
-    }
+ * 
+ */
 
 }
 

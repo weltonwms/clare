@@ -8,6 +8,7 @@ $(document).ready(function() {
 
 /*********************Mascaras para os campos ****************************************/
 	$('#cpf').mask("000.000.000-00");
+        $('#cep').mask("00000000");
 	 $('.telefone').mask(maskBehavior, {onKeyPress:
                function(val, e, field, options) {
                field.mask(maskBehavior(val, e, field, options), options);
@@ -22,7 +23,8 @@ $(document).ready(function() {
 		rules:{
 			nome:{required:true},
 			endereco:{required:true},
-			telefone:{required:true}
+			telefone:{required:true},
+                        cep:{minlength: 8}
                         
 			
 
@@ -31,7 +33,8 @@ $(document).ready(function() {
 		messages:{
 			nome:{required:'Digite o Nome'},
 			endereco:{required:'Digite o Endereço'},
-			telefone:{required:'Digite o Telefone'}
+			telefone:{required:'Digite o Telefone'},
+                        cep:{minlength:'Informe 8 dígitos'},
                         
 		}
 	});//fechamento do validate

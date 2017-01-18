@@ -2,8 +2,19 @@
 echo "<script src='".base_url('assets/plugins/jquery.validate.js')."'></script>";
 echo "<script src='".base_url('assets/plugins/jquery.mask.js')."'></script>";
 echo "<script src='".base_url('assets/js/validacao_cliente.js')."'></script>";
+echo "<script src='".base_url('assets/js/busca_cep.js')."'></script>";
 ?>
-<legend>Alteração de Cliente</legend>
+<legend>
+    <?php
+    if ($cliente->get_id_cliente()) {
+        echo 'Alteração de  Cliente';
+    } else {
+        
+        echo 'Novo Cliente';
+    }
+    ?>
+ 
+</legend>
 
 
 	<form method="post" id="form_cliente">
@@ -21,6 +32,7 @@ echo "<script src='".base_url('assets/js/validacao_cliente.js')."'></script>";
 
 				<label class="control-label" for="Nome">CEP</label> 
                                 <input id="cep" name="cep" placeholder="CEP"
+                                       autocomplete="off"
                                        value="<?php echo $cliente->get_cep();?>"
 					class="form-control" type="text">
 

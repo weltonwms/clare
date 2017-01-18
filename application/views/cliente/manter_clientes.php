@@ -55,7 +55,11 @@
                         </a>
 
                     </td>
-                    <td><?php echo $cliente->get_endereco(); ?></td>
+                    <td>
+                        <?php echo $cliente->get_endereco();
+                       echo  $cliente->get_cep()? " - CEP: ".$cliente->get_cep():"";
+                         ?>
+                    </td>
                     <td><?php echo $cliente->get_telefone(); ?></td>
                     <td><?php echo $cliente->get_responsavel(); ?></td>
 

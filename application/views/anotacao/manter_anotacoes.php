@@ -68,7 +68,7 @@
 
                     </td>
                     <td><?php echo $anotacao->get_nome_fornecedor(); ?></td>
-                    <td class="">
+                    <td class="col-md-1">
                                           
                         <a class="btn btn-default"
                             data-toggle="tooltip"

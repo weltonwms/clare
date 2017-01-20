@@ -91,8 +91,10 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
     <div class="control-group col-md-12">
         <label class="control-label ">Descrição</label> 
 
-        <input 	id="descricao" type="text" class="form-control" name='descricao'
-                value="<?php echo $anotacao->get_descricao() ?>">
+        <textarea 	id="descricao" type="text" class="form-control"
+                   name='descricao' rows="6"
+         ><?php echo $anotacao->get_descricao() ?></textarea>
+       
 
     </div>
    

@@ -69,37 +69,37 @@ $(document).ready(function () {
 
 
     $("#qtd_produto").blur(function () {
+        
         var qtd = ler_valor(this);
         var valor_unitario_fornecedor = ler_valor('#valor_unitario_fornecedor');
         var total_fornecedor = ler_valor('#total_fornecedor');
-        if (qtd) {
-            if (total_fornecedor) {
-                valor_unitario_fornecedor = total_fornecedor / qtd;
-                escrever_valor(valor_unitario_fornecedor, '#valor_unitario_fornecedor');
-
-            } else {
-                valor_unitario_fornecedor = ler_valor('#valor_unitario_fornecedor');
-                total_fornecedor = valor_unitario_fornecedor * qtd;
-                escrever_valor(total_fornecedor, '#total_fornecedor');
-            }
-        }
-        
         var valor_unitario_venda = ler_valor('#valor_unitario_venda');
         var total_venda = ler_valor('#total_venda');
-         if (qtd) {
-            if (total_venda) {
-                valor_unitario_venda = total_venda / qtd;
-                escrever_valor(valor_unitario_venda, '#valor_unitario_venda');
-
-            } else {
-                if(valor_unitario_venda){
+        
+        if (qtd) {
+           if(valor_unitario_venda){
                     total_venda = valor_unitario_venda * qtd;
                     escrever_valor(total_venda, '#total_venda');
                 }
-            }
+                
+           if(valor_unitario_fornecedor){
+               
+                total_fornecedor = valor_unitario_fornecedor * qtd;
+                escrever_valor(total_fornecedor, '#total_fornecedor');
+           }
+           
+//           if (total_fornecedor) {
+//                valor_unitario_fornecedor = total_fornecedor * qtd;
+//                escrever_valor(valor_unitario_fornecedor, '#valor_unitario_fornecedor');
+//            }
         }
+        
+        
+   
+        
+  
      
-    });
+    }); //fim blur qtd
 
     $("#valor_unitario_fornecedor").blur(function () {
         var valor_unitario_fornecedor = ler_valor(this);

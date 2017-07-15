@@ -110,9 +110,10 @@ class Servico_model extends Generic_model {
     }
 
         
-    public function executar_servico($id_servico){
-        $this->db->set('estado', 2);
-        $this->db->where('id_servico', $id_servico);
+    public function executar_servico($servico){
+        $status= array(1=>3,3=>4,4=>2);
+        $this->db->set('estado', $status[$servico->get_estado()]);
+        $this->db->where('id_servico', $servico->get_id_servico());
         $this->db->update('servico');
         if ($this->db->affected_rows() > 0) {
             return TRUE;

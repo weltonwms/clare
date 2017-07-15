@@ -67,7 +67,7 @@
                         if ($servico->get_estado() != 2):
                             ?>
                             <a class="confirm_executar_servico" 
-                                data-toggle="tooltip" title="Deixar Serviço Executado"
+                                data-toggle="tooltip" title="Avançar Estado do Serviço"
                                href="<?php echo base_url('servico/executar_servico') . '/' . $servico->get_id_servico() ?>">
                                 <span class='glyphicon glyphicon-ok'></span>
                             </a>

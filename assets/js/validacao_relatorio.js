@@ -3,6 +3,7 @@
 
 $(document).ready(function() {
     $('.meu_chosen').chosen();
+     
 
     /***********************Acao para o Botao Voltar**************************************/
     $("#voltar").click(function() {

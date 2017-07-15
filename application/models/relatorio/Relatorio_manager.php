@@ -71,7 +71,7 @@ class Relatorio_manager extends CI_Model {
    }
    
    private function executar_query($post){
-       
+       //echo "<pre>"; print_r($post['estado']); exit();
        $this->db->select('*, p.nome nome_produto, 
            c.nome nome_cliente');
        $this->db->from('item_servico i');
@@ -98,8 +98,8 @@ class Relatorio_manager extends CI_Model {
            $periodo_final = formatar_data_to_mysql($post['periodo_final']);
            $this->db->where('s.data <=',$periodo_final);
        endif;
-       if($post['estado']):
-            $this->db->where('s.estado', $post['estado']);
+       if(isset($post['estado']) && !empty($post['estado'][0])):
+            $this->db->where_in('s.estado', $post['estado']);
        endif;
        
        if($post['tipo']):

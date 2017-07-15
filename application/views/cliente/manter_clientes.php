@@ -114,3 +114,5 @@
 </div><!-- /.modal -->
 
 <?php echo "<script src='" . base_url('assets/js/manter_cliente.js') . "'></script>"; ?>
+
+

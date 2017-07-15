@@ -71,6 +71,8 @@ class Servico_composite extends CI_Model{
         return $this->servico->get_nome_estado();
     }
     
+    
+    
     public function get_tipo(){
         return $this->servico->get_tipo();
     }

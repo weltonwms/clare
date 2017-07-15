@@ -34,7 +34,10 @@
             <?php
             $estado = array('', 'Orçamento', 'Executado', 'Em Produção', "Entregue não pago");
             if ($requisicao['estado']):
-                echo "Relatório de Serviço: {$estado[$requisicao['estado']]}";
+                echo "Relatório de Serviço: ";
+                foreach($requisicao['estado'] as $state):
+                echo  $estado[$state]. " | ";
+                endforeach;
             endif;
             ?>
             <?php

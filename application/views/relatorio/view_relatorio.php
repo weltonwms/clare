@@ -146,15 +146,15 @@ endforeach;
             <label class=""><span
                     class="glyphicon glyphicon-filter"></span> Estado:</label>
             <div class="">
-                <select name="estado" class="form-control">
-                    <option value=''>--Todos--</option>
+                <select name="estado[]" class="form-control meu_chosen" multiple="multiple" data-placeholder="--Todos--">
+                    
 <?php
 $opcoes2 = array('2' => 'Executado', '1' => 'Orçamento', '3' => 'Em Produção', '4' => "Entregue não pago");
 
 foreach ($opcoes2 as $key => $opcao):
     echo "<option value='{$key}' ";
     if (isset($requisicao['estado']) &&
-            $requisicao['estado'] == $key
+    in_array($key, $requisicao['estado']) 
     )
         echo "selected='selected'";
     echo ">";

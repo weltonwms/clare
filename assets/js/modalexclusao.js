@@ -47,7 +47,7 @@ $(document).ready(function() {
 	});
         
          $(".confirm_executar_servico").confirm({
-		text : "Colocar este Serviço como Executado?",
+		text : "Avançar o Estado deste Serviço?",
 		title : " Mudar Estado do Serviço",
 		confirmButton : " Confirma",
                 classIconConfirmButton : "glyphicon glyphicon-ok",

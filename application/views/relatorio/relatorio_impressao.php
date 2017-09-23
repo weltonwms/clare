@@ -33,7 +33,7 @@
         <div align="center">
             <?php
             $estado = array('', 'Orçamento', 'Executado', 'Em Produção', "Entregue não pago");
-            if ($requisicao['estado']):
+            if (isset($requisicao['estado']) && $requisicao['estado']):
                 echo "Relatório de Serviço: ";
                 foreach($requisicao['estado'] as $state):
                 echo  $estado[$state]. " | ";
@@ -63,7 +63,7 @@
                     <th>Estado</th>
                     <th>Tipo</th>
                     <th>Cliente</th>
-
+                    <th>Vendedor</th>
                     <th>Produto</th>
                     <th>Qtd</th>
                     <th>Total Forn</th>
@@ -83,7 +83,7 @@
                             <td><?php echo $item_servico->get_estado_servico() ?></td>
                             <td><?php echo $item_servico->get_tipo_servico() ?></td>
                             <td><?php echo $item_servico->get_nome_cliente() ?></td>
-
+                            <td><?php echo $item_servico->get_nome_vendedor() ?></td>
                             <td><?php echo $item_servico->get_nome_produto() ?> </td>
                             <td><?php echo $item_servico->get_qtd_produto() ?></td>
                             <td><?php echo $item_servico->get_total_fornecedor(TRUE) ?></td>
@@ -92,7 +92,7 @@
                         </tr>  
                     <?php endforeach; ?>
                     <tr class="total">
-                        <td colspan='8' class="text-right"><b>Total Geral</b>&nbsp;&nbsp;&nbsp;</td>
+                        <td colspan='9' class="text-right"><b>Total Geral</b>&nbsp;&nbsp;&nbsp;</td>
                         <td class="info"><?php echo $relatorio->get_total_geral_formatado(); ?></td>
                         <td class="info"><?php echo $relatorio->get_total_lucro_formatado(); ?></td>
                     </tr>

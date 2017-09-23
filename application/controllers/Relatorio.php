@@ -34,11 +34,12 @@ class Relatorio extends CI_Controller {
     public function index() {
         $this->load->model('cliente/Cliente_manager', 'Cliente_manager');
         $this->load->model('produto/Produto_manager', 'Produto_manager');
+        $this->load->model('servico/Servico_manager');
         $this->load->model('fornecedor/Fornecedor_manager', 'Fornecedor_manager');
         $dados['clientes'] = $this->Cliente_manager->get_clientes();
         $dados['produtos'] = $this->Produto_manager->get_produtos();
         $dados['fornecedores'] = $this->Fornecedor_manager->get_fornecedores();
-
+        $dados['vendedores']=$this->Servico_manager->get_vendedores();
         $this->carrega_view('relatorio/view_relatorio', $dados);
     }
 
@@ -46,10 +47,12 @@ class Relatorio extends CI_Controller {
         $this->load->model('cliente/Cliente_manager', 'Cliente_manager');
         $this->load->model('produto/Produto_manager', 'Produto_manager');
         $this->load->model('fornecedor/Fornecedor_manager', 'Fornecedor_manager');
+        $this->load->model('servico/Servico_manager');
         $dados['clientes'] = $this->Cliente_manager->get_clientes();
         $dados['produtos'] = $this->Produto_manager->get_produtos();
         $dados['fornecedores'] = $this->Fornecedor_manager->get_fornecedores(1);
         $dados['requisicao'] = $this->input->post();
+        $dados['vendedores']=$this->Servico_manager->get_vendedores();
         $dados['relatorio'] = $this->Relatorio_manager->gerar_relatorio($this->input->post());
 
 

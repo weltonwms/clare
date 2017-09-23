@@ -31,6 +31,16 @@ class Servico_composite extends CI_Model{
         return $this->servico->get_id_cliente();
     }
     
+     public function get_id_vendedor(){
+        return $this->servico->get_id_vendedor();
+    }
+    
+    public function get_nome_vendedor(){
+        
+        $nomes=array(1=>'Glauber',2=>"Maurício",3=>"Paulo",''=>""); //substituir por model vendedor;
+        return $nomes[$this->get_id_vendedor()];
+    }
+    
     public function get_nome_cliente(){
         return $this->cliente->get_nome();
     }

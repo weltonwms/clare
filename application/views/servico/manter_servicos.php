@@ -37,6 +37,7 @@
             <th>Data</th>
             <th>Estado</th>
             <th>Tipo</th>
+             <th>Vendedor</th>
             <th >
                 Ação
             </th>
@@ -72,10 +73,14 @@
                                 <span class='glyphicon glyphicon-ok'></span>
                             </a>
         <?php endif; ?>
+                  
 
 
                     </td>
                     <td><?php echo $servico->get_nome_tipo(); ?></td>
+                      <td>
+                        <?php echo $servico->get_nome_vendedor() ?>
+                    </td>
                     <td class="">
                        
                         <a target="_blank" class="btn_imprimir btn btn-default" 

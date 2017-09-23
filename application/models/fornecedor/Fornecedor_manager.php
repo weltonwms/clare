@@ -12,7 +12,11 @@ class Fornecedor_manager extends CI_Model{
         $this->load->model('fornecedor/Fornecedor_dao','Fornecedor_dao');
         $this->load->model('fornecedor/Fornecedor_model','Fornecedor_model');
     }
-    
+    /**
+     * Função que retorna todos os fornecedores
+     * @param boolean $chave_array_igual_id indica se a chave do array deve ser o id fornecedor
+     * @return array lista de fornecedores
+     */
     public function get_fornecedores($chave_array_igual_id = null){
         return $this->Fornecedor_dao->get_fornecedores($chave_array_igual_id);
     }

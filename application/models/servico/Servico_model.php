@@ -11,6 +11,7 @@ class Servico_model extends Generic_model {
     protected $obs;
     protected $tipo;
     protected $porcentagem_comissao;
+    protected $id_vendedor;
     protected $tabela="servico";
     
     
@@ -108,7 +109,18 @@ class Servico_model extends Generic_model {
     public function set_porcentagem_comissao($porcentagem_comissao) {
         $this->porcentagem_comissao = $porcentagem_comissao;
     }
+    
+    public function get_id_vendedor()
+    {
+        return $this->id_vendedor;
+    }
 
+    public function set_id_vendedor($id_vendedor)
+    {
+        $this->id_vendedor = $id_vendedor;
+    }
+
+    
         
     public function executar_servico($servico){
         $status= array(1=>3,3=>4,4=>2);

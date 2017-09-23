@@ -134,11 +134,30 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
 
     </div>
 
-    <div class="control-group col-md-8 bloco_obs">
+    <div class="control-group col-md-6 bloco_obs">
         <label class="control-label ">Obs:</label> 
 
         <input 	id="obs" type="text" class="form-control" name='obs'
                 value="<?php echo $servico->get_obs() ?>">
+
+    </div>
+    
+    <div class="control-group col-md-2">
+        <label class="control-label">Vendedor</label>
+
+        <select  name="id_vendedor" id="id_vendedor" class="form-control meu_chosen" >
+            <option value="" >Selecione</option>
+            <?php
+            foreach ($vendedores as $vendedor):
+                echo "<option value='{$vendedor->id}' ";
+                if ($vendedor->id == $servico->get_id_vendedor())
+                    echo "selected='selected'";
+                echo ">";
+                echo $vendedor->nome;
+                echo "</option>";
+            endforeach;
+            ?>
+        </select>
 
     </div>
 

@@ -47,8 +47,11 @@ class Relatorio_manager extends CI_Model {
            $servico->set_data($valor->data);
            $servico->set_estado($valor->estado);
            $servico->set_tipo($valor->tipo);
+           $servico->set_id_vendedor($valor->id_vendedor);
            $servico->set_porcentagem_comissao($valor->porcentagem_comissao);
+           
            $cliente->set_nome($valor->nome_cliente);
+           
            
            $produto->set_nome($valor->nome_produto);
            $produto->set_id_fornecedor($valor->id_fornecedor);
@@ -104,6 +107,10 @@ class Relatorio_manager extends CI_Model {
        
        if($post['tipo']):
             $this->db->where('s.tipo', $post['tipo']);
+       endif;
+       
+       if($post['id_vendedor']):
+            $this->db->where('s.id_vendedor', $post['id_vendedor']);
        endif;
         if($post['ordenado_por']):
            $ordem=array('cliente'=>'c.nome', 'produto'=>'p.nome','data'=>'s.data','id_servico'=>'s.id_servico');

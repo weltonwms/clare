@@ -70,6 +70,10 @@ class Servico_manager extends Generic_manager {
 
         return $retorno;
     }
+    
+    public function get_vendedores(){
+        return $this->db->get('vendedor')->result();
+    }
 
     protected function get_model() {
          $this->load->model('servico/Servico_model');

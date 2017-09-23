@@ -58,6 +58,7 @@ class Servico extends CI_Controller{
         $dados['clientes']=  $this->Cliente_manager->get_clientes();
         $dados['produtos']=  $this->Produto_manager->get_produtos();
         $dados['servico']=$this->Servico_manager->get_servico($id_servico);
+        $dados['vendedores']=$this->Servico_manager->get_vendedores();
         $this->carrega_view('servico/edicao_servico',$dados);
     }
     

@@ -37,7 +37,7 @@ class Servico_composite extends CI_Model{
     
     public function get_nome_vendedor(){
         
-        $nomes=array(1=>'Glauber',2=>"Maurício",3=>"Paulo",''=>""); //substituir por model vendedor;
+        $nomes=array(0=>'',1=>'Glauber',2=>"Maurício",3=>"Paulo",''=>""); //substituir por model vendedor;
         return $nomes[$this->get_id_vendedor()];
     }
     

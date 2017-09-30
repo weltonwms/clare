@@ -25,7 +25,7 @@ $(document).ready(function () {
 
     });
 
-    $("#tabela").on('click', '.btn_imprimir', function (e) {
+    $("body").on('click', '.btn_imprimir', function (e) {
         var estado = $(this).attr('data-estado');
         var id_servico = $(this).attr('data-id_servico');
         if (estado == 1) {
@@ -38,12 +38,12 @@ $(document).ready(function () {
     });
 
     $("#form_imprimir_servico").submit(function (event) {
-          //alert( "Handler for .submit() called." );
-  //event.preventDefault();
+        //alert( "Handler for .submit() called." );
+        //event.preventDefault();
         $("#modal_imprimir_servico").modal('hide');
     });
-    
-    $("#tabela_ajax_servico").on('click','.confirm',function(){
+
+    $("#tabela_ajax_servico").on('click', '.confirm', function () {
         alert("confirm");
     });
 
@@ -51,3 +51,22 @@ $(document).ready(function () {
 
 
 });
+
+function gatilhoTabela() {
+    $('.estado:contains("Orçamento")').addClass('text-danger');
+    $('.estado:contains("Executado")').addClass('text-success');
+     $(".confirm_servico").confirm({
+                text : "Deseja realmente excluir este Serviço?",
+		title : "  Exclusão de Serviço",
+		confirmButton : " Excluir",
+		cancelButton : " Cancelar"
+        });
+    $(".confirm_executar_servico").confirm({
+		text : "Avançar o Estado deste Serviço?",
+		title : " Mudar Estado do Serviço",
+		confirmButton : " Confirma",
+                classIconConfirmButton : "glyphicon glyphicon-ok",
+                classConfirmButton : "btn btn-primary",
+		cancelButton : " Cancelar"
+	});
+}

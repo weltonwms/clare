@@ -26,95 +26,22 @@
 <!--inicio da tabela com lista de servicos-->
 
 
-<table id="tabela" data-order='[[ 0, "desc" ]]'
+<table id="tabela-ajax" 
        class="table table-bordered table-striped custab table-condensed">
-    <thead>
-        <tr class="text-primary">
-            <th class="col-md-1">Cód Serv</th>
-            <th>Cliente</th>
-
-
-            <th>Data</th>
-            <th>Estado</th>
-            <th>Tipo</th>
-             <th>Vendedor</th>
-            <th >
-                Ação
-            </th>
-
-
-        </tr>
-    </thead>
+     <thead>
+            <tr>
+                <th>Cód Sv</th>
+                <th>Cliente</th>
+                <th>Data</th>
+                <th>Estado</th>
+                <th>Tipo</th>
+                <th>Vendedor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
 
     <tbody>
-            <?php
-        if ($servicos):
-            
-            foreach ($servicos as $servico):
-                ?>
-                <tr>
-                    <td>
-                        <a href="#" class="detalhe_servico" 
-                           data-id_servico="<?php echo $servico->get_id_servico(); ?>">
-                               <?php echo $servico->get_id_servico(); ?>
-                        </a>
-                    </td>
-                    <td><?php echo $servico->get_nome_cliente(); ?></td>
-
-
-                    <td><?php echo $servico->get_data(); ?></td>
-                    <td class="estado">
-                        <?php echo $servico->get_nome_estado();
-                        if ($servico->get_estado() != 2):
-                            ?>
-                            <a class="confirm_executar_servico" 
-                                data-toggle="tooltip" title="Avançar Estado do Serviço"
-                               href="<?php echo base_url('servico/executar_servico') . '/' . $servico->get_id_servico() ?>">
-                                <span class='glyphicon glyphicon-ok'></span>
-                            </a>
-        <?php endif; ?>
-                  
-
-
-                    </td>
-                    <td><?php echo $servico->get_nome_tipo(); ?></td>
-                      <td>
-                        <?php echo $servico->get_nome_vendedor() ?>
-                    </td>
-                    <td class="">
-                       
-                        <a target="_blank" class="btn_imprimir btn btn-default" 
-                           data-id_servico="<?php echo $servico->get_id_servico(); ?>"
-                           data-estado="<?php echo $servico->get_estado(); ?>"
-                           data-toggle="tooltip"
-                           title="Imprimir"
-                           href="<?php echo base_url('servico/imprimir') . '/' . $servico->get_id_servico() ?>">
-                            <span class="glyphicon glyphicon-print"></span> 
-                         
-                        </a>
-                           
-                   
-                        <a class="btn btn-default"
-                            data-toggle="tooltip"
-                           title="Editar"
-                            href="<?php echo base_url('servico/editar') . '/' . $servico->get_id_servico() ?>">
-                            <span class="glyphicon glyphicon-pencil"></span> 
-                        </a>
-                   
-                        <a class="confirm_servico btn btn-danger" 
-                            data-toggle="tooltip"
-                           title="Excluir"
-                           href="<?php echo base_url('servico/excluir') . '/' . $servico->get_id_servico() ?>">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>
-                    </td>
-
-                </tr>
-                <?php
-            endforeach;
-            
-        endif;
-        ?>
+           
 
        
     </tbody>
@@ -186,10 +113,3 @@
 
 
 
-<script>
-    $('.estado:contains("Orçamento")').addClass('text-danger');
-    $('.estado:contains("Executado")').addClass('text-success');
-    
-</script>
-
-<?php // echo "<pre>"; print_r($servicos);

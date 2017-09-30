@@ -25,6 +25,7 @@ class Servico_dao extends Generic_dao {
         $this->db->select("*");
         $this->db->from("servico s");
         $this->db->join("cliente c", "s.id_cliente=c.id_cliente", "left");
+        $this->db->order_by('s.id_servico','desc');
     }
      
     protected function get_componentes_composite() {

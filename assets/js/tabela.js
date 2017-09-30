@@ -25,16 +25,16 @@ $(document).ready(function () {
             }
         }
     }); //fechamento datatable #tabela
-    
-      $('#tabela_ajax_servico').dataTable({
+
+    $('#tabela_ajax_servico').dataTable({
         "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-       "processing": true, 
-        "serverSide": true, 
-        "pageLength":5,
-         "ajax": {
-            "url": base_url+"servico/teste1",
+        "iDisplayLength": 25,
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": base_url + "servico/teste1",
             "type": "POST"
         },
         "bStateSave": true,
@@ -57,6 +57,96 @@ $(document).ready(function () {
             }
         }
     }); //fechamento datatable #tabela_ajax_servico
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $('#tabela-ajax').DataTable({
+        "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+        "iDisplayLength": 25,
+        "ajax": base_url + "servico/ajax",
+        "columns": [
+            {"data": "id"},
+            {"data": "cliente"},
+            {"data": "data"},
+            {"data": "estado"},
+            {"data": "tipo"},
+            {"data": "vendedor"},
+            {"data": "acoes"}
+        ],
+        "order": [0, 'desc'],
+        drawCallback: gatilhoTabela,
+        "bStateSave": true,
+        "columnDefs": [{
+                "targets": [-1],
+                "orderable": false
+            }],
+         processing:true,
+        oLanguage: {
+            
+            'sProcessing': "<div id='loader'>Carregando...</div>",
+            "sSearch": "<span class='glyphicon glyphicon-search'></span> Pesquisar: ",
+            "sLengthMenu": "Mostrar _MENU_ registros por página",
+            "sZeroRecords": "Nenhum registro encontrado",
+            "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+            "sInfoEmpty": "<span class='text-danger'>Mostrando 0 / 0 de 0 registros</span>",
+            "sInfoFiltered": "<span class='text-danger'>(filtrado de _MAX_ registros)</span>",
+            "oPaginate": {
+                "sFirst": "Início",
+                "sPrevious": "Anterior",
+                "sNext": "Próximo",
+                "sLast": "Último"
+            }
+        }
+       
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

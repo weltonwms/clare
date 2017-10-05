@@ -1,4 +1,4 @@
-<?php echo "<script src='" . base_url('assets/plugins/jquery.confirm.js') . "'></script>"; ?>
+<?php echo "<script src='" . base_url('assets/plugins/jquery.confirm2.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/js/tabela.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/js/manter_servico.js') . "'></script>"; ?>

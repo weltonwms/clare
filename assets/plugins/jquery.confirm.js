@@ -100,7 +100,7 @@
         modal.on('shown', function () {
             modal.find(".btn-primary:first").focus();
         });
-        modal.on('hidden', function () {
+        modal.on('hide.bs.modal', function () {
             modal.remove();
         });
         modal.find(".confirm").click(function () {

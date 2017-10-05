@@ -24,12 +24,7 @@ $(document).ready(function() {
 	});
         
         
-        $(".confirm_servico").confirm({
-                text : "Deseja realmente excluir este Serviço?",
-		title : "  Exclusão de Serviço",
-		confirmButton : " Excluir",
-		cancelButton : " Cancelar"
-        });
+        
         
          $(".confirm_anotacao").confirm({
                 text : "Deseja realmente excluir esta Anotação?",
@@ -46,14 +41,6 @@ $(document).ready(function() {
 		cancelButton : " Cancelar"
 	});
         
-         $(".confirm_executar_servico").confirm({
-		text : "Avançar o Estado deste Serviço?",
-		title : " Mudar Estado do Serviço",
-		confirmButton : " Confirma",
-                classIconConfirmButton : "glyphicon glyphicon-ok",
-                classConfirmButton : "btn btn-primary",
-		cancelButton : " Cancelar"
-	});
         
        
 });

@@ -219,3 +219,7 @@ div.modal-dialog.largura_ideal{
 a.detalhe_cliente{
     color:black;
 }
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #e4e4e4;
+}

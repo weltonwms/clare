@@ -10,8 +10,13 @@ abstract class Generic_model extends CI_Model{
         $skips = array($identificador);
         $dados = $this->carrega_dados($skips);
         $this->db->insert($this->tabela, $dados);
-        if ($this->db->affected_rows() > 0) {
-            return $this->db->insert_id();
+        $nr_affected_rows=$this->db->affected_rows();
+        if ($nr_affected_rows > 0) {
+            $insert_id=$this->db->insert_id();
+            $identificador=  $this->get_identificador();
+            $this->$identificador=$insert_id;
+            $this->after_save($dados,$nr_affected_rows);
+            return $insert_id;
         }
         return;
     }
@@ -22,9 +27,12 @@ abstract class Generic_model extends CI_Model{
         $dados = $this->carrega_dados($skips);
         $this->db->where($identificador, $this->$identificador);
         $this->db->update($this->tabela, $dados);
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
+        $nr_affected_rows=$this->db->affected_rows();
+        $this->after_save($dados,$nr_affected_rows); //mesmo que não haja alteração a função after_save é chamada
+        if ($nr_affected_rows > 0) {
+           return TRUE;
         }
+         
         return;
     }
     
@@ -49,6 +57,10 @@ abstract class Generic_model extends CI_Model{
             $dados[$key] = $this->$key;
         endforeach;
         return $dados;
+    }
+    
+    protected function after_save($dados,$nr_affected_rows){
+        return true;
     }
     
     

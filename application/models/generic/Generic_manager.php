@@ -5,7 +5,7 @@ abstract class Generic_manager extends CI_Model {
     public function salvar($post) {
         $retorno = array();
         $nome_id = $this->get_nome_id();
-        if ($post[$nome_id]) {
+        if (isset($post[$nome_id]) && $post[$nome_id]) {
             $retorno['status'] = (int) $this->alterar($post);
             $retorno['acao_executada'] = 'alteracao';
         } else {

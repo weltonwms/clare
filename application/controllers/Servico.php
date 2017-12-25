@@ -48,8 +48,8 @@ class Servico extends CI_Controller {
         //$servico = $servicos[0];
         foreach ($servicos as $servico):
             $arr = array();
-            
-            $arr['id'] = $servico->get_id_servico(). " <a class='detalhe_servico' href='' data-id_servico='{$servico->get_id_servico()}'><span class='glyphicon glyphicon-eye-open'> </span></a>";
+
+            $arr['id'] = $servico->get_id_servico() . " <a class='detalhe_servico' href='' data-id_servico='{$servico->get_id_servico()}'><span class='glyphicon glyphicon-eye-open'> </span></a>";
             $arr['cliente'] = $servico->get_nome_cliente();
             $arr['data'] = $servico->get_data();
             $arr['estado'] = "<span class='estado'>{$servico->get_nome_estado()}</span>";
@@ -61,12 +61,12 @@ class Servico extends CI_Controller {
             $arr['tipo'] = $servico->get_nome_tipo();
             $arr['vendedor'] = $servico->get_nome_vendedor();
             $arr['extn'] = $servico->get_id_servico();
-             $arr['acoes'] = ' <a target="_blank" class="btn_imprimir btn btn-default" 
-                           data-id_servico="'. $servico->get_id_servico().'"'.
-                           'data-estado="'.$servico->get_estado().'"'.
-                           'data-toggle="tooltip"
+            $arr['acoes'] = ' <a target="_blank" class="btn_imprimir btn btn-default" 
+                           data-id_servico="' . $servico->get_id_servico() . '"' .
+                    'data-estado="' . $servico->get_estado() . '"' .
+                    'data-toggle="tooltip"
                            title="Imprimir"
-                           href="'.base_url('servico/imprimir') . '/' . $servico->get_id_servico().'">
+                           href="' . base_url('servico/imprimir') . '/' . $servico->get_id_servico() . '">
                             <span class="glyphicon glyphicon-print"></span> 
                            </a>
                            
@@ -74,16 +74,27 @@ class Servico extends CI_Controller {
                         <a class="btn btn-default"
                             data-toggle="tooltip"
                            title="Editar"
-                            href="'. base_url('servico/editar') . '/' . $servico->get_id_servico().'">
+                            href="' . base_url('servico/editar') . '/' . $servico->get_id_servico() . '">
                             <span class="glyphicon glyphicon-pencil"></span> 
                         </a>
-                   
+                        
+                        <span title="Pagamentos" data-toggle="tooltip">
+                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal"
+                            
+                            data-id_servico="'.$servico->get_id_servico().'" >
+                            <span class="glyphicon glyphicon-usd"></span>
+                         </a>
+                         </span>
+                         
                         <a class="confirm_servico btn btn-danger" 
                             data-toggle="tooltip"
-                           
-                           href="'.base_url('servico/excluir') . '/' . $servico->get_id_servico().'">
+                            title="Excluir"
+                           href="' . base_url('servico/excluir') . '/' . $servico->get_id_servico() . '">
                             <span class="glyphicon glyphicon-trash"></span>
-                        </a>';
+                        </a>
+                        
+
+                        ';
             $dados['data'][] = $arr;
 
         endforeach;
@@ -91,7 +102,7 @@ class Servico extends CI_Controller {
         exit();
     }
 
-    public function salvar_servico()
+    public function salvar_servico($redirect_back=null)
     {
 
         $retorno = $this->Servico_manager->salvar($this->input->post());
@@ -103,7 +114,15 @@ class Servico extends CI_Controller {
             $this->session->set_flashdata('status', 'danger');
             $this->session->set_flashdata('msg_confirm', 'Não foi Possível Salvar Serviço!');
         }
-        redirect(base_url('servico'));
+        
+        if($redirect_back):
+            $id_servico=$retorno['acao_executada']=='cadastro'?$retorno['status']:$this->input->post('id_servico');
+            redirect(base_url("servico/editar/$id_servico"));
+        else:
+            //exit('redirecionar para servicos');
+            redirect(base_url('servico'));
+        endif;
+        
     }
 
     public function editar($id_servico = null)
@@ -201,6 +220,23 @@ class Servico extends CI_Controller {
         $dados['servico'] = $this->Servico_manager->get_servico($id_servico);
         $this->load->view('servico/servico_detalhado_ajax', $dados);
     }
+
+   
+    public function x3($id_servico)
+    {
+        
+        $x = $this->Servico_manager->get_servico($id_servico);
+        $dados['id_servico'] = $x->get_id_servico();
+        $dados['cliente_nome'] = $x->get_nome_cliente();
+        $dados['total_venda'] = number_format($x->get_total_geral_venda(), 2, ",", ".");
+        $dados['total_pago'] = number_format($x->get_soma_pagamentos(), 2, ",", ".");
+        $restante=$x->get_total_geral_venda()-$x->get_soma_pagamentos();
+        $dados['total_restante'] = number_format($restante, 2, ",", ".");
+        $dados['pagamentos'] = $x->get_array_pagamentos();
+        echo json_encode($dados);
+     }
+
+   
 
     public function teste1()
     {

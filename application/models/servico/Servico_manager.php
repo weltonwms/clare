@@ -23,9 +23,8 @@ class Servico_manager extends Generic_manager {
 
     public function executar_servico($id_servico) {
          $servico=  $this->get_servico($id_servico);
-        if($servico->get_estado()!=2):
-            $this->load->model('servico/Servico_model', 'servico');
-            return $this->servico->executar_servico($servico);
+         if($servico->get_estado()!=2):
+            return $servico->executar_servico();
         endif;
     }
 

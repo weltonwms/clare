@@ -41,17 +41,38 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                         type="submit" class="btn btn-default limpa_state" id="Clonar">
                     <span class=" text-danger glyphicon glyphicon-heart"></span> Clonar
                 </button>
+            
+                 <span title="Pagamentos" data-toggle="tooltip">
+                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal"
+                            
+                           data-id_servico="<?php echo $servico->get_id_servico()?>">
+                            <span class="glyphicon glyphicon-usd"></span>
+                         </a>
+              </span>
+            
             <?php endif; ?>
+            <button formaction="<?php echo base_url('servico/salvar_servico/redirect_back') ?>"
+                    type="submit" 
+                    class="btn btn-success" 
+                    id="salvar_redirect_back">
+                <span class="glyphicon glyphicon-save"></span> Salvar
+            </button>
+            
             <button formaction="<?php echo base_url('servico/salvar_servico') ?>"
                     type="submit" 
-                    class="btn btn-success <?php echo $class_limpa ?>" 
+                    class="btn btn-default <?php echo $class_limpa ?>" 
                     id="salvar">
-                <span class="glyphicon glyphicon-save"></span> Salvar e Fechar
+                <span class="glyphicon glyphicon-ok"></span> Salvar e Fechar
             </button>
+            
+           
+            
+            
             <a href="<?php echo base_url('servico') ?>"
                class="btn btn-default">
                 <span class="glyphicon glyphicon-arrow-left"></span> Voltar
             </a>
+             
 
         </div>
     </div>
@@ -105,7 +126,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
     <div class="control-group col-md-3">
         <label class="control-label ">Forma Pagamento</label> 
 
-        <input 	id="forma_pagamento" type="text" class="form-control" name='forma_pagamento'
+        <input 	readonly="readonly" id="forma_pagamento" type="text" class="form-control" name='forma_pagamento'
                 value="<?php echo $servico->get_forma_pagamento() ?>">
 
     </div>
@@ -289,6 +310,16 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
 <br><br><br><br>
 <div class="row">
     <div class="col-md-12" style="">
+        <?php
+$total_pago = $servico->get_soma_pagamentos();
+$restante_pagar = $servico->get_total_geral_venda() - $total_pago;
+?>
+        <br>
+        <button class="btn btn-default"> Total Pago: R$: <span class="total_pago"><?php echo number_format($total_pago, 2, ",", "."); ?></span></button>
+        <button class="btn btn-default"> Restante a Pagar: R$: <span class="total_restante"><?php echo number_format($restante_pagar, 2, ",", ".") ?></span></button>
+        
+        
+        
         <btn href="<?php echo base_url('') ?>" type="button"
              id="btn_adicionar_item_servico" class="btn btn-default navbar-right"> <span
                 class="glyphicon glyphicon-plus"></span> Novo Item
@@ -370,7 +401,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
         </table>
     </div>
 </div>
-
+<?php $this->load->view('servico/pagamentos')?>
 <script>
 
 

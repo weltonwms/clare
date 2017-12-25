@@ -1,6 +1,7 @@
 <?php echo "<script src='" . base_url('assets/plugins/jquery.confirm2.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/js/tabela.js') . "'></script>"; ?>
+<?php echo "<script src='" . base_url('assets/plugins/jquery.mask.js') . "'></script>";?> <!--utilizado em pagamentos.js -->
 <?php echo "<script src='" . base_url('assets/js/manter_servico.js') . "'></script>"; ?>
 
 <legend>Lista de Servicos</legend>
@@ -17,7 +18,7 @@
     <div class="col-md-12">
         <a href="<?php echo base_url('servico/editar') ?>" type="button"
            class="btn btn-success navbar-right"> <span
-                class="glyphicon glyphicon-plus"></span> Novo Servico
+           class="glyphicon glyphicon-plus"></span> Novo Servico
          </a>
         <br><br>
     </div>
@@ -26,8 +27,10 @@
 <!--inicio da tabela com lista de servicos-->
 
 
+
+<?php $this->load->view('servico/pagamentos')?>
 <table id="tabela-ajax" 
-       class="table table-bordered table-striped custab table-condensed">
+       class="table table-bordered table-striped custab table-condensed table-hover">
      <thead>
             <tr>
                 <th>Cód Sv</th>

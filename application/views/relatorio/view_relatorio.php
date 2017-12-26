@@ -5,7 +5,7 @@ echo link_tag(array('href' => 'assets/plugins/chosen/chosen.css', 'rel' => 'styl
 echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'></script>";
 echo "<script src='" . base_url('assets/js/validacao_relatorio.js') . "'></script>";
 ?>
-<legend>Relatório <a class="click_esconde" href="#"><span class="caret"</span></a></legend>
+<legend>Relatório Prod/Svc <a class="click_esconde" href="#"><span class="caret"</span></a></legend>
 
 <form id='form_relatorio' action="<?php echo base_url('relatorio/gerar_relatorio') ?>" method="post">
 

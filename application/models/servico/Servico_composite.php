@@ -6,6 +6,8 @@ class Servico_composite extends CI_Model {
     private $itens_servico; //array de objetos tipo Item_servico_model
     private $pagamentos; //array de objetos tipo Pagamento_model
     private $cliente; //objeto Cliente_model
+    private $total_geral_venda; //atributo para usar pattern single
+    private $total_geral_fornecedor; //atributo para usar pattern single
 
     public function __construct()
     {
@@ -28,7 +30,7 @@ class Servico_composite extends CI_Model {
     {
         $this->itens_servico = $itens_servico;
     }
-    
+
     public function executar_servico()
     {
         $this->servico->executar_servico();
@@ -136,7 +138,7 @@ class Servico_composite extends CI_Model {
 
     public function get_soma_pagamentos()
     {
-         $soma = 0;
+        $soma = 0;
         foreach ($this->get_pagamentos() as $pagamento):
             $soma+=$pagamento->get_valor_pago();
         endforeach;
@@ -164,20 +166,30 @@ class Servico_composite extends CI_Model {
 
     public function get_total_geral_venda()
     {
-        $soma = 0;
-        foreach ($this->get_itens_servico() as $item):
-            $soma+=$item->get_total_venda();
-        endforeach;
-        return $soma;
+        //não use isso se for forçar uma nova soma em tempo de execução.
+        //Isso é para não utilizar cache sem ficar somando de novo.
+        if (!$this->total_geral_venda):
+            $soma = 0;
+            foreach ($this->get_itens_servico() as $item):
+                $soma+=$item->get_total_venda();
+            endforeach;
+            $this->total_geral_venda = $soma;
+        endif;
+        return $this->total_geral_venda;
     }
 
     public function get_total_geral_fornecedor()
     {
-        $soma = 0;
-        foreach ($this->get_itens_servico() as $item):
-            $soma+=$item->get_total_fornecedor();
-        endforeach;
-        return $soma;
+        //não use isso se for forçar uma nova soma em tempo de execução.
+        //Isso é para não utilizar cache sem ficar somando de novo.
+        if (!$this->total_geral_fornecedor):
+            $soma = 0;
+            foreach ($this->get_itens_servico() as $item):
+                $soma+=$item->get_total_fornecedor();
+            endforeach;
+            $this->total_geral_fornecedor = $soma;
+        endif;
+        return $this->total_geral_fornecedor;
     }
 
 }

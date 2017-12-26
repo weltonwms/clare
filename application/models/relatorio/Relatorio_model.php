@@ -3,6 +3,7 @@
 
 class Relatorio_model extends CI_Model{
   private $itens_servico; //lista de Item_servico_composite
+  private $pagamentos; //lista de Pagamento_composite
   
   function __construct() {
       parent::__construct();
@@ -12,8 +13,16 @@ class Relatorio_model extends CI_Model{
       $this->itens_servico=$itens_servico;
   }
   
+  public function set_pagamentos(array $pagamentos){
+      $this->pagamentos=$pagamentos;
+  }
+  
   public function get_itens_servico(){
       return $this->itens_servico;
+  }
+  
+  public function get_pagamentos(){
+      return $this->pagamentos;
   }
   
   public function get_total_geral(){
@@ -42,6 +51,16 @@ class Relatorio_model extends CI_Model{
   
   public function get_total_lucro_formatado(){
       return "R$ ". number_format($this->get_total_lucro(),2,',','.');
+  }
+  
+  public function get_total_pago(){
+      
+      $valor=0;
+      foreach ($this->pagamentos as $pagamento):
+          $valor+=$pagamento->get_valor_pago();
+      endforeach;
+      return $valor;
+      
   }
 
 }

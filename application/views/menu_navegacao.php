@@ -19,18 +19,28 @@ $x7 = isset($active) && $active == 'anotacao' ? 'active' : '';
                     <span class="icon-bar"></span>
                 </button>
                 <ul class="nav navbar-nav">
-                <li class="<?php echo $x1 ?>"><a class="navbar-brand" href="<?php echo base_url('home') ?>">Home</a></li>
+                    <li class="<?php echo $x1 ?>"><a class="navbar-brand" href="<?php echo base_url('home') ?>">Home</a></li>
                 </ul>
             </div>
             <div class="collapse navbar-collapse" id="clare-collapse-1">
                 <ul class="nav navbar-nav">
-                    
+
                     <li class="<?php echo $x2 ?>"><a href="<?php echo base_url('cliente') ?>" class="limpa_state">Cliente</a></li>
                     <li class="<?php echo $x3 ?>"><a href="<?php echo base_url('fornecedor') ?>" class="limpa_state">Fornecedor</a></li>
                     <li class="<?php echo $x4 ?>"><a href="<?php echo base_url('produto') ?>" class="limpa_state">Produto</a></li>
                     <li class="<?php echo $x5 ?>"><a href="<?php echo base_url('servico') ?>" class="limpa_state">Serviço</a></li>
-                    <li class="<?php echo $x6 ?>"><a href="<?php echo base_url('relatorio') ?>">Emitir Relatório</a></li>
+
+                    <li class="dropdown <?php echo $x6 ?>">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Emitir Relatório <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo base_url('relatorio') ?>">Prod/Sv</a></li>
+                            <li><a href="<?php echo base_url('relatorio/fluxo') ?>">Fluxo</a></li>
+                        </ul>
+                    </li>
+
                     <li class="<?php echo $x7 ?>"><a href="<?php echo base_url('anotacao') ?>" class="limpa_state">Anotações</a></li>
+
+
                 </ul>
 
                 <div class="navbar-right">

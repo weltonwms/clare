@@ -158,6 +158,14 @@ class Servico_composite extends CI_Model {
         endforeach;
         return $lista;
     }
+    
+    public function get_pagamento($id_pagamento){
+         foreach ($this->get_pagamentos() as $pagamento):
+            if($pagamento->get_id_pagamento()==$id_pagamento):
+                return $pagamento;
+            endif;
+        endforeach;
+    }
 
     public function get_email_cliente()
     {

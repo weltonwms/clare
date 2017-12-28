@@ -1,4 +1,6 @@
+
 <?php echo "<script src='" . base_url('assets/js/pagamentos.js') . "'></script>"; ?>
+
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
@@ -35,6 +37,9 @@
                             <option value="2">Cartão</option>
                             <option value="3">Boleto</option>
                             <option value="4">Cheque</option>
+                            <option value="5">Dep. BB</option>
+                            <option value="6">Dep. Itaú</option>
+                            <option value="7">Dep. Caixa</option>
                         </select> 
                     </div>
 
@@ -54,6 +59,7 @@
                 <table id="pg_tabela" class="table table-condensed table-bordered">
                     <thead>
                         <tr>
+                            <th>id</th>
                             <th>Data</th>
                             <th>Valor Pago</th>
                             <th>Tipo Pagamento</th>
@@ -70,7 +76,8 @@
                 </table>
 
 
-            </div>
+
+            </div><!-- /.modal-body -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 

@@ -310,14 +310,15 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
 <br><br><br><br>
 <div class="row">
     <div class="col-md-12" style="">
-        <?php
+<?php
+if($servico->get_id_servico()):
 $total_pago = $servico->get_soma_pagamentos();
 $restante_pagar = $servico->get_total_geral_venda() - $total_pago;
 ?>
         <br>
         <button class="btn btn-default"> Total Pago: R$: <span class="total_pago"><?php echo number_format($total_pago, 2, ",", "."); ?></span></button>
         <button class="btn btn-default"> Restante a Pagar: R$: <span class="total_restante"><?php echo number_format($restante_pagar, 2, ",", ".") ?></span></button>
-        
+ <?php endif;?>       
         
         
         <btn href="<?php echo base_url('') ?>" type="button"

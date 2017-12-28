@@ -17,7 +17,9 @@ class Pagamento_manager extends Generic_manager {
 
     protected function after_set_objeto($model, $post)
     {
-        $model->set_valor_pago($post['valor_pago'], 1);
+        if(isset($post['valor_pago'])):
+            $model->set_valor_pago($post['valor_pago'], 1);
+        endif;
     }
 
     protected function get_model()

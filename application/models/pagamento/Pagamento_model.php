@@ -55,7 +55,7 @@ class Pagamento_model extends Generic_model {
      public function get_nome_tipo_pagamento()
     {
          if($this->tipo_pagamento):
-             $nomes=array('','Dinheiro','Cartão','Boleto','Cheque');
+             $nomes=array('','Dinheiro','Cartão','Boleto','Cheque','Dep. BB', 'Dep. Itaú','Dep. Caixa');
              return $nomes[$this->tipo_pagamento];
          endif;
         
@@ -99,6 +99,8 @@ class Pagamento_model extends Generic_model {
     {
         $this->tipo_pagamento = $tipo_pagamento;
     }
+    
+   
 
 
 }

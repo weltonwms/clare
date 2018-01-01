@@ -127,41 +127,78 @@ class Servico_composite extends CI_Model {
         return $this->itens_servico;
     }
 
-    public function get_pagamentos()
+    public function get_pagamentos($operacao = NULL)
     {
         if (!$this->pagamentos):
             $pagamentos = $this->Pagamento_dao->get_pagamentos($this->get_id_servico());
             $this->pagamentos = $pagamentos;
         endif;
+        if ($operacao):
+            return $this->separar_pagamentos_por_operacao($operacao);
+        endif;
         return $this->pagamentos;
     }
 
-    public function get_soma_pagamentos()
+    private function separar_pagamentos_por_operacao($operacao)
+    {
+        $lista = array();
+        foreach ($this->pagamentos as $pagamento):
+            if ($pagamento->get_operacao() == $operacao):
+                $lista[] = $pagamento;
+            endif;
+        endforeach;
+        return $lista;
+    }
+
+    public function get_soma_pagamentos($operacao = NULL)
     {
         $soma = 0;
-        foreach ($this->get_pagamentos() as $pagamento):
+        foreach ($this->get_pagamentos($operacao) as $pagamento):
             $soma+=$pagamento->get_valor_pago();
         endforeach;
         return $soma;
     }
 
-    public function get_array_pagamentos()
+    public function get_array_pagamentos($operacao)
     {
         $lista = array();
-        foreach ($this->get_pagamentos() as $pagamento):
+        foreach ($this->get_pagamentos($operacao) as $pagamento):
             $array['id_pagamento'] = $pagamento->get_id_pagamento();
             $array['id_servico'] = $pagamento->get_id_servico();
             $array['data'] = $pagamento->get_data_formatada();
             $array['valor_pago'] = $pagamento->get_valor_pago_formatado();
             $array['tipo_pagamento'] = $pagamento->get_nome_tipo_pagamento();
+            $array['id_fornecedor'] = $pagamento->get_id_fornecedor();
+            $f=$pagamento->get_fornecedor();
+            
+            $nome_fornecedor=$f?$f->get_empresa():'';
+            $array['nome_fornecedor'] = $nome_fornecedor;
             $lista[] = $array;
         endforeach;
+        
+        
         return $lista;
     }
-    
-    public function get_pagamento($id_pagamento){
-         foreach ($this->get_pagamentos() as $pagamento):
-            if($pagamento->get_id_pagamento()==$id_pagamento):
+
+    public function get_array_fornecedores_servico()
+    {
+        $lista_produtos = array();
+        foreach ($this->get_itens_servico() as $item):
+            $lista_produtos[] = $item->get_id_produto();
+        endforeach;
+        $this->load->model('produto/Produto_dao');
+        $produtos_composite = $this->Produto_dao->get_produtos_composite($lista_produtos);
+        $lista_fornecedores = array();
+        foreach ($produtos_composite as $produto):
+            $lista_fornecedores[$produto->get_id_fornecedor()] = $produto->get_nome_fornecedor();
+        endforeach;
+        return $lista_fornecedores;
+    }
+
+    public function get_pagamento($id_pagamento)
+    {
+        foreach ($this->get_pagamentos() as $pagamento):
+            if ($pagamento->get_id_pagamento() == $id_pagamento):
                 return $pagamento;
             endif;
         endforeach;

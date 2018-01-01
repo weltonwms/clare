@@ -36,32 +36,38 @@ $(document).ready(function () {
 
 
     });
+    
+    $('body').on('change','select[name=operacao]',function(event){
+        if(this.value=='2'){
+            $("select[name=id_fornecedor]").show();
+        }
+        else{
+             $("select[name=id_fornecedor]").hide();
+        }
+    });
 
     /************************************************************************
      * Eventos utilizados para Edit in Line na Tabela de Pagamentos
      * **********************************************************************
      */
-    $('body').on('dblclick', '#pg_tabela td', function () {
+    $('body').on('dblclick', '.pg_tabela td', function () {
         var coluna = $(this).index();
         oriVal = $(this).text();
         id_pagamento = $(this).parent().children().eq(0).text();
         switch (coluna) {
-            case 0:
-                alert('vc está na coluna 1');
-                break;
             case 1:
                 $(this).text("");
                 var input = $('#form_pagamento input[name=data]').clone();
                 $(input).appendTo(this).focus();
                 $(this).find('input').val(oriVal);
-                $('#pg_tabela .data').mask("00/00/0000");
+                $('.pg_tabela .data').mask("00/00/0000");
                 break;
             case 2:
                 $(this).text("");
                 var input = $('#form_pagamento input[name=valor_pago]').clone();
                 $(input).appendTo(this).focus();
                 $(this).find('input').val(oriVal);
-                $('#pg_tabela .pg_money').mask('000.000.000.000.000,00', {reverse: true});
+                $('.pg_tabela .pg_money').mask('000.000.000.000.000,00', {reverse: true});
                 break;
             case 3:
                 $(this).text("");
@@ -77,13 +83,13 @@ $(document).ready(function () {
     });
 
 
-    $("#pg_tabela").on('focusout', 'select, input', function () {
+    $(".pg_tabela").on('focusout', 'select, input', function () {
         var $this = $(this);
         $this.parent().text(oriVal);
         $this.remove(); // Don't just hide, remove the element.
     });
 
-    $("#pg_tabela").on('change', 'select, input', function (event) {
+    $(".pg_tabela").on('change', 'select, input', function (event) {
 
         var dados = {};
         dados[$(this).attr('name')] = $(this).val();
@@ -175,9 +181,15 @@ $(document).ready(function () {
                 $('#pg_id_servico').text(data.id_servico);
                 $('#pg_nome_cliente').text(data.cliente_nome);
                 $('#pg_total_venda').text(data.total_venda);
-                $('.total_pago').text(data.total_pago);
-                $('.total_restante').text(data.total_restante);
-                carrega_tabela(data.pagamentos);
+                 $('#pg_total_fornecedor').text(data.total_fornecedor);
+                $('.total_pago_credito').text(data.total_pago_credito);
+                $('.total_restante_credito').text(data.total_restante_credito);
+                $('.total_pago_debito').text(data.total_pago_debito);
+                $('.total_restante_debito').text(data.total_restante_debito);
+                carrega_tabela_credito(data.pagamentos_credito);
+                carrega_tabela_debito(data.pagamentos_debito);
+                carrega_fornecedores(data.fornecedores);
+                
             },
             error: function () {
                 escreve_msg('Ocorreu um erro no Servidor', 'danger')
@@ -187,23 +199,50 @@ $(document).ready(function () {
 
 
     }
+    
+    function carrega_fornecedores(fornecedores){
+        var string="<option value=''>Fornecedores</option>";
+        $.each(fornecedores,function(key, forn){
+            string+='<option value="'+key+'" >'+forn+'</option>';
+        });
+        $("select[name='id_fornecedor']").html(string);
+    }
 
-    function carrega_tabela(pagamentos) {
+    function carrega_tabela_credito(pagamentos) {
         var string = '';
         $.each(pagamentos, function (key, pag) {
             string += '<tr>' +
                     '<td>' + pag.id_pagamento + '</td>' +
                     '<td>' + pag.data + '</td>' +
                     '<td>' + pag.valor_pago + '</td>' +
-                    '<td class="td_tipo_pagamento">' + pag.tipo_pagamento + '</td>' +
+                    '<td>' + pag.tipo_pagamento + '</td>' +
                     '<td><a href="#" ' + 'data-id_pagamento="' + pag.id_pagamento + ' " ' +
                     'class="text-danger exclusao_pagamento"><span class="glyphicon glyphicon-trash"></span></a> </td>' +
                     '</tr>';
 
         });
         
-        $("#pg_tabela tbody").html(string);
-        $('#pg_tabela tr').find('td:eq(0),th:eq(0)').hide();
+        $("#pg_tabela_credito tbody").html(string);
+        $('#pg_tabela_credito tr').find('td:eq(0),th:eq(0)').hide();
+    }
+    
+    function carrega_tabela_debito(pagamentos){
+        var string = '';
+        $.each(pagamentos, function (key, pag) {
+            string += '<tr>' +
+                    '<td>' + pag.id_pagamento + '</td>' +
+                    '<td>' + pag.data + '</td>' +
+                    '<td>' + pag.valor_pago + '</td>' +
+                    '<td>' + pag.tipo_pagamento + '</td>' +
+                     '<td>' + pag.nome_fornecedor + '</td>' +
+                    '<td><a href="#" ' + 'data-id_pagamento="' + pag.id_pagamento + ' " ' +
+                    'class="text-danger exclusao_pagamento"><span class="glyphicon glyphicon-trash"></span></a> </td>' +
+                    '</tr>';
+
+        });
+        
+        $("#pg_tabela_debito tbody").html(string);
+        $('#pg_tabela_debito tr').find('td:eq(0),th:eq(0)').hide();
     }
 
     function limpa_form() {
@@ -211,6 +250,9 @@ $(document).ready(function () {
         $("#pg_data").val(getDateNow());
         $("input[name=valor_pago]").val('');
         $("select[name=tipo_pagamento]").val('');
+        $("select[name=operacao]").val('');
+        $("select[name=id_fornecedor]").val('');
+        $("select[name=id_fornecedor]").hide();
     }
 
     function escreve_msg(msg, tipo) {

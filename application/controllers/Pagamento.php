@@ -20,7 +20,10 @@ class Pagamento extends CI_Controller {
         $this->valida_cadastro($id_servico);
         $dados = $this->input->post();
         $dados['id_servico'] = $id_servico;
-
+        if ($dados['operacao'] == 1):
+            unset($dados['id_fornecedor']);
+        endif;
+        //unset($dados['fornecedor']);
         $this->Pagamento_manager->salvar($dados);
     }
 
@@ -40,20 +43,48 @@ class Pagamento extends CI_Controller {
     {
 
         $msg = '';
-        if (!$this->input->post('valor_pago') || !$this->input->post('tipo_pagamento')):
+        if (!$this->input->post('valor_pago') || !$this->input->post('tipo_pagamento') || !$this->input->post('operacao')):
             $msg = "Dados Requeridos não Preenchidos";
             return $this->saida_http($msg, 400);
         endif;
 
         $this->load->model('servico/Servico_dao');
         $servico = $this->Servico_dao->get_servico_composite($id_servico);
-        $soma_pagamentos = $servico->get_soma_pagamentos();
+        if ($this->input->post('operacao') == 1):
+            return $this->valida_cadastro_credito($servico);
+        else:
+            return $this->valida_cadastro_debito($servico);
+        endif;
+    }
+
+    public function valida_cadastro_credito($servico)
+    {
+        $soma_pagamentos = $servico->get_soma_pagamentos(CREDITO);
         $total_venda = $servico->get_total_geral_venda();
         $request_valor = moneyBrToUsd($this->input->post('valor_pago'));
         if (($request_valor + $soma_pagamentos) > $total_venda):
             $msg = "Valores Pagos maiores que a Venda<br>";
             $restante = $total_venda - $soma_pagamentos;
             $msg.="Faltam $restante a ser pago";
+            return $this->saida_http($msg, 400);
+
+        endif;
+    }
+
+    public function valida_cadastro_debito($servico)
+    {
+        if (!$this->input->post('id_fornecedor')):
+            $msg = "Necessário informar Fornecedor em Débitos";
+            return $this->saida_http($msg, 400);
+        endif;
+
+        $soma_pagamentos = $servico->get_soma_pagamentos(DEBITO);
+        $total_fornecedor = $servico->get_total_geral_fornecedor();
+        $request_valor = moneyBrToUsd($this->input->post('valor_pago'));
+        if (($request_valor + $soma_pagamentos) > $total_fornecedor):
+            $msg = "Valores Pagos maiores que total Débito Fornecedor<br>";
+            $restante = $total_fornecedor - $soma_pagamentos;
+            $msg.="Faltam $restante a ser pago ao(s) fornecedor(es)";
             return $this->saida_http($msg, 400);
 
         endif;
@@ -91,20 +122,50 @@ class Pagamento extends CI_Controller {
         if (isset($post['valor_pago']) && $post['valor_pago']):
             $this->load->model('servico/Servico_dao');
             $servico = $this->Servico_dao->get_servico_composite($post['id_servico']);
-            $soma_pagamentos = $servico->get_soma_pagamentos();
-            $pg_atual=$servico->get_pagamento($post['id_pagamento']);
-            $total_venda = $servico->get_total_geral_venda();
-            $request_valor = moneyBrToUsd($post['valor_pago']);
-            if (($request_valor + ($soma_pagamentos - $pg_atual->get_valor_pago())) > $total_venda):
-                $msg = "Valores Pagos maiores que a Venda<br>";
-                $restante = $total_venda - $soma_pagamentos;
-                $msg.="Faltam $restante a ser pago";
-                return $this->saida_http($msg, 400);
+            $pg_atual = $servico->get_pagamento($post['id_pagamento']);
 
+            if ($pg_atual->get_operacao() == 1):
+               return $this->valida_edicao_credito($servico,$pg_atual,$post);
+            else:
+                return $this->valida_edicao_debito($servico,$pg_atual,$post);
             endif;
-            $post['valor_pago']=  $request_valor;
         endif;
+        return $post;
+
         
+    }
+
+    public function valida_edicao_credito($servico, $pg_atual, $post)
+    {
+        $soma_pagamentos = $servico->get_soma_pagamentos(CREDITO);
+        $total_venda = $servico->get_total_geral_venda();
+
+        $request_valor = moneyBrToUsd($post['valor_pago']);
+        if (($request_valor + ($soma_pagamentos - $pg_atual->get_valor_pago())) > $total_venda):
+            $msg = "Valores Pagos pelo Cliente maiores que a Venda<br>";
+            $restante = $total_venda - $soma_pagamentos;
+            $msg.="Faltam $restante a ser pago pelo Cliente";
+            return $this->saida_http($msg, 400);
+
+        endif;
+        $post['valor_pago'] = $request_valor;
+        return $post;
+    }
+
+    public function valida_edicao_debito($servico, $pg_atual, &$post)
+    {
+        $soma_pagamentos = $servico->get_soma_pagamentos(DEBITO);
+        $total_fornecedor = $servico->get_total_geral_fornecedor();
+
+        $request_valor = moneyBrToUsd($post['valor_pago']);
+        if (($request_valor + ($soma_pagamentos - $pg_atual->get_valor_pago())) > $total_fornecedor):
+            $msg = "Valores Pagos maiores que Total Fornecedor<br>";
+            $restante = $total_fornecedor - $soma_pagamentos;
+            $msg.="Faltam $restante a serem pagos ao Fornecedor";
+            return $this->saida_http($msg, 400);
+
+        endif;
+        $post['valor_pago'] = $request_valor;
         return $post;
     }
 

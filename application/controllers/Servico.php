@@ -229,10 +229,17 @@ class Servico extends CI_Controller {
         $dados['id_servico'] = $x->get_id_servico();
         $dados['cliente_nome'] = $x->get_nome_cliente();
         $dados['total_venda'] = number_format($x->get_total_geral_venda(), 2, ",", ".");
-        $dados['total_pago'] = number_format($x->get_soma_pagamentos(), 2, ",", ".");
-        $restante=$x->get_total_geral_venda()-$x->get_soma_pagamentos();
-        $dados['total_restante'] = number_format($restante, 2, ",", ".");
-        $dados['pagamentos'] = $x->get_array_pagamentos();
+        $dados['total_pago_credito'] = number_format($x->get_soma_pagamentos(CREDITO), 2, ",", ".");
+        $restante_credito=$x->get_total_geral_venda()-$x->get_soma_pagamentos(CREDITO);
+        $dados['total_restante_credito'] = number_format($restante_credito, 2, ",", ".");
+        $dados['pagamentos_credito'] = $x->get_array_pagamentos(CREDITO);
+        
+         $dados['total_fornecedor'] = number_format($x->get_total_geral_fornecedor(), 2, ",", ".");
+         $dados['fornecedores'] = $x->get_array_fornecedores_servico();
+         $dados['pagamentos_debito'] = $x->get_array_pagamentos(DEBITO);
+         $dados['total_pago_debito'] = number_format($x->get_soma_pagamentos(DEBITO), 2, ",", ".");
+         $restante_debito=$x->get_total_geral_fornecedor()-$x->get_soma_pagamentos(DEBITO);
+        $dados['total_restante_debito'] = number_format($restante_debito, 2, ",", ".");
         echo json_encode($dados);
      }
 
@@ -250,9 +257,9 @@ class Servico extends CI_Controller {
 
     public function teste2()
     {
-        $this->load->model('cliente/Cliente_model');
+        $this->load->model('fornecedor/Fornecedor_dao');
         echo "<pre>";
-        print_r($this->Cliente_model->get_atributos());
+        print_r($this->Fornecedor_dao->get_fornecedor(5));
         echo "fal";
     }
 

@@ -312,12 +312,12 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
     <div class="col-md-12" style="">
 <?php
 if($servico->get_id_servico()):
-$total_pago = $servico->get_soma_pagamentos();
+$total_pago = $servico->get_soma_pagamentos(CREDITO);
 $restante_pagar = $servico->get_total_geral_venda() - $total_pago;
 ?>
         <br>
-        <button class="btn btn-default"> Total Pago: R$: <span class="total_pago"><?php echo number_format($total_pago, 2, ",", "."); ?></span></button>
-        <button class="btn btn-default"> Restante a Pagar: R$: <span class="total_restante"><?php echo number_format($restante_pagar, 2, ",", ".") ?></span></button>
+        <button class="btn btn-default"> Total Pago: R$: <span class="total_pago_credito"><?php echo number_format($total_pago, 2, ",", "."); ?></span></button>
+        <button class="btn btn-default"> Restante a Pagar: R$: <span class="total_restante_credito"><?php echo number_format($restante_pagar, 2, ",", ".") ?></span></button>
  <?php endif;?>       
         
         

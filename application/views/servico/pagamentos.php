@@ -11,10 +11,11 @@
             </div>
             <div class="modal-body">
 
-                <div class="row bg-info">
+                <div class="row bg-info info_pagamento">
                     <p class="col-md-3"><b>Serviço Nº:</b> <span id="pg_id_servico"></span></p>
                     <p class="col-md-5"><b>Cliente:</b> <span id="pg_nome_cliente"></span></p>
                     <p class="col-md-4"><b>Total Venda:</b> R$ <span id="pg_total_venda"> </span> </p>
+                     <p class="col-md-offset-8 col-md-4"><b>Total Fornecedor:</b> R$ <span id="pg_total_fornecedor"> </span> </p>
                 </div>
                 <br>
                 <form class="form-inline" id="form_pagamento" method="POST">
@@ -31,7 +32,7 @@
 
                     <div class="form-group">
                         <label class="sr-only" for="">Tipo de Pagameneto</label>
-                        <select name="tipo_pagamento" class="form-control">
+                        <select name="tipo_pagamento" class="form-control input-sm">
                             <option value="">Tipo Pagamento</option>
                             <option value="1">Dinheiro</option>
                             <option value="2">Cartão</option>
@@ -40,6 +41,24 @@
                             <option value="5">Dep. BB</option>
                             <option value="6">Dep. Itaú</option>
                             <option value="7">Dep. Caixa</option>
+                        </select> 
+                    </div>
+                    
+                     <div class="form-group">
+                        <label class="sr-only" for="">Operação</label>
+                        <select name="operacao" class="form-control input-sm">
+                            <option value="">Operação</option>
+                            <option value="1">Crédito</option>
+                            <option value="2">Débito</option>
+                           
+                        </select> 
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="sr-only" for="">Fornecedor</label>
+                        <select name="id_fornecedor" class="form-control input-sm" style="display:none">
+                            
+                           
                         </select> 
                     </div>
 
@@ -52,13 +71,13 @@
                
 
                 <br>
+<span class="label label-success">Crédito</span>
+<button class="btn btn-default btn-sm"> Total Pago: R$:<b> <span class="total_pago_credito"></span></b></button>
+<button class="btn btn-default btn-sm"> Restante a Pagar: R$:<b> <span class="total_restante_credito"></span></b></button>
 
-                <button class="btn btn-default"> Total Pago: R$: <span class="total_pago"></span></button>
-<button class="btn btn-default"> Restante a Pagar: R$: <span class="total_restante"></span></button>
-
-                <table id="pg_tabela" class="table table-condensed table-bordered">
+                <table id="pg_tabela_credito" class="pg_tabela table table-condensed table-bordered">
                     <thead>
-                        <tr>
+                        <tr  class="success">
                             <th>id</th>
                             <th>Data</th>
                             <th>Valor Pago</th>
@@ -70,6 +89,31 @@
 
                     <tbody>
 
+
+                    </tbody>
+
+                </table>
+
+
+<span class="label label-danger">Débito</span>
+<button class="btn btn-default btn-sm"> Total Pago: R$: <b><span class="total_pago_debito">90,00</span></b></button>
+<button class="btn btn-default btn-sm"> Restante a Pagar: R$: <b><span class="total_restante_debito">90,00</span></b></button>
+                <table id="pg_tabela_debito" class="pg_tabela table table-condensed table-bordered">
+                    <thead>
+                        <tr  class="danger">
+                            <th>id</th>
+                            <th>Data</th>
+                            <th>Valor Pago</th>
+                            <th>Tipo Pagamento</th>
+                            <th>Fornecedor</th>
+                            <th>Ações</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                       
+                   
 
                     </tbody>
 

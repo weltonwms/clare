@@ -74,7 +74,7 @@
 </table>
 
 <?php
-$total_pago = $servico->get_soma_pagamentos();
+$total_pago = $servico->get_soma_pagamentos(CREDITO);
 $restante_pagar = $servico->get_total_geral_venda() - $total_pago;
 ?>
 <button data-toggle="popover" class="btn btn-default"> Total Pago: R$: <?php echo number_format($total_pago, 2, ",", "."); ?></button>
@@ -145,7 +145,7 @@ $restante_pagar = $servico->get_total_geral_venda() - $total_pago;
             <th>Tipo</th>
         </tr>
 
-<?php foreach ($servico->get_pagamentos() as $pagamento): ?>
+<?php foreach ($servico->get_pagamentos(CREDITO) as $pagamento): ?>
             <tr>
                 <td><?php echo $pagamento->get_data_formatada() ?></td>
                 <td><?php echo $pagamento->get_valor_pago_formatado() ?></td>

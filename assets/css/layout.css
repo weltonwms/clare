@@ -223,3 +223,10 @@ a.detalhe_cliente{
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: #e4e4e4;
 }
+.info_pagamento p{
+    line-height: 0.5em;
+}
+
+.info_pagamento {
+    padding-top: 9px;
+}

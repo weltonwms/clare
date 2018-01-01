@@ -9,12 +9,14 @@ class Pagamento_model extends Generic_model {
     protected $data;
     protected $valor_pago;
     protected $tipo_pagamento;
+    protected $operacao;
+    protected $id_fornecedor;
+    private $fornecedor; //objeto fornecedor_model utilizado em debitos
     protected $tabela = "pagamento";
 
     function __construct()
     {
         parent::__construct();
-       
     }
 
     public function get_id_pagamento()
@@ -31,8 +33,18 @@ class Pagamento_model extends Generic_model {
     {
         return $this->data;
     }
-    
-    public function get_data_formatada(){
+
+    public function get_fornecedor()
+    {
+        if (!$this->fornecedor && $this->id_fornecedor):
+            $this->load->model('fornecedor/Fornecedor_dao');
+            $this->fornecedor=$this->Fornecedor_dao->get_fornecedor($this->id_fornecedor);
+        endif;
+        return $this->fornecedor;
+    }
+
+    public function get_data_formatada()
+    {
         $date = DateTime::createFromFormat('Y-m-d', $this->data);
         return $date->format('d\/m\/Y');
     }
@@ -41,8 +53,8 @@ class Pagamento_model extends Generic_model {
     {
         return $this->valor_pago;
     }
-    
-     public function get_valor_pago_formatado()
+
+    public function get_valor_pago_formatado()
     {
         return number_format($this->valor_pago, 2, ",", ".");
     }
@@ -51,16 +63,14 @@ class Pagamento_model extends Generic_model {
     {
         return $this->tipo_pagamento;
     }
-    
-     public function get_nome_tipo_pagamento()
+
+    public function get_nome_tipo_pagamento()
     {
-         if($this->tipo_pagamento):
-             $nomes=array('','Dinheiro','Cartão','Boleto','Cheque','Dep. BB', 'Dep. Itaú','Dep. Caixa');
-             return $nomes[$this->tipo_pagamento];
-         endif;
-        
+        if ($this->tipo_pagamento):
+            $nomes = array('', 'Dinheiro', 'Cartão', 'Boleto', 'Cheque', 'Dep. BB', 'Dep. Itaú', 'Dep. Caixa');
+            return $nomes[$this->tipo_pagamento];
+        endif;
     }
-    
 
     public function set_id_pagamento($id_pagamento)
     {
@@ -74,19 +84,18 @@ class Pagamento_model extends Generic_model {
 
     public function set_data($data)
     {
-       if (preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $data)) { //verifica se é formato dd/mm/aaaa
+        if (preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $data)) { //verifica se é formato dd/mm/aaaa
             $partes = explode("/", $data);
             $formato_mysql = $partes[2] . "-" . $partes[1] . "-" . $partes[0];
             $this->data = $formato_mysql;
         } elseif ($data == null) {
             $this->data = date('Y-m-d');
-        }
-        else{
+        } else {
             $this->data = $data;
         }
     }
 
-    public function set_valor_pago($valor_pago,$tratar_valor=null)
+    public function set_valor_pago($valor_pago, $tratar_valor = null)
     {
         if ($tratar_valor) {
             $valor_pago = str_replace(".", "", $valor_pago);
@@ -99,8 +108,25 @@ class Pagamento_model extends Generic_model {
     {
         $this->tipo_pagamento = $tipo_pagamento;
     }
-    
-   
 
+    public function get_operacao()
+    {
+        return $this->operacao;
+    }
+
+    public function get_id_fornecedor()
+    {
+        return $this->id_fornecedor;
+    }
+
+    public function set_operacao($operacao)
+    {
+        $this->operacao = $operacao;
+    }
+
+    public function set_id_fornecedor($id_fornecedor)
+    {
+        $this->id_fornecedor = $id_fornecedor;
+    }
 
 }

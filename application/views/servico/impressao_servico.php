@@ -102,7 +102,7 @@
     <body>
         <?php
         $base_url = FCPATH;
-        $total_pago = $servico->get_soma_pagamentos();
+        $total_pago = $servico->get_soma_pagamentos(CREDITO);
         $restante_pagar = $servico->get_total_geral_venda() - $total_pago;
         ?>
 

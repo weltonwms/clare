@@ -9,7 +9,7 @@ echo "<script src='" . base_url('assets/js/validacao_relatorio.js') . "'></scrip
 
 <form id='form_relatorio' action="<?php echo base_url('relatorio/gerar_fluxo') ?>" method="post">
 
-    
+
 
     <div class="row esconde">
 
@@ -39,10 +39,10 @@ echo "<script src='" . base_url('assets/js/validacao_relatorio.js') . "'></scrip
 
             </div>
         </div>
-        
-       
-        
-        
+
+
+
+
 
         <div class="col-md-2">
             <label class=""><span
@@ -51,14 +51,16 @@ echo "<script src='" . base_url('assets/js/validacao_relatorio.js') . "'></scrip
                 <select name="tipo_pagamento[]" class="form-control meu_chosen" multiple="multiple" data-placeholder="--Todos--">
 
                     <?php
-                    $opcoes2 = array('1' => 'Dinheiro', '2' => 'Cartão', '3' => 'Boleto', '4' => "Cheque");
+                    $opcoes2 = array('1' => 'Dinheiro', '2' => 'Cartão', '3' => 'Boleto', 
+                        '4' => "Cheque",'5'=>"Dep. BB",'6'=>"Dep. Itaú",'7'=>"Dep. Caixa");
 
                     foreach ($opcoes2 as $key => $opcao):
                         echo "<option value='{$key}' ";
                         if (isset($requisicao['tipo_pagamento']) &&
                                 in_array($key, $requisicao['tipo_pagamento'])
-                        )
-                        { echo "selected='selected'";}
+                        ) {
+                            echo "selected='selected'";
+                        }
                         echo ">";
                         echo $opcao;
                         echo "</option>";
@@ -78,7 +80,7 @@ echo "<script src='" . base_url('assets/js/validacao_relatorio.js') . "'></scrip
                     <option value=''>--Selecione--</option>
                     <?php
                     $opcoes = array('servico' => 'Serviço', 'data_pagamento' => 'Dt Pagamento');
-                   
+
                     foreach ($opcoes as $key => $opcao):
                         echo "<option value='{$key}' ";
                         if (isset($requisicao['ordenado_por']) &&
@@ -96,10 +98,10 @@ echo "<script src='" . base_url('assets/js/validacao_relatorio.js') . "'></scrip
 
             </div>
         </div>
-        
-        
-        
-        
+
+
+
+
 
         <div class="col-md-2">
             <label>&nbsp;</label>
@@ -111,57 +113,142 @@ echo "<script src='" . base_url('assets/js/validacao_relatorio.js') . "'></scrip
 
 
     </div><!--Fechamento da Row-->
+<br>
+
+</form>
 
 
-    <br>
-   
-</form> 
-<?php if (isset($relatorio)):?>
-<button  class="btn btn-default"> Total Pago: R$: <?php echo number_format($relatorio->get_total_pago(),2,',','.'); ?></button>
+
+
+
+
+
+
+
+
+
+<!--aqui está outra coisa -->
+
+<?php if(isset($relatorio)):?>
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="pull-right">
+            <button class="btn btn-success">Total Crédito: R$: <?php echo number_format($relatorio->get_soma_pagamentos(CREDITO),2,',','.')?></button>
+            <button class="btn btn-danger">Total Débito: R$: <?php echo number_format($relatorio->get_soma_pagamentos(DEBITO),2,',','.')?></button>
+            <button class="btn">Total Lucro: R$: <?php echo number_format($relatorio->get_lucro(),2,',','.')?></button>
+        </div>
+    </div>
+</div>
 <?php endif;?>
-<table id="tabela"
-       class="table table-bordered table-striped custab table-condensed">
-    <thead class="text-primary small">
-        <tr>
-            <th>Svç</th>
-            <th>Data Svç</th>
-            <th>Estado</th>
-            <th>Tipo</th>
-            <th>Cliente</th>
-            <th>Total Venda</th>
-            <th>Lucro Venda</th>
-            <th>Valor Pago</th>
-            <th>Data Pg</th>
-            <th>Tipo Pagamento</th>
-            <th>Lucro Pg</th>
+<br>
+<div class="row">
+<div class="col-md-6">
+    <div class="panel panel-success">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            Créditos (Pg Clientes)
 
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        if (isset($relatorio)):
 
-            foreach ($relatorio->get_pagamentos() as $pagamento):
-                ?>
+        </div>
+
+        <!-- Table -->
+
+        <table class="table">
+            <thead>
                 <tr>
-                    <td><?php echo $pagamento->get_id_servico() ?></td>
-                    <td><?php echo $pagamento->get_data_servico() ?></td> 
-                    <td><?php echo $pagamento->get_estado_servico() ?></td>
-                    <td><?php echo $pagamento->get_tipo_servico() ?></td>
-                    <td><?php echo $pagamento->get_nome_cliente() ?></td>
-                    <td><?php echo $pagamento->get_total_geral_venda_formatado() ?></td>
-                     <td><?php echo number_format($pagamento->get_lucro_venda(),2,',','.') ?></td>
-                    <td><?php echo $pagamento->get_valor_pago_formatado() ?> </td>
-                    <td><?php echo $pagamento->get_data_pagamento_formatada() ?></td>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Pago em</th>
+                    <th>Serviço</th>
+                </tr>
+            </thead>
+
+            <tbody>
+         <?php
+        if (isset($relatorio)):
+            foreach ($relatorio->get_pagamentos(CREDITO) as $pagamento):
+         ?>
+                <tr>
                     <td><?php echo $pagamento->get_tipo_pagamento() ?></td>
-                    <td>lucro pg</td>
-                    
+                    <td><?php echo $pagamento->get_valor_pago_formatado() ?></td> 
+                    <td><?php echo $pagamento->get_data_formatada() ?></td>
+                    <td>
+                        <?php echo $pagamento->get_id_servico() ?>
+                        (<?php echo $pagamento->get_nome_cliente() ?> )
+                    </td>
                 </tr>  
             <?php endforeach; ?>
            
-        <?php endif; ?>
-    </tbody>
+        
+                <tr class="active">
+
+                    <td colspan="3" class="text-center"><b>Total </b></td>
+                    <td class="info">R$ <?php echo number_format($relatorio->get_soma_pagamentos(CREDITO),2,',','.')?></td>
+                </tr>
+                
+            <?php endif; ?>
+            </tbody>
+    </div>
 </table>
+
+
+</div>
+</div> <!--fim col-md-->
+
+
+<div class="col-md-6">
+    <div class="panel panel-danger">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Débitos (Pg Fornecedores)</div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Pago em</th>
+                    <th>Serviço</th>
+                    <th>Fornecedor</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                 <?php
+        if (isset($relatorio)):
+            foreach ($relatorio->get_pagamentos(DEBITO) as $pagamento):
+         ?>
+                <tr>
+                    <td><?php echo $pagamento->get_tipo_pagamento() ?></td>
+                    <td><?php echo $pagamento->get_valor_pago_formatado() ?></td> 
+                    <td><?php echo $pagamento->get_data_formatada() ?></td>
+                    <td>
+                        <?php echo $pagamento->get_id_servico() ?>
+                        
+                    </td>
+                     <td><?php echo $pagamento->get_nome_fornecedor() ?></td>
+                </tr>  
+            <?php endforeach; ?>
+           
+        
+                
+                <tr class="active">
+                    <td colspan="4" class="text-center"><b>Total</b></td>
+                    <td class="info">R$ <?php echo number_format($relatorio->get_soma_pagamentos(DEBITO),2,',','.')?></td>
+                </tr>
+         <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+</div> <!-- fim row -->
+
+
+
+
 
 
 

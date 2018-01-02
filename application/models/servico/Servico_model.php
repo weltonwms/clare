@@ -159,7 +159,7 @@ class Servico_model extends Generic_model {
 
     private function automatizar_pagamento()
     {
-        if ($this->estado == 2):
+        if ($this->estado == 2 && $this->tipo!=2):
             //exit("estado igual 2");
             $this->load->model('pagamento/Pagamento_manager');
             $this->Pagamento_manager->automatizar_pagamento($this->id_servico);

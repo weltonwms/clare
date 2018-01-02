@@ -8,7 +8,8 @@ class Pagamento_composite extends CI_Model {
     private $pagamento; //objeto Pagamento_model
     private $servico;   // objeto servico_model
     private $cliente; //objeto cliente_model
-    private $lista_servicos_composite; //array com servicos utilizado em relatorio fluxo
+    private $fornecedor; //objeto Fornecedor_model
+    //private $lista_servicos_composite; //array com servicos utilizado em relatorio fluxo
 
     public function set_pagamento(Pagamento_model $pagamento)
     {
@@ -24,11 +25,19 @@ class Pagamento_composite extends CI_Model {
     {
         $this->cliente = $cliente;
     }
+    
+    public function set_fornecedor(Fornecedor_model $fornecedor)
+    {
+        $this->fornecedor = $fornecedor;
+    }
 
+        /*
     public function set_lista_servicos_composite($lista_servicos_composite)
     {
         $this->lista_servicos_composite = $lista_servicos_composite;
     }
+         * 
+         */
 
     public function get_id_servico()
     {
@@ -85,41 +94,14 @@ class Pagamento_composite extends CI_Model {
         return $this->pagamento->get_valor_pago_formatado();
     }
 
-    public function get_data_pagamento()
+    public function get_data()
     {
         return $this->pagamento->get_data();
     }
 
-    public function get_data_pagamento_formatada()
+    public function get_data_formatada()
     {
         return $this->pagamento->get_data_formatada();
-    }
-
-    public function get_total_geral_venda()
-    {
-        $servico_composite = $this->lista_servicos_composite[$this->get_id_servico()];
-        return $servico_composite->get_total_geral_venda();
-    }
-
-    public function get_total_geral_fornecedor()
-    {
-        $servico_composite = $this->lista_servicos_composite[$this->get_id_servico()];
-        return $servico_composite->get_total_geral_fornecedor();
-    }
-
-    public function get_lucro_venda()
-    {
-        $servico_composite = $this->lista_servicos_composite[$this->get_id_servico()];
-        $pc = $servico_composite->get_porcentagem_comissao();
-        if ($servico_composite->get_tipo() == 2 && $pc):
-            return $servico_composite->get_total_geral_fornecedor() * ($pc / 100);
-        endif;
-        return $this->get_total_geral_venda() - $this->get_total_geral_fornecedor();
-    }
-
-    public function get_total_geral_venda_formatado()
-    {
-        return number_format($this->get_total_geral_venda(), 2, ',', '.');
     }
 
     public function get_operacao()
@@ -130,6 +112,16 @@ class Pagamento_composite extends CI_Model {
     public function get_id_fornecedor()
     {
         return $this->pagamento->get_id_fornecedor();
+    }
+    
+    public function get_nome_fornecedor()
+    {
+        return $this->fornecedor->get_empresa();
+    }
+    
+    public function get_responsavel_fornecedor()
+    {
+        return $this->fornecedor->get_responsavel();
     }
 
 }

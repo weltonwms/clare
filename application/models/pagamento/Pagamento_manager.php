@@ -37,7 +37,7 @@ class Pagamento_manager extends Generic_manager {
     {
         $this->load->model('servico/Servico_dao');
         $servico= $this->Servico_dao->get_servico_composite($id_servico);
-        $soma_pagamentos=$servico->get_soma_pagamentos();
+        $soma_pagamentos=$servico->get_soma_pagamentos(CREDITO);
         $total_venda=$servico->get_total_geral_venda();
         $a_pagar=$total_venda-$soma_pagamentos;
         
@@ -47,6 +47,7 @@ class Pagamento_manager extends Generic_manager {
             $dados['valor_pago']= moneyUsdToBr($a_pagar); 
             $dados['data']=date('d\/m\/Y');
             $dados['tipo_pagamento']=null;
+            $dados['operacao']=CREDITO;
             $this->cadastrar($dados);
         endif;
 //        echo "total da Venda".$total_venda. "<br>";

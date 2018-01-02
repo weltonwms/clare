@@ -21,8 +21,35 @@ class Relatorio_model extends CI_Model{
       return $this->itens_servico;
   }
   
-  public function get_pagamentos(){
-      return $this->pagamentos;
+  public function get_pagamentos($operacao){
+      return $this->separar_por_operacao($operacao);
+  }
+  
+  
+  private function separar_por_operacao($operacao){
+      $lista=array();
+      foreach($this->pagamentos as $pagamento):
+          if($pagamento->get_operacao()==$operacao):
+              $lista[]=$pagamento;
+          endif;
+      endforeach;
+      
+      return $lista;
+  }
+  
+  public function get_soma_pagamentos($operacao)
+  {
+      $soma=0;
+      foreach($this->get_pagamentos($operacao) as $pagamento):
+          $soma+=$pagamento->get_valor_pago();
+      endforeach;
+      return $soma;
+      
+  }
+  
+  public function get_lucro()
+  {
+      return $this->get_soma_pagamentos(CREDITO)-$this->get_soma_pagamentos(DEBITO);
   }
   
   public function get_total_geral(){

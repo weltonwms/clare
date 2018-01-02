@@ -75,8 +75,9 @@ class Relatorio extends CI_Controller {
         $dados['requisicao'] = $this->input->post();
 
         $dados['relatorio'] = $this->Relatorio_manager->gerar_fluxo($this->input->post());
+        
 
-        //echo "<pre>"; print_r($dados); exit();
+        //echo "<pre>"; print_r($dados['relatorio']->get_pagamentos(1)); exit();
         $this->carrega_view('relatorio/view_fluxo', $dados);
     }
 

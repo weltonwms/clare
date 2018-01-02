@@ -137,13 +137,15 @@ class Relatorio_manager extends CI_Model {
 
         $this->load->model('pagamento/Pagamento_model');
         $this->load->model('pagamento/Pagamento_composite');
-        $lista_servicos_composite = $this->gerar_lista($query);
+        $this->load->model('fornecedor/Fornecedor_model');
+        //$lista_servicos_composite = $this->gerar_lista($query);
         foreach ($query as $valor):
 
             $composite = new $this->Pagamento_composite();
             $pagamento = new $this->Pagamento_model();
             $cliente = new $this->Cliente_model();
             $servico = new $this->Servico_model();
+            $fornecedor = new $this->Fornecedor_model();
 
 
             $servico->set_id_servico($valor->id_servico);
@@ -160,12 +162,18 @@ class Relatorio_manager extends CI_Model {
             $pagamento->set_valor_pago($valor->valor_pago);
             $pagamento->set_tipo_pagamento($valor->tipo_pagamento);
             $pagamento->set_id_servico($valor->id_servico);
-
-
+            $pagamento->set_operacao($valor->operacao);
+            $pagamento->set_id_fornecedor($valor->id_fornecedor);
+            
+            $fornecedor->set_id_fornecedor($valor->id_fornecedor);
+            $fornecedor->set_empresa($valor->empresa);
+            $fornecedor->set_responsavel($valor->responsavel);
+            
             $composite->set_cliente($cliente);
             $composite->set_pagamento($pagamento);
             $composite->set_servico($servico);
-            $composite->set_lista_servicos_composite($lista_servicos_composite);
+            $composite->set_fornecedor($fornecedor);
+            //$composite->set_lista_servicos_composite($lista_servicos_composite);
 
 
             $lista[] = $composite;
@@ -186,7 +194,7 @@ class Relatorio_manager extends CI_Model {
         $this->db->from('pagamento p');
         $this->db->join('servico s', 'p.id_servico = s.id_servico', 'inner');
         $this->db->join('cliente c', 's.id_cliente = c.id_cliente', 'inner');
-
+        $this->db->join('fornecedor f', 'f.id_fornecedor = p.id_fornecedor', 'left');
 
         if ($post['periodo_inicial']):
             $periodo_inicial = formatar_data_to_mysql($post['periodo_inicial']);
@@ -229,8 +237,8 @@ class Relatorio_manager extends CI_Model {
             $servico_composite->set_servico($servico_model);
             $lista[$key] = $servico_composite;
         endforeach;
-        
-        return $lista;
+        //inutilizado por não precisar de lista de serviços composites com demasiadas info
+        //return $lista;
     }
 
     /*

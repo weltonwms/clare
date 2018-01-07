@@ -236,5 +236,37 @@ class Servico_composite extends CI_Model {
         endif;
         return $this->total_geral_fornecedor;
     }
+    
+    /**
+     * retornar uma lista com o índice sendo o id do fornecedor, contendo stdClass
+     * com informações pertinentes dos fornecedores a pagar: total_fornecedor, nome_fornecedor,
+     * a_pagar.
+     * @return array lista de stdClass
+     */
+    public function get_lista_fornecedores_a_pagar()
+    {
+       $itens=$this->get_itens_servico();
+       $lista=array();
+       foreach($itens as $item):
+          if(!isset($lista[$item->get_id_fornecedor()])):
+               $lista[$item->get_id_fornecedor()]= $x=new stdClass();
+                    $x->nome_fornecedor=$item->get_nome_fornecedor();
+                    $x->total_fornecedor=$item->get_total_fornecedor();
+                    $x->a_pagar=$x->total_fornecedor;
+                   
+           else:
+               $lista[$item->get_id_fornecedor()]->total_fornecedor+=$item->get_total_fornecedor();
+               $lista[$item->get_id_fornecedor()]->a_pagar=$lista[$item->get_id_fornecedor()]->total_fornecedor;
+           endif;
+       endforeach;
+       
+       $pagamentos=  $this->get_pagamentos(DEBITO);
+       
+       foreach($pagamentos as $pagamento):
+           $lista[$pagamento->get_id_fornecedor()]->a_pagar-=$pagamento->get_valor_pago(); 
+       endforeach;
+       
+       return $lista;
+    }
 
 }

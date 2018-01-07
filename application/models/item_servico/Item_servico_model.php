@@ -151,6 +151,13 @@ class Item_servico_model extends Generic_model {
         }
         return $this->obj_produto->get_nome_fornecedor();
     }
+    
+     public function get_id_fornecedor() {
+        if (!is_object($this->obj_produto)) {
+            $this->set_obj_produto($this->id_produto);
+        }
+        return $this->obj_produto->get_id_fornecedor();
+    }
 
     public function get_valor_fornecedor() {
         return $this->valor_fornecedor;

@@ -242,6 +242,13 @@ class Servico extends CI_Controller {
         $dados['total_restante_debito'] = number_format($restante_debito, 2, ",", ".");
         echo json_encode($dados);
      }
+     
+     public function get_lista_fornecedores_a_pagar($id_servico)
+     {
+//         echo "estou no server"; exit();
+         $x = $this->Servico_manager->get_servico($id_servico);
+         echo json_encode($x->get_lista_fornecedores_a_pagar());
+     }
 
    
 
@@ -255,12 +262,12 @@ class Servico extends CI_Controller {
         echo json_encode($saida);
     }
 
-    public function teste2()
+    public function teste2($id_servico=1604)
     {
-        $this->load->model('fornecedor/Fornecedor_dao');
-        echo "<pre>";
-        print_r($this->Fornecedor_dao->get_fornecedor(5));
-        echo "fal";
+       $s = $this->Servico_manager->get_servico($id_servico);
+       echo "<pre>"; print_r($s->get_lista_fornecedores_a_pagar());
     }
+    
+    
 
 }

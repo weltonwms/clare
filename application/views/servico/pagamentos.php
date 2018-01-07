@@ -97,7 +97,7 @@
 
 <span class="label label-danger">Débito</span>
 <button class="btn btn-default btn-sm"> Total Pago: R$: <b><span class="total_pago_debito">90,00</span></b></button>
-<button class="btn btn-default btn-sm"> Restante a Pagar: R$: <b><span class="total_restante_debito">90,00</span></b></button>
+<button data-toggle="popover" class="btn btn-default btn-sm pop-deb"> Restante a Pagar: R$: <b><span class="total_restante_debito">90,00</span></b></button>
                 <table id="pg_tabela_debito" class="pg_tabela table table-condensed table-bordered">
                     <thead>
                         <tr  class="danger">
@@ -129,3 +129,10 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<script>
+    
+   
+</script>
+
+

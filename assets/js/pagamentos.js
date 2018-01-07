@@ -3,6 +3,7 @@ $(document).ready(function () {
     include_once(base_url + "assets/js/datepicker.js");
     $('.data').mask("00/00/0000");
     $('.pg_money').mask('000.000.000.000.000,00', {reverse: true});
+    
 
     function getDateNow() {
         var d = new Date();
@@ -36,13 +37,12 @@ $(document).ready(function () {
 
 
     });
-    
-    $('body').on('change','select[name=operacao]',function(event){
-        if(this.value=='2'){
+
+    $('body').on('change', 'select[name=operacao]', function (event) {
+        if (this.value == '2') {
             $("select[name=id_fornecedor]").show();
-        }
-        else{
-             $("select[name=id_fornecedor]").hide();
+        } else {
+            $("select[name=id_fornecedor]").hide();
         }
     });
 
@@ -125,10 +125,10 @@ $(document).ready(function () {
             error: function () {
                 escreve_msg('Ocorreu um erro no Servidor', 'danger')
             },
-            beforeSend:function(){
-                $( "table" ).append( "<p class='pg_loading'>Carregando</p>" );
+            beforeSend: function () {
+                $("table").append("<p class='pg_loading'>Carregando</p>");
             },
-            complete:function(){
+            complete: function () {
                 $('.pg_loading').remove();
             }
 
@@ -181,7 +181,7 @@ $(document).ready(function () {
                 $('#pg_id_servico').text(data.id_servico);
                 $('#pg_nome_cliente').text(data.cliente_nome);
                 $('#pg_total_venda').text(data.total_venda);
-                 $('#pg_total_fornecedor').text(data.total_fornecedor);
+                $('#pg_total_fornecedor').text(data.total_fornecedor);
                 $('.total_pago_credito').text(data.total_pago_credito);
                 $('.total_restante_credito').text(data.total_restante_credito);
                 $('.total_pago_debito').text(data.total_pago_debito);
@@ -189,7 +189,7 @@ $(document).ready(function () {
                 carrega_tabela_credito(data.pagamentos_credito);
                 carrega_tabela_debito(data.pagamentos_debito);
                 carrega_fornecedores(data.fornecedores);
-                
+
             },
             error: function () {
                 escreve_msg('Ocorreu um erro no Servidor', 'danger')
@@ -199,11 +199,11 @@ $(document).ready(function () {
 
 
     }
-    
-    function carrega_fornecedores(fornecedores){
-        var string="<option value=''>Fornecedores</option>";
-        $.each(fornecedores,function(key, forn){
-            string+='<option value="'+key+'" >'+forn+'</option>';
+
+    function carrega_fornecedores(fornecedores) {
+        var string = "<option value=''>Fornecedores</option>";
+        $.each(fornecedores, function (key, forn) {
+            string += '<option value="' + key + '" >' + forn + '</option>';
         });
         $("select[name='id_fornecedor']").html(string);
     }
@@ -221,12 +221,12 @@ $(document).ready(function () {
                     '</tr>';
 
         });
-        
+
         $("#pg_tabela_credito tbody").html(string);
         $('#pg_tabela_credito tr').find('td:eq(0),th:eq(0)').hide();
     }
-    
-    function carrega_tabela_debito(pagamentos){
+
+    function carrega_tabela_debito(pagamentos) {
         var string = '';
         $.each(pagamentos, function (key, pag) {
             string += '<tr>' +
@@ -234,13 +234,13 @@ $(document).ready(function () {
                     '<td>' + pag.data + '</td>' +
                     '<td>' + pag.valor_pago + '</td>' +
                     '<td>' + pag.tipo_pagamento + '</td>' +
-                     '<td>' + pag.nome_fornecedor + '</td>' +
+                    '<td>' + pag.nome_fornecedor + '</td>' +
                     '<td><a href="#" ' + 'data-id_pagamento="' + pag.id_pagamento + ' " ' +
                     'class="text-danger exclusao_pagamento"><span class="glyphicon glyphicon-trash"></span></a> </td>' +
                     '</tr>';
 
         });
-        
+
         $("#pg_tabela_debito tbody").html(string);
         $('#pg_tabela_debito tr').find('td:eq(0),th:eq(0)').hide();
     }
@@ -264,6 +264,43 @@ $(document).ready(function () {
                 '</div>';
 
         $('#msg_pag').html(string);
+    }
+
+
+    $('.pop-deb').popover({
+        "placement": "bottom",
+        "html": true,
+        "trigger": 'hover',
+        "content": function () {
+            var div_id = "tmp-id-" + $.now();
+            return details_in_popup(div_id);
+        }
+    });
+
+    function details_in_popup(div_id) {
+       var id_servico = $('#pg_id_servico').text();
+        $.ajax({
+            url: base_url + "servico/get_lista_fornecedores_a_pagar/" + id_servico,
+            dataType: 'json',
+            success: function (response) {
+                var string = '<table class="table table-condensed table-bordered">' +
+                        '<tr>' +
+                        '<th>Fornecedor</th>' +
+                        '<th>A Pagar</th>' +
+                        '<tr>';
+
+                $.each(response, function (key, f) {
+                    string += '<tr>' +
+                            '<td>' + f.nome_fornecedor + '</td>' +
+                            '<td>' + f.a_pagar + '</td>' +
+                            '</tr>';
+
+                });
+                string += '</table>';
+                $('#' + div_id).html(string);
+            }
+        });
+        return '<div id="' + div_id + '">Carregando...</div>';
     }
 
 

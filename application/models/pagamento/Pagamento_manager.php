@@ -37,12 +37,21 @@ class Pagamento_manager extends Generic_manager {
     {
         $this->load->model('servico/Servico_dao');
         $servico= $this->Servico_dao->get_servico_composite($id_servico);
-        $soma_pagamentos=$servico->get_soma_pagamentos(CREDITO);
-        $total_venda=$servico->get_total_geral_venda();
-        $a_pagar=$total_venda-$soma_pagamentos;
+        $this->cadastrar_automatico_credito($servico);
+        $this->cadastrar_automatico_debito($servico);
+       
+
+    }
+    
+    private function cadastrar_automatico_credito($servico)
+    {
+         $soma_pagamentos=$servico->get_soma_pagamentos(CREDITO);
+         
+        $total=$servico->get_total_geral_venda();
+        $a_pagar=$total-$soma_pagamentos;
         
         if($a_pagar>0):
-            $dados['id_servico']=$id_servico;
+            $dados['id_servico']=$servico->get_id_servico();
         //manager programado para receber valores em br
             $dados['valor_pago']= moneyUsdToBr($a_pagar); 
             $dados['data']=date('d\/m\/Y');
@@ -50,10 +59,28 @@ class Pagamento_manager extends Generic_manager {
             $dados['operacao']=CREDITO;
             $this->cadastrar($dados);
         endif;
-//        echo "total da Venda".$total_venda. "<br>";
+        
+        //        echo "total da Venda".$total. "<br>";
 //        echo "total de pagamentos realizados".$soma_pagamentos. "<br>";
 //        echo "Falta pagar: $a_pagar";
 //        exit();
+    }
+    
+    private function cadastrar_automatico_debito($servico)
+    {
+        $lista_fornecedores=$servico->get_lista_fornecedores_a_pagar();
+        foreach ($lista_fornecedores as $key=>$item):
+            if($item->a_pagar>0):
+                $dados['id_servico']=$servico->get_id_servico();
+        //manager programado para receber valores em br
+            $dados['valor_pago']= moneyUsdToBr($item->a_pagar); 
+            $dados['data']=date('d\/m\/Y');
+            $dados['tipo_pagamento']=null;
+            $dados['operacao']=DEBITO;
+            $dados['id_fornecedor']=$key;
+            $this->cadastrar($dados);
+            endif;
+        endforeach;
     }
 
 }

@@ -24,14 +24,32 @@ $(document).ready(function () {
     $("body").on('click', '.confirm_executar_servico', function (e) {
         e.preventDefault();
         var url = e.currentTarget.attributes['href'].value;
-        $.confirm({
-         title: "Avanço de Estado do Serviço",
-        text: "Deseja Realmente Avançar o estado do Serviço?",
-         confirmButton: "Avançar",
-        cancelButton: " Cancelar",
-         confirm: function () {
-             
-             $.ajax({
+//        $.confirm({
+//         title: "Avanço de Estado do Serviço",
+//        text: "Deseja Realmente Avançar o estado do Serviço?",
+//         confirmButton: "Avançar",
+//        cancelButton: " Cancelar",
+//         confirm: function () {
+//             
+//             $.ajax({
+//                type: "GET",
+//                dataType: "html",
+//                url: url,
+//                success: function ()
+//                {
+//                    
+//                    table_ajax.ajax.reload(null, false);
+//
+//                }
+//
+//            });//fechamento do ajax
+//        },
+//        cancel: function () {
+//            // nothing to do
+//        }
+//    });
+
+     $.ajax({
                 type: "GET",
                 dataType: "html",
                 url: url,
@@ -43,11 +61,6 @@ $(document).ready(function () {
                 }
 
             });//fechamento do ajax
-        },
-        cancel: function () {
-            // nothing to do
-        }
-    });
 
 
     });

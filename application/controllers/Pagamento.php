@@ -78,13 +78,14 @@ class Pagamento extends CI_Controller {
             return $this->saida_http($msg, 400);
         endif;
 
-        $soma_pagamentos = $servico->get_soma_pagamentos(DEBITO);
-        $total_fornecedor = $servico->get_total_geral_fornecedor();
+        $lista_fornecedores = $servico->get_lista_fornecedores_a_pagar();
+        $fornecedor=$lista_fornecedores[$this->input->post('id_fornecedor')];
+        
         $request_valor = moneyBrToUsd($this->input->post('valor_pago'));
-        if (($request_valor + $soma_pagamentos) > $total_fornecedor):
-            $msg = "Valores Pagos maiores que total Débito Fornecedor<br>";
-            $restante = $total_fornecedor - $soma_pagamentos;
-            $msg.="Faltam $restante a ser pago ao(s) fornecedor(es)";
+        if ($request_valor > $fornecedor->a_pagar):
+            $msg = "Valor ultrapassado ao Fornecedor<br>";
+            $restante = $fornecedor->a_pagar;
+            $msg.="Faltam $restante a ser pago ao fornecedor {$fornecedor->nome_fornecedor}";
             return $this->saida_http($msg, 400);
 
         endif;
@@ -154,14 +155,14 @@ class Pagamento extends CI_Controller {
 
     public function valida_edicao_debito($servico, $pg_atual, &$post)
     {
-        $soma_pagamentos = $servico->get_soma_pagamentos(DEBITO);
-        $total_fornecedor = $servico->get_total_geral_fornecedor();
-
+        $lista_fornecedores = $servico->get_lista_fornecedores_a_pagar();
+        $fornecedor=$lista_fornecedores[$pg_atual->get_id_fornecedor()];
+        
         $request_valor = moneyBrToUsd($post['valor_pago']);
-        if (($request_valor + ($soma_pagamentos - $pg_atual->get_valor_pago())) > $total_fornecedor):
-            $msg = "Valores Pagos maiores que Total Fornecedor<br>";
-            $restante = $total_fornecedor - $soma_pagamentos;
-            $msg.="Faltam $restante a serem pagos ao Fornecedor";
+        if (($request_valor - $pg_atual->get_valor_pago()) > $fornecedor->a_pagar):
+            $msg = "Valor Ultrapassado<br>";
+            $restante = $fornecedor->a_pagar;
+            $msg.="Faltam $restante a serem pagos ao Fornecedor {$fornecedor->nome_fornecedor}";
             return $this->saida_http($msg, 400);
 
         endif;

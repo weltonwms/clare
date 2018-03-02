@@ -157,6 +157,7 @@ class Servico extends CI_Controller {
         $dados['imprimir_total'] = $imprimir_total;
         $html = $this->load->view('servico/impressao_servico', $dados, TRUE);
         $this->load->library('pdf');
+        $this->pdf->set_paper('a4', 'portrait');
         $this->pdf->createPDF($html, 'relat');
     }
 

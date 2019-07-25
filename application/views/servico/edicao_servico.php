@@ -41,15 +41,15 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                         type="submit" class="btn btn-default limpa_state" id="Clonar">
                     <span class=" text-danger glyphicon glyphicon-heart"></span> Clonar
                 </button>
-            
-                 <span title="Pagamentos" data-toggle="tooltip">
-                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal"
-                            
-                           data-id_servico="<?php echo $servico->get_id_servico()?>">
-                            <span class="glyphicon glyphicon-usd"></span>
-                         </a>
-              </span>
-            
+
+                <span title="Pagamentos" data-toggle="tooltip">
+                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal"
+
+                       data-id_servico="<?php echo $servico->get_id_servico() ?>">
+                        <span class="glyphicon glyphicon-usd"></span>
+                    </a>
+                </span>
+
             <?php endif; ?>
             <button formaction="<?php echo base_url('servico/salvar_servico/redirect_back') ?>"
                     type="submit" 
@@ -57,22 +57,22 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                     id="salvar_redirect_back">
                 <span class="glyphicon glyphicon-save"></span> Salvar
             </button>
-            
+
             <button formaction="<?php echo base_url('servico/salvar_servico') ?>"
                     type="submit" 
                     class="btn btn-default <?php echo $class_limpa ?>" 
                     id="salvar">
                 <span class="glyphicon glyphicon-ok"></span> Salvar e Fechar
             </button>
-            
-           
-            
-            
+
+
+
+
             <a href="<?php echo base_url('servico') ?>"
                class="btn btn-default">
                 <span class="glyphicon glyphicon-arrow-left"></span> Voltar
             </a>
-             
+
 
         </div>
     </div>
@@ -141,17 +141,17 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
         </select>
 
     </div>
-    
-    <div class="control-group col-md-2 bloco_porcentagem" <?php if($servico->get_tipo()!=2) echo "style='display: none'"?>>
-         <label class="control-label">Porcentagem</label>
 
-                        <div class="input-group">
-                           
-                            <input name="porcentagem_comissao" id="porcentagem_comissao" type="text"
-                                   class="form-control" 
-                                   value="<?php echo $servico->get_porcentagem_comissao() ?>">
-                             <span class="input-group-addon">%</span>
-                        </div>
+    <div class="control-group col-md-2 bloco_porcentagem" <?php if ($servico->get_tipo() != 2) echo "style='display: none'" ?>>
+        <label class="control-label">Porcentagem</label>
+
+        <div class="input-group">
+
+            <input name="porcentagem_comissao" id="porcentagem_comissao" type="text"
+                   class="form-control" 
+                   value="<?php echo $servico->get_porcentagem_comissao() ?>">
+            <span class="input-group-addon">%</span>
+        </div>
 
     </div>
 
@@ -162,7 +162,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                 value="<?php echo $servico->get_obs() ?>">
 
     </div>
-    
+
     <div class="control-group col-md-2">
         <label class="control-label">Vendedor</label>
 
@@ -310,17 +310,17 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
 <br><br><br><br>
 <div class="row">
     <div class="col-md-12" style="">
-<?php
-if($servico->get_id_servico()):
-$total_pago = $servico->get_soma_pagamentos(CREDITO);
-$restante_pagar = $servico->get_total_geral_venda() - $total_pago;
-?>
-        <br>
-        <button class="btn btn-default"> Total Pago: R$: <span class="total_pago_credito"><?php echo number_format($total_pago, 2, ",", "."); ?></span></button>
-        <button class="btn btn-default"> Restante a Pagar: R$: <span class="total_restante_credito"><?php echo number_format($restante_pagar, 2, ",", ".") ?></span></button>
- <?php endif;?>       
-        
-        
+        <?php
+        if ($servico->get_id_servico()):
+            $total_pago = $servico->get_soma_pagamentos(CREDITO);
+            $restante_pagar = $servico->get_total_geral_venda() - $total_pago;
+            ?>
+            <br>
+            <button class="btn btn-default"> Total Pago: R$: <span class="total_pago_credito"><?php echo number_format($total_pago, 2, ",", "."); ?></span></button>
+            <button class="btn btn-default"> Restante a Pagar: R$: <span class="total_restante_credito"><?php echo number_format($restante_pagar, 2, ",", ".") ?></span></button>
+        <?php endif; ?>       
+
+
         <btn href="<?php echo base_url('') ?>" type="button"
              id="btn_adicionar_item_servico" class="btn btn-default navbar-right"> <span
                 class="glyphicon glyphicon-plus"></span> Novo Item
@@ -402,7 +402,7 @@ $restante_pagar = $servico->get_total_geral_venda() - $total_pago;
         </table>
     </div>
 </div>
-<?php $this->load->view('servico/pagamentos')?>
+<?php $this->load->view('servico/pagamentos') ?>
 <script>
 
 
@@ -421,8 +421,12 @@ $restante_pagar = $servico->get_total_geral_venda() - $total_pago;
         }
     });
 
-    $("#btn_submit_tudo").click(function () {
-        $("#form_servico").submit();
+    $("#btn_submit_tudo").click(function (e) {
+        if ($("#form_servico").valid()) {
+            $("#form_servico").submit();
+            $("#btn_submit_tudo").attr("disabled", true);
+        }
+
     });
 
     $(".editar_item_servico").click(function () {

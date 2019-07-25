@@ -27,16 +27,53 @@
                 border-right:  0px;
                 font-weight:bold;
             }
+
+            footer .pagenum:before {
+                content: counter(page);
+            }
+
+            footer { 
+                position: fixed; 
+                left: 0px; right: 0px; 
+                bottom: 0px; 
+                font-size: 9px;
+                font-weight: bold;
+                /*                background-color: lightblue; */
+                /*                height: 50px;*/
+            }
+
+            footer .texto1{
+                position: fixed;
+                bottom: -10px;
+                text-align: left;
+            }
+
+            footer .nr_pagina{
+                bottom: -10px; 
+                text-align: right;
+                position: fixed; 
+                font-style: italic;
+            }
         </style>
     </head>
     <body>
+        <footer class="">
+            <div class="texto1">
+                BlueSky System - <?php echo date('d-m-Y'); ?>
+            </div>
+
+            <div class="nr_pagina">Página <span class="pagenum"></span></div>
+
+
+        </footer>
+
         <div align="center">
             <?php
             $estado = array('', 'Orçamento', 'Executado', 'Em Produção', "Entregue não pago");
             if (isset($requisicao['estado']) && $requisicao['estado']):
                 echo "Relatório de Serviço: ";
-                foreach($requisicao['estado'] as $state):
-                echo  $estado[$state]. " | ";
+                foreach ($requisicao['estado'] as $state):
+                    echo $estado[$state] . " | ";
                 endforeach;
             endif;
             ?>

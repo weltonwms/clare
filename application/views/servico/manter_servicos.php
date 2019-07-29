@@ -1,6 +1,4 @@
 <?php echo "<script src='" . base_url('assets/plugins/jquery.confirm2.js') . "'></script>"; ?>
-<?php echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>"; ?>
-<?php echo "<script src='" . base_url('assets/js/tabela.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/plugins/jquery.mask.js') . "'></script>";?> <!--utilizado em pagamentos.js -->
 <?php echo "<script src='" . base_url('assets/js/manter_servico.js') . "'></script>"; ?>
 
@@ -29,7 +27,7 @@
 
 
 <?php $this->load->view('servico/pagamentos')?>
-<table id="tabela-ajax" 
+<table id="tabela_cliente" 
        class="table table-bordered table-striped custab table-condensed table-hover">
      <thead>
             <tr>
@@ -44,7 +42,7 @@
         </thead>
 
     <tbody>
-           
+<!-- Carregamento de responsabilidade do Datatables Ajax-->
 
        
     </tbody>

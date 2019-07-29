@@ -36,13 +36,20 @@ class Servico extends CI_Controller {
     public function index()
     {
         //$this->output->enable_profiler(TRUE);
-        $dados['servicos'] = $this->Servico_manager->get_servicos();
+        //$dados['servicos'] = $this->Servico_manager->get_servicos();
         //echo "<pre>"; print_r($dados); exit();
-        $this->carrega_view('servico/manter_servicos', $dados);
+        $this->carrega_view('servico/manter_servicos');
+    }
+    
+    public function getDataTables(){
+        $this->load->model('servico/Servico_datatables');
+        $json= $this->Servico_datatables->getTable($this->input->get());
+        echo $json; exit();
     }
 
     public function ajax()
     {
+        //método deprecated na version 3.0. método getDataTables deve ser usado.
         $servicos = $this->Servico_manager->get_servicos();
         $dados['data'] = array();
         //$servico = $servicos[0];
@@ -255,21 +262,7 @@ class Servico extends CI_Controller {
 
    
 
-    public function teste1()
-    {
-        $this->load->model("datatables/Data_tables");
-        $colunas = array('id_servico', 'cliente', 'data', 'estado', 'tipo');
-        $tabela = "xTemp";
-        $this->Data_tables->inicializar($this->input->post(), $colunas, $tabela);
-        $saida = $this->Data_tables->get_saida();
-        echo json_encode($saida);
-    }
-
-    public function teste2($id_servico=1604)
-    {
-       $s = $this->Servico_manager->get_servico($id_servico);
-       echo "<pre>"; print_r($s->get_lista_fornecedores_a_pagar());
-    }
+    
     
     
 

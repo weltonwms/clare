@@ -1,9 +1,51 @@
 $(document).ready(function () {
-
+    
+     tabela_cliente=$('#tabela_cliente').DataTable({
+        dom: "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+        iDisplayLength: 25,
+        serverSide: true,
+        ajax: base_url + "servico/getDataTables",
+        columns: [
+            {data: "id_servico", name:"id_servico"},
+            {data: "cliente", name:"cliente"},
+            {data: "dt", name:"data"},
+            {data: "estado", name:"estado"},
+            {data: "tipo", name:"tipo"},
+            {data: "vendedor", name:"vendedor"},
+            {data: "acoes"}
+        ],
+        "order": [0, 'desc'],
+        drawCallback: gatilhoTabela,
+        "bStateSave": true,
+        "columnDefs": [{
+                "targets": [-1],
+                "orderable": false
+            }],
+         processing:true,
+        oLanguage: {
+            
+            'sProcessing': "<div id='loader'>Carregando...</div>",
+            "sSearch": "<span class='glyphicon glyphicon-search'></span> Pesquisar: ",
+            "sLengthMenu": "Mostrar _MENU_ registros por página",
+            "sZeroRecords": "Nenhum registro encontrado",
+            "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+            "sInfoEmpty": "<span class='text-danger'>Mostrando 0 / 0 de 0 registros</span>",
+            "sInfoFiltered": "<span class='text-danger'>(filtrado de _MAX_ registros)</span>",
+            "oPaginate": {
+                "sFirst": "Início",
+                "sPrevious": "Anterior",
+                "sNext": "Próximo",
+                "sLast": "Último"
+            }
+        }
+       
+    });
 
     $("body").on('click', '.detalhe_servico', function (e) {
         e.preventDefault();
-        id_servico = ($(this).attr('data-id_servico'));
+        var id_servico = ($(this).attr('data-id_servico'));
         $.ajax({
             type: "GET",
             dataType: "html",
@@ -20,60 +62,26 @@ $(document).ready(function () {
     });
 
 
-
     $("body").on('click', '.confirm_executar_servico', function (e) {
         e.preventDefault();
         var url = e.currentTarget.attributes['href'].value;
-//        $.confirm({
-//         title: "Avanço de Estado do Serviço",
-//        text: "Deseja Realmente Avançar o estado do Serviço?",
-//         confirmButton: "Avançar",
-//        cancelButton: " Cancelar",
-//         confirm: function () {
-//             
-//             $.ajax({
-//                type: "GET",
-//                dataType: "html",
-//                url: url,
-//                success: function ()
-//                {
-//                    
-//                    table_ajax.ajax.reload(null, false);
-//
-//                }
-//
-//            });//fechamento do ajax
-//        },
-//        cancel: function () {
-//            // nothing to do
-//        }
-//    });
+        $.ajax({
+            type: "GET",
+            dataType: "html",
+            url: url,
+            success: function ()
+            {
 
-     $.ajax({
-                type: "GET",
-                dataType: "html",
-                url: url,
-                success: function ()
-                {
-                    
-                    table_ajax.ajax.reload(null, false);
+                tabela_cliente.ajax.reload(null, false);
 
-                }
+            }
 
-            });//fechamento do ajax
+        });//fechamento do ajax
 
 
     });
-
-
-}); //fim ready
-
-
-
-
-
-
-$("body").on('click', '.btn_imprimir', function (e) {
+    
+    $("body").on('click', '.btn_imprimir', function (e) {
     var estado = $(this).attr('data-estado');
     var id_servico = $(this).attr('data-id_servico');
     if (estado == 1) {
@@ -84,11 +92,14 @@ $("body").on('click', '.btn_imprimir', function (e) {
 });
 
 
-$('body').on('submit',"#form_imprimir_servico",function (event) {
+$('body').on('submit', "#form_imprimir_servico", function (event) {
     //alert( "Handler for .submit() called." );
     //event.preventDefault();
     $("#modal_imprimir_servico").modal('hide');
 });
+
+
+}); //fim ready
 
 
 
@@ -111,7 +122,7 @@ function gatilhoTabela() {
                 url: url,
                 success: function ()
                 {
-                    table_ajax.ajax.reload(null, false);
+                    tabela_cliente.ajax.reload(null, false);
 
                 }
 
@@ -123,3 +134,6 @@ function gatilhoTabela() {
 
 
 } //fim do gatilho
+
+
+

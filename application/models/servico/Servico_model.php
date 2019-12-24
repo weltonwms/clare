@@ -137,6 +137,16 @@ class Servico_model extends Generic_model {
         $this->id_vendedor = $id_vendedor;
     }
 
+    public function get_nome_vendedor()
+    {
+        return $this->nome_vendedor;
+    }
+
+    public function set_nome_vendedor($nome_vendedor)
+    {
+        $this->nome_vendedor = $nome_vendedor;
+    }
+
     public function executar_servico()
     {
         $status = array(1 => 3, 3 => 4, 4 => 2);

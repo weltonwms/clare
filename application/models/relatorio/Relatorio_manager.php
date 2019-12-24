@@ -51,6 +51,7 @@ class Relatorio_manager extends CI_Model {
             $servico->set_estado($valor->estado);
             $servico->set_tipo($valor->tipo);
             $servico->set_id_vendedor($valor->id_vendedor);
+	    $servico->set_nome_vendedor($valor->nome_vendedor);
             $servico->set_porcentagem_comissao($valor->porcentagem_comissao);
 
             $cliente->set_nome($valor->nome_cliente);
@@ -78,14 +79,15 @@ class Relatorio_manager extends CI_Model {
     {
         //echo "<pre>"; print_r($post['estado']); exit();
         $this->db->select('*, p.nome nome_produto, 
-           c.nome nome_cliente');
+           c.nome nome_cliente, v.nome nome_vendedor');
         $this->db->from('item_servico i');
         $this->db->join('servico s', 'i.id_servico = s.id_servico', 'inner');
         $this->db->join('produto p', 'i.id_produto = p.id_produto', 'inner');
         $this->db->join('fornecedor f', 'p.id_fornecedor = f.id_fornecedor', 'inner');
         $this->db->join('cliente c', 's.id_cliente = c.id_cliente', 'inner');
+	$this->db->join('vendedor v', 's.id_vendedor = v.id', 'left');
         if ($post['id_cliente']):
-            $this->db->where('s.id_cliente', $post['id_cliente']);
+	   $this->db->where('s.id_cliente', $post['id_cliente']);
         endif;
         if ($post['id_produto']):
             $this->db->where('i.id_produto', $post['id_produto']);

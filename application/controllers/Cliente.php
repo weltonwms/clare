@@ -31,16 +31,17 @@ class Cliente extends CI_Controller{
     
     public function index(){
         //$this->output->enable_profiler(TRUE);
-        $dados['clientes']=$this->Cliente_manager->get_clientes();
-        $this->carrega_view('cliente/manter_clientes',$dados);    
+        //$dados['clientes']=$this->Cliente_manager->get_clientes();
+        //$this->carrega_view('cliente/manter_clientes',$dados);  
+        $this->carrega_view('cliente/manter_clientes');
 		
     }
-    /*
-    public function novo_cliente(){
-         $this->carrega_view('cliente/novo_cliente'); 
+    
+    public function getDataTables(){
+        $this->load->model('cliente/Cliente_datatables');
+        $json= $this->Cliente_datatables->getTable($this->input->get());
+        echo $json; exit();
     }
-     * 
-     */
     
     public function salvar_cliente(){
         $retorno=$this->Cliente_manager->salvar($this->input->post());

@@ -1,5 +1,4 @@
-<?php echo "<script src='" . base_url('assets/plugins/jquery.confirm.js') . "'></script>"; ?>
-<?php echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>"; ?>
+<?php echo "<script src='" . base_url('assets/plugins/jquery.confirm2.js') . "'></script>"; ?>
 <?php echo "<script src='" . base_url('assets/js/tabela.js') . "'></script>"; ?>
 
 
@@ -29,7 +28,7 @@
 <!--inicio da tabela com lista de clientes-->
 
 <div class="table-responsive">
-<table id="tabela" class="table table-bordered   table-condensed">
+<table id="tabela_cliente" class="table table-bordered   table-condensed">
     <thead>
         <tr class="text-primary">
             <th>Empresa</th>
@@ -43,46 +42,7 @@
 
     <tbody>
 
-        <?php
-        if ($clientes):
-            foreach ($clientes as $cliente):
-                ?>
-                <tr>
-                    <td>
-                        <a href="#" class="detalhe_cliente" 
-                           data-id_cliente="<?php echo $cliente->get_id_cliente(); ?>">
-                               <?php echo $cliente->get_nome(); ?>
-                        </a>
-
-                    </td>
-                    <td>
-                        <?php echo $cliente->get_endereco();
-                       echo  $cliente->get_cep()? " - CEP: ".$cliente->get_cep():"";
-                         ?>
-                    </td>
-                    <td><?php echo $cliente->get_telefone(); ?></td>
-                    <td><?php echo $cliente->get_responsavel(); ?></td>
-
-                    <td>
-                        <a class="btn btn-default"
-                            data-toggle="tooltip"
-                            title="Editar"
-                            href="<?php echo base_url('cliente/editar') . '/' . $cliente->get_id_cliente() ?>">
-                            <span class="glyphicon glyphicon-pencil"></span> 
-                        </a>
-                   
-                        <a class="confirm btn btn-danger" 
-                           data-toggle="tooltip"
-                            title="Excluir"
-                           href="<?php echo base_url('cliente/excluir') . '/' . $cliente->get_id_cliente() ?>">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>
-                    </td>
-                </tr>
-                <?php
-            endforeach;
-        endif;
-        ?>
+       
     </tbody>
 
 
@@ -112,7 +72,4 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-<?php echo "<script src='" . base_url('assets/js/manter_cliente.js') . "'></script>"; ?>
-
 

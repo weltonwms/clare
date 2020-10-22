@@ -417,7 +417,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
             $("#total_venda").val('');
             $("#valor_unitario_fornecedor").val('');
             $("#total_fornecedor").val('');
-            $("#modal_manter_item_servico").modal('show');
+            $("#modal_manter_item_servico").modal({keyboard: false,show:true,backdrop:'static'});
         }
     });
 

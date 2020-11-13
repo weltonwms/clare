@@ -121,7 +121,7 @@
                             <td><?php echo $item_servico->get_tipo_servico() ?></td>
                             <td><?php echo $item_servico->get_nome_cliente() ?></td>
                             <td><?php echo $item_servico->get_nome_vendedor() ?></td>
-                            <td><?php echo $item_servico->get_nome_produto() ?> </td>
+                            <td><?php echo $item_servico->get_nome_produto()." - ".$item_servico->get_descricao_item() ?> </td>
                             <td><?php echo $item_servico->get_qtd_produto() ?></td>
                             <td><?php echo $item_servico->get_total_fornecedor(TRUE) ?></td>
                             <td><?php echo $item_servico->get_total_venda(TRUE) ?></td>

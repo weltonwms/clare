@@ -47,6 +47,10 @@ class Item_servico_composite extends CI_Model {
         return $this->produto->get_nome();
     }
 
+    public function get_descricao_item() {
+        return $this->item_servico->get_descricao();
+    }
+
     public function get_valor_produto() {
         return $this->produto->get_valor();
     }

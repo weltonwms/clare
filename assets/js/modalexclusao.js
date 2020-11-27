@@ -41,6 +41,13 @@ $(document).ready(function() {
 		cancelButton : " Cancelar"
 	});
         
+        $(".confirm_boleto").confirm({
+		text : "Deseja realmente excluir este Boleto?",
+		title : "  Exclusão de Boleto",
+		confirmButton : " Excluir",
+		cancelButton : " Cancelar"
+	});
+        
         
        
 });

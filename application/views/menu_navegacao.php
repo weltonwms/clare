@@ -6,6 +6,7 @@ $x4 = isset($active) && $active == 'produto' ? 'active' : '';
 $x5 = isset($active) && $active == 'servico' ? 'active' : '';
 $x6 = isset($active) && $active == 'relatorio' ? 'active' : '';
 $x7 = isset($active) && $active == 'anotacao' ? 'active' : '';
+$x8 = isset($active) && $active == 'boleto' ? 'active' : '';
 ?>
 <section id="menu"  >
     <nav class="navbar navbar-default" >
@@ -39,7 +40,7 @@ $x7 = isset($active) && $active == 'anotacao' ? 'active' : '';
                     </li>
 
                     <li class="<?php echo $x7 ?>"><a href="<?php echo base_url('anotacao') ?>" class="limpa_state">Anotações</a></li>
-
+                    <li class="<?php echo $x8 ?>"><a href="<?php echo base_url('boleto') ?>" class="limpa_state">Boletos</a></li>
 
                 </ul>
 

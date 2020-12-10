@@ -112,7 +112,7 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Edição de Boleto</h4>
             </div>
             <div class="modal-body">
                 <form method="post" action="<?php echo base_url('boleto/save') ?>" id="formBoleto">
@@ -146,8 +146,6 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
                                 <option value="2">Pago</option>
                             </select>
                         </div>
-
-
 
                     </div>
 

@@ -44,11 +44,11 @@ class Boleto extends CI_Controller{
         $retorno=$this->Boleto_manager->save($this->input->post());
         if($retorno){
             $this->session->set_flashdata('status','success');
-            $this->session->set_flashdata('msg_confirm','Cliente Salvo com Sucesso!');
+            $this->session->set_flashdata('msg_confirm','Boleto Salvo com Sucesso!');
         }
         else{
             $this->session->set_flashdata('status','danger');
-            $this->session->set_flashdata('msg_confirm','Não foi Possível Salvar Cliente!');
+            $this->session->set_flashdata('msg_confirm','Não foi Possível Salvar Boleto!');
         }
         $this->session->set_flashdata('scrollTop',$this->input->post('scrollTop'));
         redirect('boleto');
@@ -84,20 +84,36 @@ class Boleto extends CI_Controller{
 
 
     public function teste(){
-        $dt1="2019-09-09";
-        $dt2="2020-09-08";
         
-        if($dt1 > $dt2){
-            echo "$dt1 eh maior que $dt2";
-        }else if($dt1===$dt2){
-            echo "$dt1 eh igual a $dt2";
-        }
-        else{
-            echo "$dt1 eh menor que $dt2";
-        }
-        
-         $h=date("Y-m-d");
-         echo "<br><br>Hoje é: ".$h;
+    }
+    
+   
+    
+    public function createBath(){
+        $post= $this->input->post();
+        $retorno= $this->Boleto_manager->createBath($post);
+        echo json_encode($retorno);
+    }
+    
+    public function createAjax(){
+        $retorno=$this->Boleto_manager->create2($this->input->post());
+        echo json_encode($retorno);
+    }
+    
+    public function editAjax(){
+        //print_r($this->input->post());
+        $this->db->where('id_boleto', $this->input->post('id_boleto'));
+        echo $this->db->update('boleto', $this->input->post());
+    }
+    
+    public function excluirAjax($id_boleto){
+         $retorno=$this->Boleto_manager->delete($id_boleto);
+        echo json_encode($retorno);
+    }
+    
+    public function getBoletosAjax($id_servico){
+        $retorno=$this->Boleto_manager->getBoletosByServico($id_servico);
+        echo json_encode($retorno);
     }
     
    

@@ -34,6 +34,16 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
 
 <form method="post" action="<?php echo base_url('servico/manter_itens_servico') ?>" id="form_servico">
     <input type="hidden" name="id_servico" value="<?php echo $servico->get_id_servico(); ?>"/>
+    <?php if ($servico->get_id_servico()): ?>
+    <div class="col-md-12">
+        <button type="button" class="btn btn-default" id="btnGeracaoBoletos"
+                data-id_servico="<?php echo $servico->get_id_servico() ?>"
+                data-total_venda="<?php echo $servico->get_total_geral_venda()?>">
+            <span class="text-success glyphicon glyphicon-credit-card"></span> Geração Boletos
+        </button>
+    </div>
+    <?php endif; ?>
+    
     <div class="col-md-12">
         <div class="navbar-right ">
             <?php if ($servico->get_id_servico()): ?>
@@ -403,6 +413,7 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
     </div>
 </div>
 <?php $this->load->view('servico/pagamentos') ?>
+<?php $this->load->view('servico/boletos') ?>
 <script>
 
 

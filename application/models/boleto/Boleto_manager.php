@@ -33,6 +33,7 @@ class Boleto_manager extends CI_Model {
         $this->db->select("*");
         $this->db->from("boleto");
         $this->db->where_in("id_servico", $servicos);
+        $this->db->order_by('vencimento');
         $boletos = $this->db->get()->result();
         //echo "<pre>"; print_r($boletos); exit();
 
@@ -116,6 +117,107 @@ class Boleto_manager extends CI_Model {
         $this->db->set("estado", $estado);
         $this->db->where('id_boleto', $id_boleto);
         return $this->db->update('boleto');
+    }
+    
+    public function create2($post){
+        $this->db->trans_start();
+        $this->db->insert('boleto',$post);
+        $insert_id = $this->db->insert_id();
+        $this->db->where('id_boleto',$insert_id);
+        $last_record= $this->db->get('boleto')->result();
+        $this->db->trans_complete();
+        return $this->tratarItem($last_record[0]);
+    }
+    
+    public function tratarItem($item){
+        $obj= new Boleto_model($item);
+        $obj->estado=$obj->getEstado();
+        $obj->vencimento=$obj->getVencimento();
+        if(!$obj->nr_boleto):
+            $obj->nr_boleto='';
+        endif;
+        
+        $obj->valor_boleto=$obj->getValorBoleto();
+        return $obj;
+    }
+    
+    public function tratarItens($items){
+        $lista=[];
+        foreach($items as $item):
+            $lista[]= $this->tratarItem($item);
+        endforeach;
+        return $lista;
+    }
+    
+    public function getBoletosByServico($id_servico){
+        $this->db->where('id_servico',$id_servico);
+        $this->db->order_by('vencimento');
+        $resultado=$this->db->get('boleto')->result();
+        return $this->tratarItens($resultado);
+    }
+    
+    public function createBath($post){
+        
+        $id_servico=$post['id_servico'];
+        $dtInicial=$post['data_inicial'];
+        $parcelas=$post['parcelas'];
+        
+        $valor_boleto=$post['total']/$parcelas;
+        
+        $dates= $this->geraBoletos($dtInicial,$parcelas);
+        
+        $this->db->trans_start();
+        $ids_gravados=[];
+        $registros_gravados=[];
+        foreach($dates as $date):
+            $registro=['vencimento'=>$date, 'id_servico'=>$id_servico,'valor_boleto'=>$valor_boleto,'estado'=>1];
+            $this->db->insert('boleto',$registro);
+            $ids_gravados[] = $this->db->insert_id();
+        endforeach;
+        
+        if($ids_gravados):
+            $this->db->where_in('id_boleto',$ids_gravados);
+            $registros_gravados= $this->db->get('boleto')->result();
+        endif;
+        
+        
+        
+        $this->db->trans_complete();
+        return $this->tratarItens($registros_gravados);
+    }
+    
+     private function geraBoletos($dtInicial,$parcelas){
+       
+        $dArray= explode("-",$dtInicial);
+       
+        $data=new stdClass();
+        $data->dia=(int) $dArray[2];
+        $data->mes=(int) $dArray[1];
+        $data->ano=(int) $dArray[0];
+       
+        $data2= clone $data;
+        
+        $lista=[];
+        for($i=0;$i<$parcelas;$i++):
+            $lista[]= clone $data2;
+            $data2->mes++;
+            if($data2->mes==13){
+                $data2->mes=1;
+                $data2->ano++;
+            }
+            
+        endfor;
+        
+        $map= array_map(function($dt){
+            return $dt->ano.
+                    "-".
+                    str_pad($dt->mes,2,"0",STR_PAD_LEFT).
+                    "-".
+                    str_pad($dt->dia,2,"0",STR_PAD_LEFT);
+        }, $lista);
+        
+        return $map;
+        
     }
 
 }

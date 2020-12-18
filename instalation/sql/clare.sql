@@ -191,6 +191,27 @@ CREATE TABLE `vendedor` (
   `nome` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE `boleto` (
+  `id_boleto` int(11) NOT NULL,
+  `id_servico` int(11) NOT NULL,
+  `nr_boleto` varchar(100) DEFAULT NULL,
+  `vencimento` date DEFAULT NULL,
+  `valor_boleto` decimal(10,2) NOT NULL,
+  `estado` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `boleto`
+  ADD PRIMARY KEY (`id_boleto`),
+  ADD KEY `id_servico_fk_boleto` (`id_servico`);
+
+ALTER TABLE `boleto`
+  MODIFY `id_boleto` int(11) NOT NULL AUTO_INCREMENT;
+
+  ALTER TABLE `boleto`
+  ADD CONSTRAINT `boleto_ibfk_1` FOREIGN KEY (`id_servico`) REFERENCES `servico` (`id_servico`) ON DELETE CASCADE;
+
+
 --
 -- Índices de tabelas apagadas
 --

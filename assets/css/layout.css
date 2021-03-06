@@ -230,3 +230,11 @@ a.detalhe_cliente{
 .info_pagamento {
     padding-top: 9px;
 }
+
+.bloco_conta_boleto{
+    color: #db6565;
+    border: 1px solid #bbb;
+    padding: 10px;
+}
+
+

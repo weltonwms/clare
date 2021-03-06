@@ -83,4 +83,19 @@ class Servico_manager extends Generic_manager {
          return "id_servico";
     }
 
+    public function updateContaBoleto($post) {
+        $id_servico = $post['id_servico'];
+
+        if($id_servico){
+            $conta_boleto= $post['conta_boleto']?$post['conta_boleto']:null;
+            $dados = [
+                "conta_boleto" =>$conta_boleto
+            ];
+
+            $this->db->where('id_servico', $id_servico);
+            return $this->db->update('servico', $dados);
+        }
+       
+    }
+
 }

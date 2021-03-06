@@ -25,8 +25,9 @@ abstract class Generic_manager extends CI_Model {
     public function alterar(array $post) {
         $model = $this->get_model();
         $this->set_objeto($post);
-        //echo "<pre>"; print_r($model); exit();
-        return $model->alterar();
+        //passagem do $post para alterar somente o que tem no $post.
+        //sem isso dados não passados perderam valor no banco de dados.
+        return $model->alterar($post);
     }
 
     public function excluir($id) {

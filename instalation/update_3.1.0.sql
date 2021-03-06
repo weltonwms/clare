@@ -1,0 +1,1 @@
+ALTER TABLE `servico` ADD `conta_boleto` TINYINT NULL COMMENT 'conta bancaria quando houver boletos' AFTER `id_vendedor`;

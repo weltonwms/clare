@@ -21,10 +21,10 @@ abstract class Generic_model extends CI_Model{
         return;
     }
     
-    public function alterar(){
+    public function alterar($post=[]){
         $identificador=  $this->get_identificador();
         $skips = array($identificador);
-        $dados = $this->carrega_dados($skips);
+        $dados = $this->carrega_dados($skips,$post);
         $this->db->where($identificador, $this->$identificador);
         $this->db->update($this->tabela, $dados);
         $nr_affected_rows=$this->db->affected_rows();
@@ -46,16 +46,27 @@ abstract class Generic_model extends CI_Model{
         return;
     }
     
-    protected function carrega_dados(array $skips = array()) {
+    protected function carrega_dados(array $skips = array(),$post=[]) {
         $atributos =  $this->get_atributos();
         $dados = array();
         $skips_interno=array('tabela',  'identificador');
+
         foreach ($atributos as $key => $valor):
+            /*
+                Quando houver o $post como parâmetro, colocar em dados somente 
+                o que estiver em $post. Evitar carregar dados que não foram postados.
+            */
+           if($post && !isset($post[$key])){
+               continue;
+           }
+
             if (in_array($key, $skips)|| in_array($key, $skips_interno)) {
                 continue;
             }
+
             $dados[$key] = $this->$key;
         endforeach;
+
         return $dados;
     }
     

@@ -22,7 +22,7 @@ class Boleto_manager extends CI_Model {
         endif;
 
         $this->db->select("item_servico.descricao, produto.nome as produto_nome, "
-                . "servico.data, servico.id_servico, cliente.nome as cliente_nome");
+                . "servico.data, servico.id_servico, servico.conta_boleto, cliente.nome as cliente_nome");
         $this->db->from("item_servico");
         $this->db->join('produto', 'produto.id_produto = item_servico.id_produto', 'inner');
         $this->db->join('servico', 'servico.id_servico = item_servico.id_servico', 'inner');
@@ -49,6 +49,7 @@ class Boleto_manager extends CI_Model {
                 $obj = new stdClass();
                 $obj->id_servico = $item->id_servico;
                 $obj->data = $item->data;
+                $obj->conta_boleto = $item->conta_boleto;
                 $obj->cliente_nome = $item->cliente_nome;
                 $obj->produtos = [];
                 $obj->boletos = [];

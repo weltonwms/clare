@@ -21,15 +21,15 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
 
 
 
-<?php foreach ($items as $key=>$item): ?>
+<?php foreach ($items as $key => $item): ?>
 
     <div class="panel  panel-primary">
         <!-- Default panel contents -->
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-10">  Cliente: <b><?php echo $item->cliente_nome ?></b> | Serviço: <?php echo $item->id_servico ?></div>
-                <div class="col-md-2">  
-                    <button class="btn btn-default btn-xs pull-right addBolToServico" 
+                <div class="col-md-2">
+                    <button class="btn btn-default btn-xs pull-right addBolToServico"
                             data-id_servico="<?php echo $item->id_servico ?>">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
@@ -39,12 +39,25 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
 
         </div>
         <div class="panel-body">
-            <p>
-                <b>Produto(s):</b>
-                <?php foreach ($item->produtos as $produto): ?>
-                    <?php echo $produto->produto_nome . " " . $produto->descricao ?><br>
-                <?php endforeach; ?>
-            </p>
+            <div class="row">
+                <div class="col-md-9">
+                     <p>
+                        <b>Produto(s):</b>
+                        <?php foreach ($item->produtos as $produto): ?>
+                         <?php echo $produto->produto_nome . " " . $produto->descricao ?><br>
+                        <?php endforeach;?>
+                    </p>
+                </div>
+                <div class="col-md-3">
+                            <?php if($item->conta_boleto):?>
+                           <div class="bloco_conta_boleto">
+                                <?php echo "Boleto ". nomeContaBoleto($item->conta_boleto)?>
+                           </div>
+                           <?php endif;?>
+                </div>
+            </div>
+
+
         </div>
 
         <!-- Table -->
@@ -62,35 +75,35 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
             <tbody>
                 <?php foreach ($item->boletos as $boleto): ?>
                     <tr>
-            <input type="hidden" id='<?php echo "bol_".$boleto->id_boleto?>'
-                   value='<?php echo json_encode($boleto)?>'>
+            <input type="hidden" id='<?php echo "bol_" . $boleto->id_boleto ?>'
+                   value='<?php echo json_encode($boleto) ?>'>
                         <td><?php echo $boleto->getVencimento() ?></td>
                         <td><?php echo $boleto->nr_boleto ?></td>
-                        <td><?php echo $boleto->getValorBoleto(TRUE) ?></td>
+                        <td><?php echo $boleto->getValorBoleto(true) ?></td>
                         <td class="<?php echo $boleto->getCssStatus() ?>">
-                            <?php echo $boleto->getEstado() ?> 
+                            <?php echo $boleto->getEstado() ?>
                             <?php if ($boleto->estado == 1): ?>
-                                <a href="<?php echo base_url('boleto/alterarEstado/').$boleto->id_boleto ?>" 
+                                <a href="<?php echo base_url('boleto/alterarEstado/') . $boleto->id_boleto ?>"
                                    class="alterarEstado" data-toggle="tooltip" title="Colocar Estado como Pago">
-                                    <span class="glyphicon glyphicon-ok"></span> 
+                                    <span class="glyphicon glyphicon-ok"></span>
                                 </a>
-                                
-                            <?php endif; ?>
+
+                            <?php endif;?>
                         </td>
                         <td>
-                           
+
                             <a href="#" class="btn btn-default btn-xs editBoleto"
-                               data-id_boleto="<?php echo $boleto->id_boleto?>">
+                               data-id_boleto="<?php echo $boleto->id_boleto ?>">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </a>
-                           
+
                             <a class="btn btn-danger btn-xs confirm_boleto text-danger"
-                               href="<?php echo base_url('boleto/excluir') . '/' .$boleto->id_boleto?> ">
+                               href="<?php echo base_url('boleto/excluir') . '/' . $boleto->id_boleto ?> ">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                <?php endforeach;?>
 
             </tbody>
         </table>
@@ -98,9 +111,9 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
     </div>
 
 <?php //echo $items[$key-1]->cliente_nome?>
-<?php echo (isset($items[$key+1]) && $item->cliente_nome!=$items[$key+1]->cliente_nome)?"<br><br>":""?>
+<?php echo (isset($items[$key + 1]) && $item->cliente_nome != $items[$key + 1]->cliente_nome) ? "<br><br>" : "" ?>
 
-<?php endforeach ?>
+<?php endforeach?>
 
 
 
@@ -117,7 +130,7 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
             <div class="modal-body">
                 <form method="post" action="<?php echo base_url('boleto/save') ?>" id="formBoleto">
                     <input type="hidden" name="id_boleto" value="" id="id_boleto">
-                    <input type="hidden" name="scrollTop" id="scrollTop" value="<?php echo $this->session->flashdata('scrollTop')  ;?>">
+                    <input type="hidden" name="scrollTop" id="scrollTop" value="<?php echo $this->session->flashdata('scrollTop'); ?>">
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="id_servico">Cód. Serviço</label>
@@ -175,7 +188,7 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
         $("#valor_boleto").val('');
         $("#estado").val('');
     }
-    
+
     function submitFormBoleto(){
         var errors= validar();
         if(errors.length===0){
@@ -185,29 +198,29 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
         else{
             alert(errors.join('\n'));
         }
-        
+
     }
-    
+
     function editFormBoleto(e){
         e.preventDefault();
         var elemento= e.currentTarget;
         var id= "#bol_"+elemento.dataset.id_boleto;
         var boleto=JSON.parse($(id).val());
-        
+
         $("#id_boleto").val(boleto.id_boleto);
         $("#id_servico").val(boleto.id_servico);
         $("#vencimento").val(boleto.vencimento);
         $("#nr_boleto").val(boleto.nr_boleto);
         $("#valor_boleto").val(boleto.valor_boleto);
         $("#estado").val(boleto.estado);
-        
+
         $('#myModal').modal({
             keyboard: false,
             backdrop:"static",
             show:true
         });
     }
-    
+
     function addBolToServico(e){
         e.preventDefault();
         var elemento= e.currentTarget;
@@ -219,10 +232,10 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
             show:true
         });
     }
-    
+
     function validar(){
         var errors= [];
-        
+
         if(!$("#id_servico").val()){
             errors.push('Cód. Serviço Obrigatório');
         }
@@ -238,10 +251,10 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
         if(!$("#estado").val()){
             errors.push('Estado Obrigatório');
         }
-        
+
         return errors;
     }
-    
+
     function submitAlterarEstado(e){
         e.preventDefault();
         var url = e.currentTarget.attributes['href'].value;
@@ -257,23 +270,23 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
             }
 
         });//fechamento do ajax
-        
+
     }
-    
+
     function scrollPage(){
         var position= $("#scrollTop").val() | 0;
         $(window).scrollTop(position);
     }
-    
+
     $("#submitBoleto").on("click",submitFormBoleto);
     $(".editBoleto").on("click",editFormBoleto);
     $(".alterarEstado").on("click",submitAlterarEstado);
     $('#myModal').on('hidden.bs.modal', resetFormBoleto);
     $(".addBolToServico").on("click",addBolToServico);
-    
+
     //$(document).ready(scrollPage);
     scrollPage();
-    
+
 </script>
 
 

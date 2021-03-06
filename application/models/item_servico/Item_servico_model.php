@@ -121,7 +121,7 @@ class Item_servico_model extends Generic_model {
         $this->total_venda = $total_venda;
     }
 
-    public function alterar() {
+    public function alterar($post=[]) {
         $identificador = $this->get_identificador();
         $skips = array($identificador);
         $dados = $this->carrega_dados($skips);

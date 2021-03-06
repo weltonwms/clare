@@ -38,7 +38,8 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
     <div class="col-md-12">
         <button type="button" class="btn btn-default" id="btnGeracaoBoletos"
                 data-id_servico="<?php echo $servico->get_id_servico() ?>"
-                data-total_venda="<?php echo $servico->get_total_geral_venda()?>">
+                data-total_venda="<?php echo $servico->get_total_geral_venda()?>"
+                data-conta_boleto="<?php echo $servico->get_conta_boleto()?>">
             <span class="text-success glyphicon glyphicon-credit-card"></span> Geração Boletos
         </button>
     </div>

@@ -13,9 +13,10 @@
     $("#btnGeracaoBoletos").on("click", function (e) {
         var el = e.currentTarget;
         var id_servico = el.dataset.id_servico;
+        var conta_boleto = el.dataset.conta_boleto;
         var total_venda = Number.parseFloat(el.dataset.total_venda);
         $("#fbp_total").val(total_venda.toFixed(2));
-        BoletoModel.inicializar(id_servico, total_venda);
+        BoletoModel.inicializar(id_servico, total_venda, conta_boleto);
         $('#modalBoletos').modal('show');
     });
 
@@ -34,11 +35,16 @@
           EditInLine.deletar(e);
     });
 
+    $("#conta_boleto").on("change", function (e) {
+       updateContaBoleto();
+    });
+
     var BoletoModel = (function () {
         var items = [];
         var inicializado = false;
         var id_servico;
         var total_venda;
+        var conta_boleto; //atributo de serviço; Posteriormente pegar a partir do id servico
 
         function addItem(item) {
             items.push(item);
@@ -50,10 +56,11 @@
             });
         }
 
-        function inicializar(id_svc, tot_venda) {
+        function inicializar(id_svc, tot_venda, conta) {
             if (!inicializado) {
                 id_servico = id_svc;
                 total_venda = tot_venda;
+                conta_boleto=conta
                 executarInicializacao();
                 inicializado = true;
             }
@@ -64,7 +71,20 @@
                 items = resposta;
                 updateTable();
             });
+            putBoletoConta();
 
+        }
+
+        function putBoletoConta(){
+            $("#conta_boleto").val(conta_boleto);
+        }
+
+        function getContaBoleto(){
+            return conta_boleto;
+        }
+
+        function getIdServico(){
+            return id_servico;
         }
 
         function forceUpdateTable() {
@@ -167,7 +187,9 @@
             addItem: addItem,
             addItems: addItems,
             submitItem: submitItem,
-            submitItems: submitItems
+            submitItems: submitItems,
+            getContaBoleto:getContaBoleto,
+            getIdServico:getIdServico
         };
     })();
 
@@ -339,6 +361,29 @@
             success: callback
         });
 
+    }
+
+    function updateContaBoleto(){
+        var conta_boleto=$("#conta_boleto").val();
+        var id_servico=BoletoModel.getIdServico();
+       
+        var obj={id_servico:id_servico,conta_boleto:conta_boleto};
+        $.ajax({
+            type: "post",
+
+            url: base_url + "servico/updateContaBoleto",
+            data: obj,
+            beforeSend: function () {
+                $("#conta_boleto").after("<p class='conta_boleto_loading'>Carregando</p>");
+            },
+            success: function (resposta) {
+                
+                   console.log(resposta)
+            },
+            complete: function () {
+               $('.conta_boleto_loading').remove();
+            }
+        });
     }
     
     function dateBrToUsd(dateBr){

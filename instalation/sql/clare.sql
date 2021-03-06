@@ -143,7 +143,8 @@ CREATE TABLE `servico` (
   `obs` varchar(200) DEFAULT NULL,
   `tipo` int(11) DEFAULT NULL,
   `porcentagem_comissao` float DEFAULT NULL,
-  `id_vendedor` int(11) DEFAULT NULL
+  `id_vendedor` int(11) DEFAULT NULL,
+  `conta_boleto` TINYINT NULL COMMENT 'conta bancaria quando houver boletos'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

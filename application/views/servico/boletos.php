@@ -32,7 +32,7 @@
                         <label for="fbp_total">Total</label>
                         <input type="number" class="form-control" id="fbp_total"  placeholder="">
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-2 col-md-offset-1">
 
                         <label for="">Confirmar</label>
                         <button class="form-control btn btn-default" id="fbp_btnConfirm">
@@ -83,7 +83,17 @@
 
                 </div>
 
-                <br><br>
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                    <label for="conta_boleto">Conta Boleto</label>
+                        <select class="form-control"  id="conta_boleto">
+                            <option value="">-Selecione-</option>
+                            <option value="1">INTER GLAUBER</option>
+                            <option value="2">INTER MAURICIO</option>
+                        </select>
+                    </div>
+                </div>
                 <table class="table tabelaBoletos">
                     <thead>
                         <tr>

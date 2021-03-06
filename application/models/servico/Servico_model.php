@@ -13,6 +13,7 @@ class Servico_model extends Generic_model {
     protected $tipo;
     protected $porcentagem_comissao;
     protected $id_vendedor;
+    protected $conta_boleto;
     protected $tabela = "servico";
 
     function __construct()
@@ -145,6 +146,15 @@ class Servico_model extends Generic_model {
     public function set_nome_vendedor($nome_vendedor)
     {
         $this->nome_vendedor = $nome_vendedor;
+    }
+
+    public function set_conta_boleto($conta){
+        $this->conta_boleto=$conta;
+    }
+
+    public function get_conta_boleto(){
+        
+        return $this->conta_boleto;
     }
 
     public function executar_servico()

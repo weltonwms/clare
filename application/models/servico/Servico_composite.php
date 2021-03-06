@@ -269,4 +269,9 @@ class Servico_composite extends CI_Model {
        return $lista;
     }
 
+    public function get_conta_boleto()
+    {
+        return $this->servico->get_conta_boleto();
+    }
+
 }

@@ -42,3 +42,14 @@ function moneyUsdToBr($valor)
     $valor1 = str_replace(".", ",", $valor);
     return $valor1;
 }
+
+function nomeContaBoleto($cd)
+{
+
+   $nomes=['','INTER GLAUBER','INTER MAURICIO'];
+   if(isset($nomes[$cd])):
+        return $nomes[$cd];
+   endif;
+    
+}
+

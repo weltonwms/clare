@@ -111,8 +111,7 @@ class Servico extends CI_Controller {
 
     public function salvar_servico($redirect_back=null)
     {
-
-        $retorno = $this->Servico_manager->salvar($this->input->post());
+       $retorno = $this->Servico_manager->salvar($this->input->post());
 
         if ($retorno['status'] > 0) {
             $this->session->set_flashdata('status', 'success');
@@ -258,6 +257,18 @@ class Servico extends CI_Controller {
 //         echo "estou no server"; exit();
          $x = $this->Servico_manager->get_servico($id_servico);
          echo json_encode($x->get_lista_fornecedores_a_pagar());
+     }
+
+     public function updateContaBoleto(){
+        $retorno=$this->Servico_manager->updateContaBoleto($this->input->post());
+        if($retorno){
+            echo "Sucesso";
+        }
+        else{
+            $this->output->set_status_header(500);
+        }
+        
+         
      }
 
    

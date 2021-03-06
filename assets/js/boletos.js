@@ -148,6 +148,7 @@
         function submitItems() {
             var parcelas = $("#fbp_parcelas").val();
             var data_inicial = $("#fbp_dataInicial").val();
+            var intervalo = $("#fbp_intervalo").val();
             var total = $("#fbp_total").val();
             //alert('submit items')
 
@@ -158,7 +159,7 @@
 
             var obj = {id_servico: id_servico,
                 parcelas: parcelas, data_inicial: data_inicial,
-                total: total};
+                intervalo:intervalo,total: total};
 
             $.ajax({
                 type: "post",

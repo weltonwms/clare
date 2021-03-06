@@ -1,9 +1,11 @@
 <?php
 
-if (!defined('BASEPATH'))
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
-class Servico extends CI_Controller {
+class Servico extends CI_Controller
+{
 
     public function __construct()
     {
@@ -17,7 +19,7 @@ class Servico extends CI_Controller {
     /*     * *************************************************************************
      * O metodo carrega_view() carrega os arquivos php que estao na passta view
      * e representa o layout. Recebe como parâmetro obrigatório o nome do arquivo
-     * do corpo que será carregado e opcionamente um array de dados para 
+     * do corpo que será carregado e opcionamente um array de dados para
      * introduzir na visão do corpo
      * *************************************************************************
      */
@@ -40,11 +42,12 @@ class Servico extends CI_Controller {
         //echo "<pre>"; print_r($dados); exit();
         $this->carrega_view('servico/manter_servicos');
     }
-    
-    public function getDataTables(){
+
+    public function getDataTables()
+    {
         $this->load->model('servico/Servico_datatables');
-        $json= $this->Servico_datatables->getTable($this->input->get());
-        echo $json; exit();
+        $json = $this->Servico_datatables->getTable($this->input->get());
+        echo $json;exit();
     }
 
     public function ajax()
@@ -61,47 +64,47 @@ class Servico extends CI_Controller {
             $arr['data'] = $servico->get_data();
             $arr['estado'] = "<span class='estado'>{$servico->get_nome_estado()}</span>";
             if ($servico->get_estado() != 2):
-                $arr['estado'].='<a class="confirm_executar_servico" data-toggle="tooltip" title="Avançar Estado do Serviço"';
-                $arr['estado'].='href="' . base_url('servico/executar_servico') . '/' . $servico->get_id_servico() . '">';
-                $arr['estado'].='<span class="glyphicon glyphicon-ok"></span> </a>';
+                $arr['estado'] .= '<a class="confirm_executar_servico" data-toggle="tooltip" title="Avançar Estado do Serviço"';
+                $arr['estado'] .= 'href="' . base_url('servico/executar_servico') . '/' . $servico->get_id_servico() . '">';
+                $arr['estado'] .= '<span class="glyphicon glyphicon-ok"></span> </a>';
             endif;
             $arr['tipo'] = $servico->get_nome_tipo();
             $arr['vendedor'] = $servico->get_nome_vendedor();
             $arr['extn'] = $servico->get_id_servico();
-            $arr['acoes'] = ' <a target="_blank" class="btn_imprimir btn btn-default" 
-                           data-id_servico="' . $servico->get_id_servico() . '"' .
-                    'data-estado="' . $servico->get_estado() . '"' .
-                    'data-toggle="tooltip"
-                           title="Imprimir"
-                           href="' . base_url('servico/imprimir') . '/' . $servico->get_id_servico() . '">
-                            <span class="glyphicon glyphicon-print"></span> 
-                           </a>
-                           
-                   
-                        <a class="btn btn-default"
-                            data-toggle="tooltip"
-                           title="Editar"
-                            href="' . base_url('servico/editar') . '/' . $servico->get_id_servico() . '">
-                            <span class="glyphicon glyphicon-pencil"></span> 
-                        </a>
-                        
-                        <span title="Pagamentos" data-toggle="tooltip">
-                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal"
-                            
-                            data-id_servico="'.$servico->get_id_servico().'" >
-                            <span class="glyphicon glyphicon-usd"></span>
-                         </a>
-                         </span>
-                         
-                        <a class="confirm_servico btn btn-danger" 
-                            data-toggle="tooltip"
-                            title="Excluir"
-                           href="' . base_url('servico/excluir') . '/' . $servico->get_id_servico() . '">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>
-                        
+            $arr['acoes'] = ' <a target="_blank" class="btn_imprimir btn btn-default"
+	                           data-id_servico="' . $servico->get_id_servico() . '"' .
+            'data-estado="' . $servico->get_estado() . '"' .
+            'data-toggle="tooltip"
+	                           title="Imprimir"
+	                           href="' . base_url('servico/imprimir') . '/' . $servico->get_id_servico() . '">
+	                            <span class="glyphicon glyphicon-print"></span>
+	                           </a>
 
-                        ';
+
+	                        <a class="btn btn-default"
+	                            data-toggle="tooltip"
+	                           title="Editar"
+	                            href="' . base_url('servico/editar') . '/' . $servico->get_id_servico() . '">
+	                            <span class="glyphicon glyphicon-pencil"></span>
+	                        </a>
+
+	                        <span title="Pagamentos" data-toggle="tooltip">
+	                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal"
+
+	                            data-id_servico="' . $servico->get_id_servico() . '" >
+	                            <span class="glyphicon glyphicon-usd"></span>
+	                         </a>
+	                         </span>
+
+	                        <a class="confirm_servico btn btn-danger"
+	                            data-toggle="tooltip"
+	                            title="Excluir"
+	                           href="' . base_url('servico/excluir') . '/' . $servico->get_id_servico() . '">
+	                            <span class="glyphicon glyphicon-trash"></span>
+	                        </a>
+
+
+	                        ';
             $dados['data'][] = $arr;
 
         endforeach;
@@ -109,9 +112,9 @@ class Servico extends CI_Controller {
         exit();
     }
 
-    public function salvar_servico($redirect_back=null)
+    public function salvar_servico($redirect_back = null)
     {
-       $retorno = $this->Servico_manager->salvar($this->input->post());
+        $retorno = $this->Servico_manager->salvar($this->input->post());
 
         if ($retorno['status'] > 0) {
             $this->session->set_flashdata('status', 'success');
@@ -120,15 +123,15 @@ class Servico extends CI_Controller {
             $this->session->set_flashdata('status', 'danger');
             $this->session->set_flashdata('msg_confirm', 'Não foi Possível Salvar Serviço!');
         }
-        
-        if($redirect_back):
-            $id_servico=$retorno['acao_executada']=='cadastro'?$retorno['status']:$this->input->post('id_servico');
+
+        if ($redirect_back):
+            $id_servico = $retorno['acao_executada'] == 'cadastro' ? $retorno['status'] : $this->input->post('id_servico');
             redirect(base_url("servico/editar/$id_servico"));
         else:
             //exit('redirecionar para servicos');
             redirect(base_url('servico'));
         endif;
-        
+
     }
 
     public function editar($id_servico = null)
@@ -161,10 +164,10 @@ class Servico extends CI_Controller {
         $imprimir_total = $this->input->get('imprimir_total') == "" ? 1 : $this->input->get('imprimir_total');
         $dados['servico'] = $this->Servico_manager->get_servico($id_servico);
         $dados['imprimir_total'] = $imprimir_total;
-         $this->load->library('pdf');
-         $dados['pdf']= $this->pdf->getCanvas();
-        $html = $this->load->view('servico/impressao_servico', $dados, TRUE);
-       
+        $this->load->library('pdf');
+        $dados['pdf'] = $this->pdf->getCanvas();
+        $html = $this->load->view('servico/impressao_servico', $dados, true);
+
         $this->pdf->set_paper('a4', 'portrait');
         $this->pdf->createPDF($html, 'relat');
     }
@@ -230,51 +233,43 @@ class Servico extends CI_Controller {
         $this->load->view('servico/servico_detalhado_ajax', $dados);
     }
 
-   
     public function x3($id_servico)
     {
-        
+
         $x = $this->Servico_manager->get_servico($id_servico);
         $dados['id_servico'] = $x->get_id_servico();
         $dados['cliente_nome'] = $x->get_nome_cliente();
         $dados['total_venda'] = number_format($x->get_total_geral_venda(), 2, ",", ".");
         $dados['total_pago_credito'] = number_format($x->get_soma_pagamentos(CREDITO), 2, ",", ".");
-        $restante_credito=$x->get_total_geral_venda()-$x->get_soma_pagamentos(CREDITO);
+        $restante_credito = $x->get_total_geral_venda() - $x->get_soma_pagamentos(CREDITO);
         $dados['total_restante_credito'] = number_format($restante_credito, 2, ",", ".");
         $dados['pagamentos_credito'] = $x->get_array_pagamentos(CREDITO);
-        
-         $dados['total_fornecedor'] = number_format($x->get_total_geral_fornecedor(), 2, ",", ".");
-         $dados['fornecedores'] = $x->get_array_fornecedores_servico();
-         $dados['pagamentos_debito'] = $x->get_array_pagamentos(DEBITO);
-         $dados['total_pago_debito'] = number_format($x->get_soma_pagamentos(DEBITO), 2, ",", ".");
-         $restante_debito=$x->get_total_geral_fornecedor()-$x->get_soma_pagamentos(DEBITO);
+
+        $dados['total_fornecedor'] = number_format($x->get_total_geral_fornecedor(), 2, ",", ".");
+        $dados['fornecedores'] = $x->get_array_fornecedores_servico();
+        $dados['pagamentos_debito'] = $x->get_array_pagamentos(DEBITO);
+        $dados['total_pago_debito'] = number_format($x->get_soma_pagamentos(DEBITO), 2, ",", ".");
+        $restante_debito = $x->get_total_geral_fornecedor() - $x->get_soma_pagamentos(DEBITO);
         $dados['total_restante_debito'] = number_format($restante_debito, 2, ",", ".");
         echo json_encode($dados);
-     }
-     
-     public function get_lista_fornecedores_a_pagar($id_servico)
-     {
-//         echo "estou no server"; exit();
-         $x = $this->Servico_manager->get_servico($id_servico);
-         echo json_encode($x->get_lista_fornecedores_a_pagar());
-     }
+    }
 
-     public function updateContaBoleto(){
-        $retorno=$this->Servico_manager->updateContaBoleto($this->input->post());
-        if($retorno){
+    public function get_lista_fornecedores_a_pagar($id_servico)
+    {
+//         echo "estou no server"; exit();
+        $x = $this->Servico_manager->get_servico($id_servico);
+        echo json_encode($x->get_lista_fornecedores_a_pagar());
+    }
+
+    public function updateContaBoleto()
+    {
+        $retorno = $this->Servico_manager->updateContaBoleto($this->input->post());
+        if ($retorno) {
             echo "Sucesso";
-        }
-        else{
+        } else {
             $this->output->set_status_header(500);
         }
-        
-         
-     }
 
-   
-
-    
-    
-    
+    }
 
 }

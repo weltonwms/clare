@@ -28,11 +28,22 @@
                         <input type="date" value="<?php echo date('Y-m-d') ?>"
                                class="form-control"  id="fbp_dataInicial" placeholder="">
                     </div>
-                    <div class="form-group col-md-3">
+
+                    <div class="form-group col-md-2">
+                        <label for="fbp_intervalo">Intervalo (dias)</label>
+                        <select class="form-control" id="fbp_intervalo">
+                            <?php for ($i = 1; $i < 31; $i++): ?>
+                                <option <?php echo $i===7?"selected":"" ?> > <?php echo $i ?> </option>
+                            <?php endfor ?>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
                         <label for="fbp_total">Total</label>
                         <input type="number" class="form-control" id="fbp_total"  placeholder="">
                     </div>
-                    <div class="form-group col-md-2 col-md-offset-1">
+                    <div class="form-group col-md-2">
 
                         <label for="">Confirmar</label>
                         <button class="form-control btn btn-default" id="fbp_btnConfirm">

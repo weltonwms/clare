@@ -161,11 +161,12 @@ class Boleto_manager extends CI_Model {
         
         $id_servico=$post['id_servico'];
         $dtInicial=$post['data_inicial'];
+        $intervalo= $post['intervalo'];
         $parcelas=$post['parcelas'];
         
         $valor_boleto=$post['total']/$parcelas;
         
-        $dates= $this->geraBoletos($dtInicial,$parcelas);
+        $dates= $this->geraBoletos($dtInicial,$parcelas,$intervalo);
         
         $this->db->trans_start();
         $ids_gravados=[];
@@ -187,38 +188,24 @@ class Boleto_manager extends CI_Model {
         return $this->tratarItens($registros_gravados);
     }
     
-     private function geraBoletos($dtInicial,$parcelas){
+     private function geraBoletos($dtInicial,$parcelas,$interval=7){
+        if(is_numeric($interval)):
+            $interval="P{$interval}D";// P7D means a period of 7 day
+        else:
+            $interval="P7D";// P7D means a period of 7 day
+        endif;
        
-        $dArray= explode("-",$dtInicial);
-       
-        $data=new stdClass();
-        $data->dia=(int) $dArray[2];
-        $data->mes=(int) $dArray[1];
-        $data->ano=(int) $dArray[0];
-       
-        $data2= clone $data;
         
-        $lista=[];
-        for($i=0;$i<$parcelas;$i++):
-            $lista[]= clone $data2;
-            $data2->mes++;
-            if($data2->mes==13){
-                $data2->mes=1;
-                $data2->ano++;
-            }
+        $lista=[$dtInicial];
+        for($i=1;$i<$parcelas;$i++):
+           
+            $date = new DateTime($lista[$i-1]);
+            $date->add(new DateInterval($interval)); 
+            $lista[]=$date->format("Y-m-d");
             
         endfor;
         
-        $map= array_map(function($dt){
-            return $dt->ano.
-                    "-".
-                    str_pad($dt->mes,2,"0",STR_PAD_LEFT).
-                    "-".
-                    str_pad($dt->dia,2,"0",STR_PAD_LEFT);
-        }, $lista);
-        
-        return $map;
-        
+        return $lista;
     }
 
 }

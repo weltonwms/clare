@@ -32,9 +32,9 @@ echo "<script src='" . base_url('assets/plugins/chosen/chosen.jquery.js') . "'><
                     <div class="col-md-8">
                         <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input name="valor" id="valor" type="text"
-                                   class="form-control money" 
-                                   value="<?php echo number_format($produto->get_valor(),2,"," ,".");?>" > 
+                            <input name="valor" id="valor" type="number"
+                                   class="form-control" 
+                                   value="<?php echo $produto->get_valor()?>" > 
                         </div>
                     </div>
 

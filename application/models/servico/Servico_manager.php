@@ -61,6 +61,10 @@ class Servico_manager extends Generic_manager {
 
     public function clonar($post) {
         $retorno = FALSE;
+        //clonagem com alteração de data e estado
+        $post['data'] = date('d/m/Y');
+        $post['estado'] = 3;
+       //fim das alterações da requisição
         $id_servico = $this->cadastrar($post);
         if ($id_servico):
             $this->load->model('item_servico/Item_servico_manager', 'item_manager');

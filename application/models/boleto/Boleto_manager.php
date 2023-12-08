@@ -53,6 +53,7 @@ class Boleto_manager extends CI_Model {
                 $obj->cliente_nome = $item->cliente_nome;
                 $obj->produtos = [];
                 $obj->boletos = [];
+                $obj->qtdNaoPagos=0;
                 $obj->produtos[] = $item;
                 $list[$item->id_servico] = $obj;
             else:
@@ -62,8 +63,10 @@ class Boleto_manager extends CI_Model {
         endforeach;
 
         foreach ($boletos as $boleto):
-
             $list[$boleto->id_servico]->boletos[] = new Boleto_model($boleto);
+            if($boleto->estado==1):
+                $list[$boleto->id_servico]->qtdNaoPagos++;
+            endif;
         endforeach;
 
         usort($list, function( $a, $b ) {

@@ -47,6 +47,9 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
                          <?php echo $produto->produto_nome . " " . $produto->descricao ?><br>
                         <?php endforeach;?>
                     </p>
+                    <input type="hidden" 
+                    id="qtdNaoPagosServico<?php echo $item->id_servico?>" 
+                    value="<?php echo $item->qtdNaoPagos?>">
                 </div>
                 <div class="col-md-3">
                             <?php if($item->conta_boleto):?>
@@ -84,6 +87,7 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
                             <?php echo $boleto->getEstado() ?>
                             <?php if ($boleto->estado == 1): ?>
                                 <a href="<?php echo base_url('boleto/alterarEstado/') . $boleto->id_boleto ?>"
+                                   data-id_servico="<?php echo $boleto->id_servico ?>" 
                                    class="alterarEstado" data-toggle="tooltip" title="Colocar Estado como Pago">
                                     <span class="glyphicon glyphicon-ok"></span>
                                 </a>
@@ -177,7 +181,41 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
     </div>
 </div>
 
+<!-- Modal BAIXA BOLETO-->
+<div class="confirmation-modal modal fade" id="modalBaixaBoleto" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×
+        </button>
+        <h4 class="modal-title ">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>  Baixa do Boleto
+        </h4> 
+      </div>
 
+      <div class="modal-body">
+        <p class="text-muted">Esta é a última parcela a pagar do Boleto. Isso Significa que o Boleto não 
+            possuirá mais pendências e sumirá dessa tela.
+        </p>
+        <p><b>Deseja Continuar?</b></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" 
+        class="btn btn-primary"
+        id="btnConfirmBaixaBoleto"
+        data-url=""        
+        >
+        <span class="glyphicon glyphicon-ok"></span> Baixar Boleto
+        </button>
+        <button class="cancel btn btn-default" type="button" data-dismiss="modal">
+            <span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+        </button>
+    </div>
+    </div>
+  </div>
+</div>
+<!-- FIM Modal BAIXA BOLETO-->
 
 <script>
     function resetFormBoleto(){
@@ -258,6 +296,23 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
     function submitAlterarEstado(e){
         e.preventDefault();
         var url = e.currentTarget.attributes['href'].value;
+        var id_servico= this.dataset.id_servico;
+        var qtdNaoPagosServico= $("#qtdNaoPagosServico"+id_servico).val();
+       
+        if(qtdNaoPagosServico <=1){
+            $("#btnConfirmBaixaBoleto").attr('data-url',url);
+            $('#modalBaixaBoleto').modal("show");
+            return false;
+        }
+        confirmaSubmitAlterarEstado(url);
+
+    }
+
+    function confirmaSubmitAlterarEstado(url){
+        if(!url){
+            alert('URL inválida');
+            return false;
+        }        
         $.ajax({
             type: "GET",
             dataType: "html",
@@ -270,7 +325,21 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
             }
 
         });//fechamento do ajax
+        
+    }
 
+    /**
+     * Baixar boleto(conjunto de boletos do serviço) é a mesma coisa 
+     * de alterar estado para Pago de uma parcela
+     * A diferença é que por ser a última parcela a ser paga resulta na falta 
+     * de pendências do Boleto(Serviço) e esse some da tela.
+     */
+    function baixarBoleto(e){
+        var elementoClicado=e.currentTarget;
+        var url= elementoClicado.dataset.url;
+        confirmaSubmitAlterarEstado(url);        
+        elementoClicado.disabled=true;
+        
     }
 
     function scrollPage(){
@@ -281,6 +350,7 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
     $("#submitBoleto").on("click",submitFormBoleto);
     $(".editBoleto").on("click",editFormBoleto);
     $(".alterarEstado").on("click",submitAlterarEstado);
+    $("#btnConfirmBaixaBoleto").on('click',baixarBoleto);
     $('#myModal').on('hidden.bs.modal', resetFormBoleto);
     $(".addBolToServico").on("click",addBolToServico);
 
@@ -288,63 +358,3 @@ echo "<script src='" . base_url('assets/js/modalexclusao.js') . "'></script>";
     scrollPage();
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

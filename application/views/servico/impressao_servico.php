@@ -218,6 +218,14 @@
 
                     </tr>
 
+                    <?php if ($servico->get_cnpj_cliente()):?>
+                    <tr>
+                        <td>CNPJ:</td>
+                        <td width="200"><?php echo $servico->get_cnpj_cliente() ?></td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <?php endif;?>
+
                     <tr>
                         <td colspan="4"> <b>Valor Pago: <?php echo number_format($total_pago, 2, ",", "."); ?> | Restante: <?php echo number_format($restante_pagar, 2, ",", ".") ?> </b></td>
 

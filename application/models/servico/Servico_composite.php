@@ -209,6 +209,11 @@ class Servico_composite extends CI_Model {
         return $this->cliente->get_email();
     }
 
+    public function get_cnpj_cliente()
+    {
+        return $this->cliente->get_cnpj();
+    }
+
     public function get_total_geral_venda()
     {
         //não use isso se for forçar uma nova soma em tempo de execução.
